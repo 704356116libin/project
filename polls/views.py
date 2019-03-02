@@ -54,6 +54,7 @@ def vote(request, question_id):
 def addQuestion(request):
     q=Question(question_text="this is content",pub_date=timezone.now())
     q.save()
+
     return HttpResponse("问题创建成功")
 
 '''
