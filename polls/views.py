@@ -5,29 +5,34 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .models import Question, Choice
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views import generic
 
-'''
-django视图以及数据库基本测试--返回问题的列表
-'''
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    template = loader.get_template('polls/index.html')
-    context = {
-        'latest_question_list': latest_question_list,
-    }
-    return HttpResponse(template.render(context, request))
-'''
-访问单个问题详情
-'''
-def detail(request, question_id):
-    question = get_object_or_404(Question,pk=question_id)
-    #get_list_or_404()函数
-    return render(request, 'polls/detail.html', {'question': question})
-
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/result.html', {'question': question})
-
+from .models import Choice, Question
+# '''
+# django视图以及数据库基本测试--返回问题的列表
+# '''
+# def index(request):
+#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
+#     template = loader.get_template('polls/index.html')
+#     context = {
+#         'latest_question_list': latest_question_list,
+#     }
+#     return HttpResponse(template.render(context, request))
+# '''
+# 访问单个问题详情
+# '''
+# def detail(request, question_id):
+#     question = get_object_or_404(Question,pk=question_id)
+#     #get_list_or_404()函数
+#     return render(request, 'polls/detail.html', {'question': question})
+#
+# def results(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'polls/result.html', {'question': question})
+#
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -42,7 +47,7 @@ def vote(request, question_id):
         # 投票数量自增
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:result', args=(question.id,)))
 '''
 添加question数据
 '''
@@ -50,3 +55,24 @@ def addQuestion(request):
     q=Question(question_text="this is content",pub_date=timezone.now())
     q.save()
     return HttpResponse("问题创建成功")
+
+'''
+通用视图方法
+'''
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/result.html'
