@@ -4,6 +4,7 @@ from . import views
 #命名空间
 app_name = 'polls'
 urlpatterns = [
+    #普通路由定义
     # ex: /polls/
     # path('', views.index, name='index'),
     # # ex: /polls/5/
@@ -15,7 +16,7 @@ urlpatterns = [
     #
     path('addQuestion', views.addQuestion, name='addQuestion'),
 
-    #通用视图
+    #通用视图路由定义
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='result'),

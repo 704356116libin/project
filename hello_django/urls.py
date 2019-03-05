@@ -17,5 +17,5 @@ from django.contrib import admin
 from django.urls import include,path
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polls/', include('polls.urls')),#投票应用
+    path('polls/', include('polls.urls')),#插入投票应用路由组
 ]

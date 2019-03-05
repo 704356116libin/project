@@ -11,9 +11,9 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import Choice, Question
-# '''
-# django视图以及数据库基本测试--返回问题的列表
-# '''
+'''
+django视图以及数据库基本测试---相当于PHP,Java中的控制器
+'''
 # def index(request):
 #     latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #     template = loader.get_template('polls/index.html')
