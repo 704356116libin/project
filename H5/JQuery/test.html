@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery测试</title>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+        #panel,#slide
+        {
+            width: 500px;
+            text-align:center;
+            background-color:#e5eecc;
+            border:solid 1px #c3c3c3;
+        }
+        #panel
+        {
+            padding:0px;
+            display:none;
+        }
+    </style>
+    <script>
+    /**
+     *隐藏文字段落
+     */
+    $(document).ready(function(){
+      $("button#hide-bt").click(function(){
+          console.log($("p"));
+        $("p").toggle(1000);
+      });
+    });
+    /**
+     *隐藏事件表单
+     */
+    $(document).ready(function(){
+      $("button#event-bt").click(function(){
+        // $("#tb-event").fadeToggle(500);//淡入淡出
+        $("#tb-event").slideToggle(300);//淡入淡出
+      });
+    });
+     /**
+     *面板滑动
+     */
+    $(document).ready(function(){
+      $("#slide").click(function(){
+        // $("#tb-event").fadeToggle(500);//淡入淡出
+        $("#panel").slideToggle();//淡入淡出
+      });
+    });
+    </script>
+</head>
+<body>
+    <div style="solid-color: black;">
+        <h3>1.测试隐藏方法,</h3>
+        <h4 style="padding-left: 30px;color: brown">主要方法:hide(),toggle()</h4>
+        <p>这是一个段落。</p>
+        <p>这是另一个段落。</p>
+        <button id="hide-bt">隐藏段落</button>
+    </div>
+    <h3>2.常见事件,</h3>
+    <div id="slide">点我滑动面板</div>
+    <div style="solid-color: black;" id="panel">
+        <table id="tb-event">
+            <tr>
+                <td>鼠标事件</td><td>键盘事件</td><td>表单事件</td><td>文档/窗口事件</td>
+            </tr>
+            <tr>
+                <td>click</td><td>	keypress</td><td>submit</td><td>load</td>
+            </tr>
+            <tr>
+                <td>dbclick</td><td>keydown</td><td>change</td><td>	resize</td>
+            </tr>
+            <tr>
+                <td>mouseenter</td><td>keyup</td><td>focus</td><td>scroll</td>
+            </tr>
+            <tr>
+                <td>mouseleave</td><td>hover</td><td>blur</td><td>unload</td>
+            </tr>
+        </table>
+        <button id="event-bt">隐藏表格</button>
+    </div>
+</body>
+</body>
+</html>
