@@ -46,6 +46,24 @@
         $("#panel").slideToggle();//淡入淡出
       });
     });
+    /**
+     * 动画测试(鼠标滑入)
+     */
+     $(document).ready(function(){
+      $("#animate-img").mouseenter(function(){
+        // $("#tb-event").fadeToggle(500);//淡入淡出
+        $("#animate-img").animate({width:'150px',height:'75px',opacity:'0.8'})
+      });
+    });
+    /**
+     * 动画测试(鼠标滑出)
+     */
+     $(document).ready(function(){
+      $("#animate-img").mouseleave(function(){
+        // $("#tb-event").fadeToggle(500);//淡入淡出
+        $("#animate-img").animate({width:'100px',height:'50px'})
+      });
+    });
     </script>
 </head>
 <body>
@@ -78,6 +96,8 @@
         </table>
         <button id="event-bt">隐藏表格</button>
     </div>
+    <h3>3.动画操作,</h3>
+    <img src="../images/bg.jpg" id="animate-img" style="width: 100px;height: 50px">
 </body>
 </body>
 </html>
