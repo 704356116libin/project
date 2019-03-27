@@ -4,67 +4,8 @@
     <meta charset="UTF-8">
     <title>JQuery测试</title>
     <script src="../js/jquery-3.3.1.min.js"></script>
-    <style type="text/css">
-        #panel,#slide
-        {
-            width: 500px;
-            text-align:center;
-            background-color:#e5eecc;
-            border:solid 1px #c3c3c3;
-        }
-        #panel
-        {
-            padding:0px;
-            display:none;
-        }
-    </style>
-    <script>
-    /**
-     *隐藏文字段落
-     */
-    $(document).ready(function(){
-      $("button#hide-bt").click(function(){
-          console.log($("p"));
-        $("p").toggle(1000);
-      });
-    });
-    /**
-     *隐藏事件表单
-     */
-    $(document).ready(function(){
-      $("button#event-bt").click(function(){
-        // $("#tb-event").fadeToggle(500);//淡入淡出
-        $("#tb-event").slideToggle(300);//淡入淡出
-      });
-    });
-     /**
-     *面板滑动
-     */
-    $(document).ready(function(){
-      $("#slide").click(function(){
-        // $("#tb-event").fadeToggle(500);//淡入淡出
-        $("#panel").slideToggle();//淡入淡出
-      });
-    });
-    /**
-     * 动画测试(鼠标滑入)
-     */
-     $(document).ready(function(){
-      $("#animate-img").mouseenter(function(){
-        // $("#tb-event").fadeToggle(500);//淡入淡出
-        $("#animate-img").animate({width:'150px',height:'75px',opacity:'0.8'})
-      });
-    });
-    /**
-     * 动画测试(鼠标滑出)
-     */
-     $(document).ready(function(){
-      $("#animate-img").mouseleave(function(){
-        // $("#tb-event").fadeToggle(500);//淡入淡出
-        $("#animate-img").animate({width:'100px',height:'50px'})
-      });
-    });
-    </script>
+    <link rel="stylesheet" type="text/css" href="../css/test.css" charset="utf-8"/>
+    <script src="../js/test/test.js"></script>
 </head>
 <body>
     <div style="solid-color: black;">
@@ -97,7 +38,8 @@
         <button id="event-bt">隐藏表格</button>
     </div>
     <h3>3.动画操作,</h3>
-    <img src="../images/bg.jpg" id="animate-img" style="width: 100px;height: 50px">
+    <img src="../images/bg.jpg" id="animate-img" style="width: 100px;height: 50px"><br/>
+     <button id="animate-btn">点我变大</button>
 </body>
 </body>
 </html>
