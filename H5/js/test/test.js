@@ -51,4 +51,16 @@ $(document).ready(function () {
             $("#animate-btn").text('点我变小')
         }
     });
+    /**
+     * 测试dom遍历--获取子元素
+     */
+    $("#btn-div-children").click(function () {
+        console.log($("#div-1").children());
+    });
+    /**
+     * 测试dom遍历--获取父元素
+     */
+    $("#btn-p-parent").click(function () {
+        console.log($("#p-1").parent());
+    });
 });
