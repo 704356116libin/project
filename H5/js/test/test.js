@@ -37,17 +37,17 @@ $(document).ready(function () {
         // $("#tb-event").fadeToggle(500);//淡入淡出
         $("#animate-img").animate({width: '100px', height: '50px'})
     });
-    var animate_btn_click=1;
-     /**
+    var animate_btn_click = 1;
+    /**
      * 动画链式操作&&css属性链式操作
      */
     $("#animate-btn").click(function () {
         animate_btn_click++;
-        if(animate_btn_click%2==0){
-            $("#animate-img").animate({width: '100px', height: '50px',opacity: '1'})
+        if (animate_btn_click % 2 == 0) {
+            $("#animate-img").animate({width: '100px', height: '50px', opacity: '1'})
             $("#animate-btn").text('点我变大')
-        }else{
-            $("#animate-img").animate({width: '150px', height: '75px',opacity: '1'})
+        } else {
+            $("#animate-img").animate({width: '150px', height: '75px', opacity: '1'})
             $("#animate-btn").text('点我变小')
         }
     });
@@ -63,4 +63,42 @@ $(document).ready(function () {
     $("#btn-p-parent").click(function () {
         console.log($("#p-1").parent());
     });
-});
+    /**
+     * get请求测试
+     */
+    $("#btn-get").click(function () {
+        alert(456);
+        var data = {};
+        $.ajax({
+            type: 'get',
+            url: '/api/getTelCode',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+
+            },
+            error: function (jqXHR) {
+                $('#status').val('发生错误:' + jqXHR.status);
+            }
+        });
+    });
+    /**
+     * post请求测试
+     */
+    $("#btn-post").click(function () {
+        alert(123);
+        var data = {};
+        $.ajax({
+            type: 'Post',
+            url: '/api/getTelCode',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+
+            },
+            error: function (jqXHR) {
+                $('#status').val('发生错误:' + jqXHR.status);
+            }
+        });
+    });
+})
