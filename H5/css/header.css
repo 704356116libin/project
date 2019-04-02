@@ -34,8 +34,8 @@ a:link,a:visited,a:focus{
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
 }
-*,*:after,*:before{
-   display: block;
+*:after,*:before{
+    display: block;
     content: "";
 }
 *:after{
