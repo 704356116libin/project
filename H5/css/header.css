@@ -106,9 +106,22 @@ a:link,a:visited,a:focus{
     -webkit-transform: scale3d(0,0,1);
     transform: scale3d(0,0,1);
 }
+
+/*第二个导航的动画效果*/
+.tooltip-edddect-2 .tooltip-content{
+    -webkit-transform: translate3d(0,20px,0) ;
+    transform: translate3d(0,20px,0) ;
+     -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+}
+.tooltip-edddect-2 .tooltip-content i{
+    -webkit-transform: scale3d(0.1,0.1,0.1);
+    transform: scale3d(0.1,0.1,0.1);
+}
 .tooltip:hover .tooltip-content,
 .tooltip .tooltip-content i{
     opacity: 1;
-     -webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0deg);
-    transform: translate3d(0,0,0)  rotate3d(0,0,0,0deg);
+     -webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0deg) scale3d(1,1,1) ;
+    transform: translate3d(0,0,0)  rotate3d(0,0,0,0deg) scale3d(1,1,1);
+
 }
