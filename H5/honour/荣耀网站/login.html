@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登陆</title>
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	</head>
+	<body>
+		<div class="customer">
+			<div class="head_center">
+				<div class="main-logo">
+					<img src="img/honor.png">
+				</div>
+				<b>|</b>
+				<div class="title">
+					荣耀官网
+				</div>
+			</div>
+		</div>
+		<span>
+			<div class="guanggao">
+				<span class="prompt_icon">根据网络安全法，为保障您的账号安全与正常使用，请尽快绑定您的手机号，感谢您的理解及支持！</span>
+			</div>
+		</span>
+		<div class="login_bg">
+			<div class="content">
+			<div class="left">
+				<img src="img/honor-login-kv.png"/>
+			</div>
+            <div class="right">
+            	<div class="userLogin">
+            		<h3 class="inputBtn in">
+            			账号登陆
+            		</h3>
+            		<h3 class="scanBtn">
+            			扫码登录
+            		</h3>
+            		<div class="inputLogin">
+            			<input class="user" type="text" placeholder="手机号/邮件地址"/>
+            			<input class="user" type="password"  placeholder="密码" />
+            			<a href="#" class="submit">登录</a>
+            			<input class="check" type="checkbox" checked=""/>记住华为账号<br>
+            			<a href="register.html" class="userUse">注册账号</a>
+            			<a href="#" class="userUse">忘记密码</a>
+            		</div>
+            		<div class="scanlogin">
+            			<img src="img/getqrWeb.png"/>
+            			<p>请扫二维码</p>
+            		</div>
+            	</div>
+            </div>
+			</div>
+			
+		</div>
+	    <div class="customer-footer">
+	    	<div class="warrant-area">
+	    		<p>
+	    			<a href="#">华为账号用户协议</a>
+	    			<b>|</b>
+	    			<a href="#">关于华为账号与隐私的声明</a>
+	    			<b>|</b>
+	    			<a href="#">常见问题</a>
+	    		</p>
+	    		<p>Copyright © 2011-2018  华为软件技术有限公司  版权所有  保留一切权利  苏B2-20070200号 | 苏ICP备09062682号-9</p>
+	    	</div>
+	    </div>
+	    <script src="js/jquery-1.11.3.js"></script>
+	    <script>
+	    	$(".content>.right>.userLogin>h3.scanBtn").on("click",function(){
+	    		$(this).addClass("in").prev().removeClass("in")
+	    		$(".content>.right>.userLogin>.inputLogin").css("display","none").next().css("display","block")
+	    	})
+	    	$(".content>.right>.userLogin>h3.inputBtn").on("click",function(){
+	    		$(this).addClass("in").next().removeClass("in")
+	    		$(".content>.right>.userLogin>.scanlogin").css("display","none").prev().css("display","block")
+	    	})
+	    </script>
+	</body>
+</html>

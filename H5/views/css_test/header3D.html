@@ -4,68 +4,90 @@
 <head>
     <meta charset="utf-8">
     <title>3D导航栏练习</title>
-    <style>
-        html {
-            font-family: sans-serif;
-            line-height: 1.15;
-            -ms-text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
-        }
-
-        body {
-            background: #edecec;
-        }
-
-        .nav {
-            display: block;
-            background: #74adaa;
-            width: 70%;
-            margin: 50px auto 150px;
-        }
-
-        .first-heade li {
-            display: inline-block;
-            border: #fff solid 1px;
-        }
-
-        .nav a {
-            color: #fff;
-            display: block;
-            text-decoration: none;
-            font-family: 'sansationregular';
-            -webkit-font-smoothing: antialiased;
-            -moz-font-smoothing: antialiased;
-            -webkit-font-smoothing: antialiased;
-            text-transform: capitalize;
-            overflow: visible;
-            line-height: 20px;
-            font-size: 20px;
-            padding: 15px 30px 15px 31px;
-        }
-    </style>
-    <script>
-        function a() {
-            var a = false
-            if (a==true) {
-                alert(111)
-            } else {
-                alert(222)
-            }
-        }
-
-    </script>
+    <link rel="stylesheet" type="text/css" href="/H5/css/header3d.css" charset="utf-8"/>
 </head>
 
 <body>
-    <div class="nav">
-        <ul class="first-heade">
-            <li><a href="#">家电</a></li>
-            <li><a href="#">零食</a></li>
-            <li><a href="#">小吃</a></li>
-            <li><a href="#">大盘鸡</a></li>
-            <li><a href="#">游戏</a></li>
-        </ul>
-    </div>
+        <div id="nav">
+                <ul class="nav-menu clearfix unstyled">
+                    <li>
+                        <a href="#" class="three-d">
+                        零食
+                        <span class="three-d-box">
+                            <span class="front">零食</span>
+                            <span class="back">零食</span>
+                        </span>
+                        </a>
+                        <ul class="clearfix unstyled drop-menu">
+                            <li>
+                                <a href="#" class="three-d">
+                                    辣条
+                                    <span class="three-d-box">
+                                        <span class="front">辣条</span>
+                                        <span class="back">辣条</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="three-d">
+                                    方便面
+                                    <span class="three-d-box">
+                                        <span class="front">方便面</span>
+                                        <span class="back">方便面</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="three-d">
+                                    薯片
+                                    <span class="three-d-box">
+                                        <span class="front"> 薯片</span>
+                                        <span class="back"> 薯片</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>    
+                        <a href="#" class="three-d">
+                        家电
+                        <span class="three-d-box">
+                            <span class="front">家电</span>
+                            <span class="back">家电</span>
+                        </span>
+                        </a>
+                        <ul class="clearfix unstyled drop-menu">
+                            <li>
+                                <a href="#" class="three-d">
+                                    手机
+                                    <span class="three-d-box">
+                                        <span class="front">手机</span>
+                                        <span class="back">手机</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="three-d">
+                                    电视
+                                    <span class="three-d-box">
+                                        <span class="front">电视</span>
+                                        <span class="back">电视</span>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="three-d">
+                                    平板
+                                    <span class="three-d-box">
+                                        <span class="front">平板</span>
+                                        <span class="back">平板</span>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
 </body>
 
 </html>
