@@ -64,9 +64,10 @@ a:link,a:visited,a:focus{
     margin: 200px auto;
 }
 .nav li{
+    /* 设置  .nav类下的 li标签显示方式为行内并行显示  */
     display: inline-block;
     margin: 0 1em;
-}
+} 
 .tooltip{
     display: inline-block;
     font-weight: 700;
@@ -87,7 +88,9 @@ a:link,a:visited,a:focus{
     width:80px;
     height: 80px;
     border-radius: 50%;
-    background: #ffffff;left: 50%;
+    background: #ffffff;
+    /* 设置起点为父盒子的50%位置（即中部） */
+    left: 50%;
     margin-left: -40px;
     bottom: 100%;
     margin-bottom: 10px;
@@ -103,6 +106,7 @@ a:link,a:visited,a:focus{
    -webkit-transition: opacity 0.3s,-webkit-transform 0.3s;
     transition: opacity 0.3s,transform 0.3s;
 }
+/* 气泡的小尖样式 */
 .tooltip-content::after{
     display: block;
     content: "";
@@ -112,8 +116,12 @@ a:link,a:visited,a:focus{
     position: absolute;
     top: 100%;
     left: 50%;
+    /* 值为负数往相反方向进行移动 */
     margin: -7px 0 0 -15px;
 }
+/* 动画的实现思路 先设定一个初始位置  之后在某个状态下恢复原状 
+   同时设定动画过度时间以及属性
+*/
 .tooltip-edddect-1 .tooltip-content{
     -webkit-transform: translate3d(0,10px,0) rotate3d(1,1,1,45deg);
     transform: translate3d(0,10px,0) rotate3d(1,1,1,45deg);
