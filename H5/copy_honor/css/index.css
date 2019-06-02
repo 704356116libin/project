@@ -26,13 +26,15 @@ div{
     position: relative;
     height: 40px;
 }
-
+/*全局容器的样式*/
 .container {
     width: 100%;
     position: relative;
     margin: 0px auto;
 }
+/*设置ul标签下的a标签显示样式*/
 ul, a {
+    /*隐藏小圆点*/
     list-style: none;
     padding: 0;
     margin: 0;
@@ -96,4 +98,83 @@ a:-webkit-any-link {
     font-size: 16px;
     padding-left: 20px;
     margin-top: 20px;
+}
+/*导航栏样式*/
+.nav .container{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+#logo img{
+    width: 15%;
+    height: 70px;
+    float: left;
+    position: absolute;
+}
+.header-nav{
+    width:65%;
+    height: 70px;
+    float: left;
+    background: white;
+    position: relative;
+    left: 150px;
+}
+.header-nav li{
+    float: left;
+    width: 12.5%;
+    height: 100%;
+    padding: 5% 0%;
+    list-style: none;
+    font-size: 16px;
+    text-align: center;
+}
+
+.header-nav parent{
+    float: left;
+    width: 12.5%;
+    padding: 29% 14%;
+    font-size: 16px;
+    text-align: center;
+}
+.parent {
+    position: relative;
+}
+.header-nav ul #child {
+    width:100%;
+    opacity: 0;
+    float: left;
+    position: absolute;
+    background-image: linear-gradient(to bottom,dodgerblue 0px,deepskyblue 100%);
+    top: 70px;
+    left: -510px;
+    right: 10px;
+    height: 250px;
+}
+/*定义导航栏下a的颜色*/
+.header-nav a{
+    text-decoration: none;
+    color: darkgray;
+}
+/*搜索框的样式*/
+.search{
+    float: right;
+    width: 20%;
+    height: 70px;
+    position: relative;
+    margin-left: 20px;
+}
+.input-search{
+    float: left;
+    line-height: 32px;
+    border: 1px solid deepskyblue;
+    margin: 20px auto;
+
+}
+.search img{
+    float: left;
+    margin: 20px auto;
 }
