@@ -100,6 +100,13 @@ a:-webkit-any-link {
     margin-top: 20px;
 }
 /*导航栏样式*/
+.nav{
+    width: 100%;
+    height: 70px;
+    border: 2px solid whitesmoke;
+    position: relative;
+    background: white;
+}
 .nav .container{
     width: 100%;
     padding-left: 0;
@@ -108,9 +115,15 @@ a:-webkit-any-link {
     margin-right: auto;
     position: relative;
 }
-
-#logo img{
+.logo {
+    /* z-index: 9999; */
     width: 15%;
+    height: 70px;
+    float: left;
+    position: absolute;
+}
+.logo img{
+    width: 100%;
     height: 70px;
     float: left;
     position: absolute;
@@ -121,19 +134,33 @@ a:-webkit-any-link {
     float: left;
     background: white;
     position: relative;
-    left: 150px;
+    left: 15%;
+}
+.header-nav ul{
+    width:100%;
+    height: 100%;
+    
 }
 .header-nav li{
     float: left;
     width: 12.5%;
-    height: 100%;
-    padding: 5% 0%;
+    padding:23px 0px;
     list-style: none;
     font-size: 16px;
     text-align: center;
 }
-
+.header-nav .child:hover{
+    border-bottom: 2px solid #00BFFF;
+    border-bottom-width: 2px;
+}
 .header-nav parent{
+    float: left;
+    width: 12.5%;
+    padding: 29% 14%;
+    font-size: 16px;
+    text-align: center;
+}
+.header-nav parent:hover{
     float: left;
     width: 12.5%;
     padding: 29% 14%;
@@ -143,8 +170,9 @@ a:-webkit-any-link {
 .parent {
     position: relative;
 }
+/*产品子级菜单样式*/
 .header-nav ul #child {
-    width:100%;
+    width:1900px;
     opacity: 0;
     float: left;
     position: absolute;
@@ -154,6 +182,22 @@ a:-webkit-any-link {
     right: 10px;
     height: 250px;
 }
+.header-nav ul #child dl {
+    width: 130px;
+    height: 220px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: block;
+    float: left;
+    margin-left: 10px;
+    text-align: left;
+    padding-top: 15px;
+}
+.header-nav ul #child #r1 {
+    width: 20px;
+    height: 220px
+}
+
 /*定义导航栏下a的颜色*/
 .header-nav a{
     text-decoration: none;
@@ -178,3 +222,4 @@ a:-webkit-any-link {
     float: left;
     margin: 20px auto;
 }
+/*轮播图样式*/
