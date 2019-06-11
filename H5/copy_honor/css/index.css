@@ -261,7 +261,7 @@ a:-webkit-any-link {
     border: 2px solid #cdcdcd;
     background-color: #DEB887;
     border-radius: 50%;
-    margin-left: 14px;
+    margin-left: 8px;
 }
 .ban:hover{
     background: #fcfcfc;
@@ -318,4 +318,27 @@ a:-webkit-any-link {
     list-style: none;
     display: flex;
     justify-content: space-around;
+}
+/*商品方块儿图样式*/
+.detail-1 {
+    width: 80%;
+    height: 200px;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.detail-1 div {
+    transition: all 500ms linear;
+}
+.detail-1 div img {
+    margin-right: 2%;
+}
+.detail-1 div:last-child img {
+    margin-right: 0%;
+}
+.detail-1 img {
+    width: 23%;
+    height: 200px;
+    float: left;
 }
