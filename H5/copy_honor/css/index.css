@@ -18,7 +18,7 @@ div{
     background-image: linear-gradient(to bottom,dodgerblue 0px,deepskyblue 100%);
     position: relative;
 }
-.banner .container {
+.banner .container1 {
     width: 100%;
     padding-left: 0;
     padding-right: 0;
@@ -28,7 +28,7 @@ div{
     height: 40px;
 }
 /*全局容器的样式*/
-.container {
+.container1 {
     width: 100%;
     position: relative;
     margin: 0px auto;
@@ -108,7 +108,7 @@ a:-webkit-any-link {
     position: relative;
     background: white;
 }
-.nav .container{
+.nav .container1{
     width: 100%;
     padding-left: 0;
     padding-right: 0;
@@ -405,7 +405,7 @@ a:-webkit-any-link {
     transform: scale(1.03);
 }
 /*底部样式*/
-.container {
+.container1 {
     width: 100%;
 }
 .d-footer {
