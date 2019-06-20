@@ -405,7 +405,7 @@ a:-webkit-any-link {
     transform: scale(1.03);
 }
 /*底部样式*/
-.container1 {
+.container-footer {
     width: 100%;
 }
 .d-footer {
@@ -413,7 +413,6 @@ a:-webkit-any-link {
     background: #00a0ea;
     color: #fff;
     width: 99%;
-    height: 200px;
 }
 .d-footer h3 {
     margin-bottom: 15px;
@@ -452,6 +451,7 @@ a:-webkit-any-link {
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
+    /* text-align: center; */
 }
 .d-footer a {
     color: #fff;
