@@ -423,7 +423,7 @@ a:-webkit-any-link {
     box-sizing: border-box;
 }
 .d-footer .f-copyright {
-    margin: 30px -15px 0;
+    /* margin: 30px -15px 0; */
     text-align: center;
 }
 .d-footer h1, h2, h3, h4, h5, h6, li, p, ul {
@@ -436,8 +436,8 @@ a:-webkit-any-link {
     font-size: 13px;
 }
 .row {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .row div{
     float: left;
@@ -465,4 +465,18 @@ a, a:hover {
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
+}
+/*单独定义页面尾部a标签的样式*/
+.help-a{
+    margin-left: 4%;
+}
+#h3-help{
+    margin-left: 4%;
+}
+#h3-join{
+    margin-left: 4%;
+}
+.ddd{
+    width: 100px;
+    text-align: center;
 }
