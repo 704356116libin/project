@@ -1,0 +1,60 @@
+body {
+    font: 12px/150% Arial,Verdana,"\5b8b\4f53";
+    color: #666;
+    background: #fff;
+    _background-image: url(about:blank);
+    _background-attachment: fixed;
+    display: block;
+    margin: 8px;
+}
+html {
+    color: -internal-root-color;
+}
+div {
+    display: block;
+}
+#logo {
+    position: relative;
+    width: 300px;
+    margin: 10px 0;
+    height: 60px;
+    float: left;
+    margin-left: 15%;
+}
+a img {
+    border: 0;
+}
+img {
+    vertical-align: middle;
+}
+#logo b {
+    display: block;
+    width: 110px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url(../img/login/login-text.png) no-repeat;
+}
+.q-link {
+    position: relative;
+    color: #999;
+    float: right;
+    top: 52px;
+    margin-right: 15%;
+}
+.q-link b {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 18px;
+    height: 14px;
+    margin: 0 5px;
+    background: url(../img/login/q-icon.png) no-repeat;
+    overflow: hidden;
+    vertical-align: middle;
+}
+a {
+    color: #666;
+    text-decoration: none;
+}
