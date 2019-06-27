@@ -13,6 +13,7 @@ html {
 div {
     display: block;
 }
+/*===================头部样式====================*/
 #logo {
     position: relative;
     width: 300px;
@@ -57,4 +58,27 @@ img {
 a {
     color: #666;
     text-decoration: none;
+}
+/*===================主体内容样式==================*/
+#content {
+    clear: both;
+}
+#content .tips-wrapper {
+    background: #fff8f0;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+#content .tips-wrapper .cont-wrapper {
+    display: inline-block;
+    *display: inline;
+    width: 90%;
+}
+#content .tips-wrapper .tips-inner p {
+    vertical-align: middle;
+    color: #999;
+    font-size: 12px;
+    display: inline-block;
+    *display: inline;
 }
