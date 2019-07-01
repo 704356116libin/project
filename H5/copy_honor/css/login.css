@@ -56,13 +56,10 @@ a {
     color: #666;
     text-decoration: none;
 }
-<<<<<<< HEAD
 a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, label, legend, li, ol, p, pre, small, span, strong, u, ul, var {
     margin: 0;
     padding: 0;
 }
-=======
->>>>>>> c34eb65ea29e9d1fedfa4e00122b3f0c51fca32d
 /*===================主体内容样式==================*/
 #content {
     clear: both;
@@ -85,7 +82,6 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     font-size: 12px;
     display: inline-block;
     *display: inline;
-<<<<<<< HEAD
 }
 #content .tips-wrapper .icon-tips {
     background: url(../img/login/icon-tips.png);
@@ -330,6 +326,4 @@ a {
 }
 .coagent li.extra-r {
     float: right;
-=======
->>>>>>> c34eb65ea29e9d1fedfa4e00122b3f0c51fca32d
 }
