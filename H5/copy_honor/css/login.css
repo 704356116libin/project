@@ -92,6 +92,10 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     margin-right: 5px;
 }
 /*===================登录框样式==================*/
+.w {
+    width: 990px;
+    margin: 0 auto;
+}
 #content .login-wrap {
     margin-top: 0;
 }
@@ -121,6 +125,15 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     position: absolute;
     background: #fff;
     display: block;
+}
+.login-form .login-tab a {
+    width: 99%;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    top: 18px;
+    border-right: 1px solid #f4f4f4;
+    text-decoration: none;
 }
 .login-form .login-tab-l, .login-form .login-tab-r {
     width: 173px;
@@ -266,6 +279,10 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     cursor: pointer;
 }
 /*=============三方登陆样式==================*/
+a {
+    color: #666;
+    text-decoration: none;
+}
 .coagent {
     padding-left: 20px;
     padding-right: 20px;
@@ -278,21 +295,22 @@ a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, 
     display: inline-block;
     display: block;
 }
+.coagent li{
+    float: left;
+}
 ol, ul {
     list-style: none;
-}
-ul {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
 }
 li {
     display: list-item;
     text-align: -webkit-match-parent;
+}
+.coagent ul:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 .coagent li a.pdl b.QQ-icon {
     background-position: 0 0;
@@ -317,13 +335,52 @@ li {
     position: relative;
     padding-left: 24px;
 }
-a {
-    color: #666;
-    text-decoration: none;
-}
+
 .coagent li a.pdl b.weixin-icon {
+    /* 雪碧图的使用方法:通过使背景图片进行位置偏移而实现区域锁定从而进行展示图片 */
     background-position: -20px 0;
 }
 .coagent li.extra-r {
     float: right;
+}
+.coagent .regist-link a {
+    color: #b61d1d;
+    font-size: 14px;
+}
+.coagent .regist-link b {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    background: url(../img/login/pwd-icons-new.png) -104px -75px no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+/* 登录页面banner背景图样式 */
+#login-banner-bg{
+    background: url(../img/login/login-banner1.png) 0px 0px no-repeat;
+    background-color: #e93854
+}
+.login-wrap .login-banner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 475px;
+    background: #e93854;
+}
+.login-wrap .i-inner {
+    position: relative;
+    z-index: 3;
+    height: 475px;
+}
+/* 底部样式 */
+#footer-2013 {
+    padding-bottom: 30px;
+    text-align: center;
+}
+#footer-2013 .links a, #footer-2013 .links span {
+    margin: 0 10px;
 }
