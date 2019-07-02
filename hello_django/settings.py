@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',#管理静态文件的框架
 
     'polls.apps.PollsConfig',#demo
+    'honor.apps.HonorConfig',#荣耀网站
 ]
 
 MIDDLEWARE = [
