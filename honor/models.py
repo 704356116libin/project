@@ -8,4 +8,4 @@ class GoodsClass(models.Model):
     created_at = models.DateTimeField('创建时间')
     updated_at = models.DateTimeField('更新时间')
     def __str__(self):
-        return self.name
+        return self.name+'\n'

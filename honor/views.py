@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import *
 from django.utils import timezone
+import json
 def index(request):
     return HttpResponse("您好这是准备展示honor的")
 def hello_honor(request):
@@ -19,6 +20,5 @@ def add_goods_class(request):
 查询商品类别
 '''
 def search_goods_class(request):
-    data=GoodsClass.objects.filter(id__gt=0)
-    print(data)
-    return HttpResponse(data)
+    data=GoodsClass.objects.filter(id=0)
+    return HttpResponse(json.dump(data))
