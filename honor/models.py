@@ -9,3 +9,6 @@ class GoodsClass(models.Model):
     updated_at = models.DateTimeField('更新时间')
     def __str__(self):
         return self.name+'\n'
+    # 将属性和属性值转换成dict 列表生成式
+    def toDict(self):
+        return dict([(attr, getattr(self, attr)) for attr in [f.name for f in self._meta.fields]])#type(self._meta.fields).__name__

@@ -20,5 +20,13 @@ def add_goods_class(request):
 查询商品类别
 '''
 def search_goods_class(request):
-    data=GoodsClass.objects.filter(id=0)
-    return HttpResponse(json.dump(data))
+    data=GoodsClass.objects.all()[:5]
+    str1=queryset_to_json(data)
+    return HttpResponse(json.dumps(str1))
+# 遍历查询集 调用model属性转换成dict
+def queryset_to_json(queryset):
+        obj_arr=[]
+        for o in queryset:
+            obj_arr.append(o.toDict())
+        return obj_arr
+
