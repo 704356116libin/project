@@ -79,7 +79,13 @@ class GoodsClass(BaseModel):
     updated_at = models.DateTimeField(help_text='更新时间')
     def __str__(self):
         return self.name
-    
+'''
+厂家模型类
+'''
+class Factory(BaseModel):
+    name=models.CharField(max_length=100,help_text='厂家名字')
+    def __str__(self):
+        return self.name  
 '''
 商品表
 '''
@@ -90,11 +96,15 @@ class Goods(BaseModel):
     stock=models.IntegerField(help_text='商品库存')
     desc=models.CharField(max_length=255,help_text='商品描述')
     head_img=models.CharField(max_length=255,help_text='商品主图路径',default='')
-
+    goods=models.ManyToManyField(Factory,through='goods_factory')#与厂家多对多关系
     def __str__(self):
         return self.name
-    
-
-
+'''
+厂家-商品多对对中间表
+'''
+class GoodsFactory(BaseModel):
+    goods_id = models.ForeignKey(Goods, on_delete=models.CASCADE)
+    factory_id = models.ForeignKey(Factory, on_delete=models.CASCADE)
+    date_joined = models.DateField()
     
 
