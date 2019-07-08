@@ -96,7 +96,7 @@ class Goods(BaseModel):
     stock=models.IntegerField(help_text='商品库存')
     desc=models.CharField(max_length=255,help_text='商品描述')
     head_img=models.CharField(max_length=255,help_text='商品主图路径',default='')
-    goods=models.ManyToManyField(Factory,through='goods_factory')#与厂家多对多关系
+    factory=models.ManyToManyField(Factory,through='GoodsFactory')#与厂家多对多关系
     def __str__(self):
         return self.name
 '''

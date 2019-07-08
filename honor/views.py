@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from .models import *
-from django.utils import timezone
+from datetime import date
 import json
 def index(request):
     return HttpResponse("您好这是准备展示honor的")
@@ -32,7 +32,7 @@ def search_goods_class(request):
 def add_goods(request):
     # 查询出目标id的goods_class
     goods_class=GoodsClass.objects.get(pk=request.GET['class_id'])
-    goods=Goods(name='iphone x',price=7999,stock=1000,desc='iphone x 有着非常牛x的功能')
+    goods=Goods(name='华为 P30',price=7999,stock=1000,desc='华为 P30 有着非常牛x的功能')
     goods.goodclass=goods_class
     goods.save()
     return HttpResponse('商品创建成功')
@@ -42,4 +42,18 @@ def queryset_to_json(queryset):
         for o in queryset:
             obj_arr.append(o.toDict())
         return obj_arr
+def test_relation(request):
+    # 多对多关系测试
+    # factory=Factory.objects.create(name='苹果')
+    factory=Factory.objects.get(pk=4)
+    # 查到iphone8的商品记录
+    iphone8=Goods.objects.get(pk=2)
 
+    # 查询多对多关系
+    print(factory.goods_set.all())#未定义many_to_many字段，查询反向关连
+    print(iphone8.factory.all())
+    print()
+    # 通过中间表保存多对多的关系
+    # goods_factory=GoodsFactory(goods_id=iphone8,factory_id=factory,date_joined=date(2019,7,8))
+    # goods_factory.save()
+    return HttpResponse('success')
