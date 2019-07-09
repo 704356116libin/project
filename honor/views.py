@@ -48,12 +48,33 @@ def test_relation(request):
     factory=Factory.objects.get(pk=4)
     # 查到iphone8的商品记录
     iphone8=Goods.objects.get(pk=2)
+    #不通过主键查找goods
+    goods=Goods.objects.filter(name__startswith='iphone')
+    goods=Goods.objects.filter(name='iphone 8')
+    goods=Goods.objects.filter(price__gt=8000)
+    goods=Goods.objects.filter(name__contains='iphone')
+    # goods=GoodsFactory.objects.filter(date_joined__gt=date(2019,6,1))
 
     # 查询多对多关系
     print(factory.goods_set.all())#未定义many_to_many字段，查询反向关连
     print(iphone8.factory.all())
-    print()
+    print(goods)
+    
     # 通过中间表保存多对多的关系
     # goods_factory=GoodsFactory(goods_id=iphone8,factory_id=factory,date_joined=date(2019,7,8))
     # goods_factory.save()
+    # 查询对应多对多关系里某个记录中间表记录
+    goods_factory=factory.goods_set.all()
+    goods_factory=factory.goods_set.get(name='iphone 8')
+    
+
+    '''
+    一对一： models.OneToOneField(
+            Place,
+            on_delete=models.CASCADE,
+            primary_key=True,
+            )
+    '''
+
+    print(goods_factory)
     return HttpResponse('success')
