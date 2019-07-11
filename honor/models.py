@@ -77,6 +77,8 @@ class GoodsClass(BaseModel):
     sort=models.SmallIntegerField( help_text='同级分类权重')
     created_at = models.DateTimeField(help_text='创建时间')
     updated_at = models.DateTimeField(help_text='更新时间')
+    class Meta:
+        db_table='honor_goods_class'
     def __str__(self):
         return self.name
 '''
@@ -86,6 +88,8 @@ class Factory(BaseModel):
     name=models.CharField(max_length=100,help_text='厂家名字')
     def __str__(self):
         return self.name  
+    class Meta:
+        db_table='honor_factory'
 '''
 商品表
 '''
@@ -97,6 +101,8 @@ class Goods(BaseModel):
     desc=models.CharField(max_length=255,help_text='商品描述')
     head_img=models.CharField(max_length=255,help_text='商品主图路径',default='')
     factory=models.ManyToManyField(Factory,through='GoodsFactory')#与厂家多对多关系
+    class Meta:
+        db_table='honor_goods'
     def __str__(self):
         return self.name
 '''
@@ -106,5 +112,8 @@ class GoodsFactory(BaseModel):
     goods_id = models.ForeignKey(Goods, on_delete=models.CASCADE)
     factory_id = models.ForeignKey(Factory, on_delete=models.CASCADE)
     date_joined = models.DateField()
+    class Meta:
+        db_table='goods_factory'
+
     
 
