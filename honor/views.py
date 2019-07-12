@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import *
 from datetime import date
 import json
+from django.core.serializers import serialize
 def index(request):
     return HttpResponse("您好这是准备展示honor的")
 def hello_honor(request):
@@ -45,7 +46,10 @@ def queryset_to_json(queryset):
 def test_relation(request):
     # 多对多关系测试
     # factory=Factory.objects.create(name='苹果')
-    factory=Factory.objects.get(pk=4)
+    factory=Factory.objects.get(pk=1)
+    factory=Goods.objects.all()
+    return HttpResponse(json.dumps({"a":123,"b":{"c":34,"d":456}}))
+    return HttpResponse(serialize('json',factory))
     # 查到iphone8的商品记录
     iphone8=Goods.objects.get(pk=2)
     #不通过主键查找goods
@@ -54,7 +58,7 @@ def test_relation(request):
     goods=Goods.objects.filter(price__gt=8000)
     goods=Goods.objects.filter(name__contains='iphone')
     # goods=GoodsFactory.objects.filter(date_joined__gt=date(2019,6,1))
-
+   
     # 查询多对多关系
     print(factory.goods_set.all())#未定义many_to_many字段，查询反向关连
     print(iphone8.factory.all())
