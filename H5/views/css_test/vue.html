@@ -1,23 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>vue学习</title>
-        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-       
-    </head>
-    <body>
-        <div id="app">
-            {{ message }}
-        </div>
-    </body>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                message: 'Hello Vue!'
-            }
-        })
-    </script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue学习</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="../../js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <div id="app-2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定信息
+        </span>
+    </div>
+    <div id="app-3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <!-- vue循环测试 -->
+    <hr style="color: cadetblue">
+    <div id="app-4">
+        <ol>
+            <li v-for="v in data">
+                <span>{{v.value}}</span>
+            </li>
+        </ol>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: '页面加载于' + new Date().toLocaleDateString()
+        }
+    })
+    var app3=new Vue({
+        el:"#app-3",
+        data:{
+            seen:false
+        }
+    })
+    // 循环数据
+    var app4=new Vue({
+        el:"#app-4",
+        data:{
+            data:[
+                {value:"学习Python"},
+                {value:"学习Django"},
+                {value:"学习Vue.js"}
+            ]
+        }
+    })
+</script>
+
 </html>
