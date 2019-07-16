@@ -5,6 +5,8 @@ from .models import *
 from datetime import date
 import json
 from django.core.serializers import serialize
+# 导入用户模块
+from django.contrib.auth.models import User
 def index(request):
     return HttpResponse("您好这是准备展示honor的")
 def hello_honor(request):
@@ -48,8 +50,9 @@ def test_relation(request):
     # factory=Factory.objects.create(name='苹果')
     factory=Factory.objects.get(pk=1)
     factory=Goods.objects.all()
-    return HttpResponse(json.dumps({"a":123,"b":{"c":34,"d":456}}))
-    return HttpResponse(serialize('json',factory))
+    users=User.objects.all()
+#     return HttpResponse(json.dumps({"a":123,"b":{"c":34,"d":456}}))
+    return HttpResponse(serialize('json',users))
     # 查到iphone8的商品记录
     iphone8=Goods.objects.get(pk=2)
     #不通过主键查找goods
