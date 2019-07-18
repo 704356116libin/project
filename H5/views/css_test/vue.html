@@ -11,7 +11,9 @@
 
 <body>
     <div id="app">
-        {{ message }}
+        <p>没有进行属性计算：{{ message.split('').reverse().join('')}}</p>
+        <p>进行属性计算的:{{ newMessage}}</p>
+        <p>进行属性计算的:{{ newMessage2}}</p>
     </div>
     <div id="app-2">
         <span v-bind:title="message">

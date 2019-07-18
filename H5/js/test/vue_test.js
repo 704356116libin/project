@@ -2,13 +2,21 @@ var app = new Vue({
     el: '#app',
     data: {
         message: 'Hello Vue!'
+    },
+    computed: {
+        newMessage:function(){
+            return this.message.split().reverse().join('-');
+        },
+        newMessage2:function(){
+            return '666';
+        }
     }
 })
 var app2 = new Vue({
     el: '#app-2',
     data: {
         message: '页面加载于' + new Date().toLocaleDateString()
-    }
+    },
 })
 var app3 = new Vue({
     el: "#app-3",
