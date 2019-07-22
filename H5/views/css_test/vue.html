@@ -6,7 +6,7 @@
     <title>vue学习</title>
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="../../js/vue.js"></script>
-
+    <link rel="stylesheet" href="../../css/vue_test.css">
 </head>
 
 <body>
@@ -49,14 +49,30 @@
             todo 对象是变量，即其内容可以是动态的。
             我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
           -->
-          <my-item
+          <my-item v-bind:class='colorClass'
             v-for="item in datas"
             v-bind:my="item"
             v-bind:key="item.id">
           </my-item>
         </ol>
-      </div>
+    </div>
+    <hr style="color: cadetblue;">
+    <div id="watch-example">
+      <span style="color: cadetblue;">侦听器</span>
+      <p>
+        Ask a yes/no question:
+        <input v-model="question">
+      </p>
+      <p>{{ answer }}</p>
+    </div>
+    
+    <div id="app-8">
+      <hr style="color: cadetblue;">
+      <span v-bind:class="[colorClass,bgClass]" >动态绑定class style</span><br>
+    </div>
 </body>
+<script src="../../js/axios.js"></script>
+<script src="../../js/lodash.min.js"></script>
 <script src="../../js/test/vue_test.js"></script>
 
 </html>
