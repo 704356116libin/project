@@ -69,6 +69,15 @@
     <div id="app-8">
       <hr style="color: cadetblue;">
       <span v-bind:class="[colorClass,bgClass]" >动态绑定class style</span><br>
+      <div v-if="active===true">
+        展示
+      </div>
+      <div v-else-if="active===false">
+        不展示
+      </div>
+      <div v-else>
+        默认值
+      </div>
     </div>
 </body>
 <script src="../../js/axios.js"></script>
