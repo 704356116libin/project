@@ -79,6 +79,25 @@
         默认值
       </div>
     </div>
+    <div id="app-x">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post 
+                v-for="post in posts" 
+                :key="post.id"
+                v-bind:post='post'
+            >
+            </blog-post> 
+            <button v-on:click="big">变大</button>
+        </div>
+    </div>
+    <div id="app-xx">
+        <button v-on:click="show_tab(1)">tab-1</button>
+        <button v-on:click="show_tab(2)">tab-2</button>
+        <button v-on:click="show_tab(3)">tab-3</button>
+        <component v-bind:is="current">
+        </component>
+    </div>
+    
 </body>
 <script src="../../js/axios.js"></script>
 <script src="../../js/lodash.min.js"></script>

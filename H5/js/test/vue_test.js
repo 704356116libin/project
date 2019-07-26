@@ -157,3 +157,74 @@ var app8=new Vue({
       }
   }
 })
+
+Vue.component('blog-post', {
+    props: ['post'],
+    template: `
+      <div class="blog-post">
+        <h3>{{ post.title }}</h3>
+        <div v-html="post.content"></div>
+      </div>
+    `
+})
+new Vue({
+    el:'#app-x',
+    data:{
+        posts:[
+            {
+                id:1,
+                content:'aaaa',
+                title:'879'
+            },
+            {
+                id:2,
+                content:'aaaa',
+                title:'879'
+            },
+            {
+                id:3,
+                content:'aaaa',
+                title:'879'
+            }
+        ],
+        postFontSize: 1
+    },
+    methods:{
+        big:function(){
+            ++this.postFontSize
+        }
+    }
+})
+// 选项卡测试
+Vue.component('tab-1', {
+    template: `
+      <div class="blog-post">
+        <h5>aaaaa</h5>
+      </div>
+    `
+})
+Vue.component('tab-2', {
+    template: `
+      <div class="blog-post">
+        <h5>bbbbb</h5>
+      </div>
+    `
+})
+Vue.component('tab-3', {
+    template: `
+      <div class="blog-post">
+        <h5>ccccc</h5>
+      </div>
+    `
+})
+new Vue({
+    el:'#app-xx',
+    data:{
+        current:'tab-1'
+    },
+    methods:{
+        show_tab:function(index){
+            this.current='tab-'+index
+        }
+    }
+})
