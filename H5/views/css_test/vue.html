@@ -87,7 +87,7 @@
                 v-bind:post='post'
             >
             </blog-post> 
-            <button v-on:click="big">变大</button>
+            <button v-on:click="postFontSize+=big()">变大</button>
         </div>
     </div>
     <div id="app-xx">
@@ -96,6 +96,16 @@
         <button v-on:click="show_tab(3)">tab-3</button>
         <component v-bind:is="current">
         </component>
+    </div  >
+    <div id="app-show-info">
+      <user-info
+        v-for="post in data"
+        :username="post.username"
+        :money="post.money"
+        :age="post.age"
+        :key="post.id"
+      >
+      </user-info>
     </div>
     
 </body>

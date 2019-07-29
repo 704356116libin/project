@@ -1,4 +1,3 @@
-
 var app = new Vue({
     el: '#app',
     data: {
@@ -30,10 +29,15 @@ var app3 = new Vue({
 var app4 = new Vue({
     el: "#app-4",
     data: {
-        data: [
-            { value: "学习Python" },
-            { value: "学习Django" },
-            { value: "学习Vue.js" }
+        data: [{
+                value: "学习Python"
+            },
+            {
+                value: "学习Django"
+            },
+            {
+                value: "学习Vue.js"
+            }
         ]
     }
 })
@@ -68,25 +72,33 @@ Vue.component('my-item', {
 var app7 = new Vue({
     el: "#app-7",
     data: {
-        datas: [
-            { id: 0, text: '蔬菜' },
-            { id: 1, text: '奶酪' },
-            { id: 2, text: '随便其他什么人吃的东西' }
+        datas: [{
+                id: 0,
+                text: '蔬菜'
+            },
+            {
+                id: 1,
+                text: '奶酪'
+            },
+            {
+                id: 2,
+                text: '随便其他什么人吃的东西'
+            }
         ]
     },
-    computed:{
-        colorClass:function(){
-            data={
-                red:false,
-                green:true
+    computed: {
+        colorClass: function () {
+            data = {
+                red: false,
+                green: true
             }
-            if(this.active){
-                data.red=true
-                data.green=false
+            if (this.active) {
+                data.red = true
+                data.green = false
             }
             return data
-          }
         }
+    }
 })
 //================侦听器demo=====================
 var wacthExample = new Vue({
@@ -103,7 +115,7 @@ var wacthExample = new Vue({
         }
     },
     //vue生命周期创建完成后调用
-    created:function(){
+    created: function () {
         // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
         // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
         // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
@@ -113,49 +125,49 @@ var wacthExample = new Vue({
     },
     methods: {
         getAnswer: function () {
-          if (this.question.indexOf('?') === -1) {
-            this.answer = 'Questions usually contain a question mark. ;-)'
-            return
-          }
-          this.answer = 'Thinking...'
-          var vm = this
-          axios.get('https://yesno.wtf/api')
-            .then(function (response) {
-              vm.answer = response.data.answer
-            })
-            .catch(function (error) {
-              vm.answer = 'Error! Could not reach the API. ' + error
-            })
+            if (this.question.indexOf('?') === -1) {
+                this.answer = 'Questions usually contain a question mark. ;-)'
+                return
+            }
+            this.answer = 'Thinking...'
+            var vm = this
+            axios.get('https://yesno.wtf/api')
+                .then(function (response) {
+                    vm.answer = response.data.answer
+                })
+                .catch(function (error) {
+                    vm.answer = 'Error! Could not reach the API. ' + error
+                })
         }
-      }
+    }
 })
 //===================绑定class style
-var app8=new Vue({
-  el:'#app-8', 
-  data:{
-      active:false,
-      switch_bg:true
-  },
-  computed:{
-      colorClass:function(){
-        data={
-            red:false,
-            green:true
+var app8 = new Vue({
+    el: '#app-8',
+    data: {
+        active: false,
+        switch_bg: true
+    },
+    computed: {
+        colorClass: function () {
+            data = {
+                red: false,
+                green: true
+            }
+            if (this.active) {
+                data.red = true
+                data.green = false
+            }
+            return data
+        },
+        bgClass: function () {
+            $data = {
+                bg: false
+            }
+            this.switch_bg ? data.bg = true : data.bg = false
+            return $data
         }
-        if(this.active){
-            data.red=true
-            data.green=false
-        }
-        return data
-      },
-      bgClass:function(){
-        $data={
-            bg:false
-        }
-        this.switch_bg?data.bg=true:data.bg=false
-        return $data
-      }
-  }
+    }
 })
 
 Vue.component('blog-post', {
@@ -164,34 +176,34 @@ Vue.component('blog-post', {
       <div class="blog-post">
         <h3>{{ post.title }}</h3>
         <div v-html="post.content"></div>
+        <slot>asdada</slot>
       </div>
     `
 })
 new Vue({
-    el:'#app-x',
-    data:{
-        posts:[
-            {
-                id:1,
-                content:'aaaa',
-                title:'879'
+    el: '#app-x',
+    data: {
+        posts: [{
+                id: 1,
+                content: 'aaaa',
+                title: '879'
             },
             {
-                id:2,
-                content:'aaaa',
-                title:'879'
+                id: 2,
+                content: 'aaaa',
+                title: '879'
             },
             {
-                id:3,
-                content:'aaaa',
-                title:'879'
+                id: 3,
+                content: 'aaaa',
+                title: '879'
             }
         ],
         postFontSize: 1
     },
-    methods:{
-        big:function(){
-            ++this.postFontSize
+    methods: {
+        big: function () {
+            return 0.1
         }
     }
 })
@@ -218,13 +230,54 @@ Vue.component('tab-3', {
     `
 })
 new Vue({
-    el:'#app-xx',
-    data:{
-        current:'tab-1'
+    el: '#app-xx',
+    data: {
+        current: 'tab-1'
     },
-    methods:{
-        show_tab:function(index){
-            this.current='tab-'+index
+    methods: {
+        show_tab: function (index) {
+            this.current = 'tab-' + index
         }
     }
+})
+//测试组键传值验证验证
+Vue.component('user-info', {
+    props: {
+        username: String, //用户名必须为string类型
+        age: Number, //年龄必须为整数且必须0-100之间
+        sex: {
+            type: String,
+            default: '男'
+        },
+        money: {
+            validator: function (value) {
+                return value > 0 && value <= 100
+            }
+        }
+    },
+    template: '<div>\
+        <table>\
+            <th>\
+                <tr>姓名:{{this.username}}</tr>\
+                <tr>年龄:{{this.age}}</tr>\
+                <tr>性别:{{this.sex}}</tr>\
+                <tr>金币:{{this.money}}</tr>\
+                <slot></slot>\
+            </th>\
+        </table>\
+    </div>'
+})
+new Vue({
+    el: "#app-show-info",
+    data: {
+        data:[
+            {
+                id:1,
+                username: 'libin',
+                age: 24,
+                money: 67
+            }
+        ]
+    }
+        
 })
