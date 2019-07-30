@@ -107,7 +107,12 @@
       >
       </user-info>
     </div>
-    
+    <div id="app-event">
+        <h5 style="color: brown;">父子组件之间的通信</h5>
+        <span>{{sum}}</span><br>
+        <button-sum v-on:sum="parent_sum($event)" :foo.sync="sum"></button-sum>
+        <button-sum v-on:sum="parent_sum($event)" ></button-sum>
+    </div>
 </body>
 <script src="../../js/axios.js"></script>
 <script src="../../js/lodash.min.js"></script>

@@ -270,14 +270,40 @@ Vue.component('user-info', {
 new Vue({
     el: "#app-show-info",
     data: {
-        data:[
-            {
-                id:1,
-                username: 'libin',
-                age: 24,
-                money: 67
-            }
-        ]
+        data: [{
+            id: 1,
+            username: 'libin',
+            age: 24,
+            money: 67
+        }]
     }
-        
+})
+// 测试父子组件间的通信
+Vue.component('button-sum', {
+    template: '<button v-on:click="child_increment(1)">{{count}}</button>',
+    data: function () {
+        return {
+            count: 0
+        }
+    },
+    methods: {
+        child_increment: function (step) {
+            this.count += 1;
+            this.$emit('sum', this.count)
+            // this.$emit('update:foo', this.count)
+        }
+    }
+})
+new Vue({
+    el:"#app-event",
+    data:function(){
+        return {
+            sum:0
+        }
+    },
+    methods:{
+        parent_sum:function(step){
+            this.sum+=step;
+        }
+    }
 })
