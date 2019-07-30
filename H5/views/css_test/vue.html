@@ -2,83 +2,165 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>vue学习</title>
-    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
-    <script src="../../js/vue.js"></script>
-    <link rel="stylesheet" href="../../css/vue_test.css">
+  <meta charset="UTF-8">
+  <title>vue学习</title>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="../../js/vue.js"></script>
+  <link rel="stylesheet" href="../../css/vue_test.css">
 </head>
 
 <body>
-    <div id="app">
-        <p>没有进行属性计算：{{ message.split('').reverse().join('')}}</p>
-        <p>进行属性计算的:{{ newMessage}}</p>
-        <p>进行属性计算的:{{ newMessage2}}</p>
-    </div>
-    <div id="app-2">
-        <span v-bind:title="message">
-            鼠标悬停几秒钟查看此处动态绑定信息
-        </span>
-    </div>
-    <div id="app-3">
-        <p v-if="seen">现在你看到我了</p>
-    </div>
-    <!-- vue循环测试 -->
-    <hr style="color: cadetblue;">
-    <div id="app-4">
-        <ol>
-            <li v-for="v in data">
-                <span>{{v.value}}</span>
-            </li>
-        </ol>
-    </div>
-    <hr style="color: cadetblue;">
-    <div id="app-5">
-        <p>{{message}}</p>
-        <button v-on:click="reverseMessage">逆转消息</button>
-    </div>
-    <hr style="color: cadetblue;">
-    <div id="app-6">
-        <p>{{message}}</p>
-        <input v-model="message">
-    </div>
-    <div id="app-7">
-        <ol>
-          <!--
+  <div id="app">
+    <p>没有进行属性计算：{{ message.split('').reverse().join('')}}</p>
+    <p>进行属性计算的:{{ newMessage}}</p>
+    <p>进行属性计算的:{{ newMessage2}}</p>
+  </div>
+  <div id="app-2">
+    <span v-bind:title="message">
+      鼠标悬停几秒钟查看此处动态绑定信息
+    </span>
+  </div>
+  <div id="app-3">
+    <p v-if="seen">现在你看到我了</p>
+  </div>
+  <!-- vue循环测试 -->
+  <hr style="color: cadetblue;">
+  <div id="app-4">
+    <ol>
+      <li v-for="v in data">
+        <span>{{v.value}}</span>
+      </li>
+    </ol>
+  </div>
+  <hr style="color: cadetblue;">
+  <div id="app-5">
+    <p>{{message}}</p>
+    <button v-on:click="reverseMessage">逆转消息</button>
+  </div>
+  <hr style="color: cadetblue;">
+  <div id="app-6">
+    <p>{{message}}</p>
+    <input v-model="message">
+  </div>
+  <div id="app-7">
+    <ol>
+      <!--
             现在我们为每个 todo-item 提供 todo 对象
             todo 对象是变量，即其内容可以是动态的。
             我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
           -->
-          <my-item v-bind:class='colorClass'
-            v-for="item in datas"
-            v-bind:my="item"
-            v-bind:key="item.id">
-          </my-item>
-        </ol>
-    </div>
+      <my-item v-bind:class='colorClass' v-for="item in datas" v-bind:my="item" v-bind:key="item.id">
+      </my-item>
+    </ol>
+  </div>
+  <hr style="color: cadetblue;">
+  <div id="watch-example">
+    <span style="color: cadetblue;">侦听器</span>
+    <p>
+      Ask a yes/no question:
+      <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+  </div>
+
+  <div id="app-8">
     <hr style="color: cadetblue;">
-    <div id="watch-example">
-      <span style="color: cadetblue;">侦听器</span>
-      <p>
-        Ask a yes/no question:
-        <input v-model="question">
-      </p>
-      <p>{{ answer }}</p>
+    <span v-bind:class="[colorClass,bgClass]">动态绑定class style</span><br>
+    <div v-if="active===true">
+      展示
     </div>
-    
-    <div id="app-8">
-      <hr style="color: cadetblue;">
-      <span v-bind:class="[colorClass,bgClass]" >动态绑定class style</span><br>
-      <div v-if="active===true">
-        展示
-      </div>
-      <div v-else-if="active===false">
-        不展示
-      </div>
-      <div v-else>
-        默认值
-      </div>
+    <div v-else-if="active===false">
+      不展示
     </div>
+    <div v-else>
+      默认值
+    </div>
+  </div>
+  <div id="app-9">
+    <hr style="color: cadetblue;">
+    <span v-bind:class="[colorClass,bgClass]">Vue for 循环</span><br>
+    <ul>
+      <li v-for="item in goods" :key="item.id">
+        {{item.name}} -- {{item.id}} -- {{item.price}}
+      </li>
+    </ul>
+    <span v-bind:class="[colorClass,bgClass]">Vue for 循环--第二种形式</span><br>
+    <ul>
+      <li v-for="(item,index) in goods_filter(goods)">
+        索引 {{index}} : {{item.name}} -- {{item.price}}
+      </li>
+    </ul>
+    <span v-bind:class="[colorClass,bgClass]">Vue for 循环对象</span><br>
+    <ul>
+      <li v-for="(value,name,index) in cars"> 
+        {{value}}--{{name}}--{{index}}
+      </li>
+    </ul>
+    <span v-for="n in 10" v-if="n%2==0">{{ n }}  </span>
+  </div>
+  <hr style="color: cadetblue;">
+  <div id="app-10">
+    <form v-on:submit.prevent="add_new">
+      <span>添加新的商品：</span>
+      <label for="new-list">名称：</label>
+      <input v-model="model.name" id="new-name" placeholder="名称">
+      <label for="new-price">价格：</label>
+      <input v-model="model.price" id="new-price" placeholder="价格" type="number">
+      <button>添加</button>
+    </form>
+    <ul>
+      <li 
+        is="goods-list"
+        v-for="(item,index) in goods" :key="item.id"
+        v-bind:item="item"
+        v-bind:index="index"
+        v-on:remove="remove(index)"
+      ></li>
+    </ul>
+    <p>测试事件点击</p><br>
+    <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+        Submit
+      </button>
+  </div>
+  <hr style="color: cadetblue;">
+  <div id="app-11">
+    <input type="text" v-model="text">
+    <p>input : {{text}}</p>
+    <textarea  id="text-area" v-model="text" cols="30" rows="10"></textarea><br>
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">{{checked}}</label><br>
+    <span>多选框数组绑定</span>
+    <div >
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+    </div>
+    <span>按钮数据绑定</span>
+    <div >
+        <input type="radio" id="p-jack" value="Jack" v-model="picked">
+        <label for="p-jack">Jack</label>
+        <input type="radio" id="p-john" value="John" v-model="picked">
+        <label for="p-john">John</label>
+        <input type="radio" id="p-mike" value="Mike" v-model="picked">
+        <label for="p-mike">Mike</label>
+        <br>
+        <span>Checked names: {{ picked }}</span>
+    </div>
+    <span>选择框--数据绑定</span>
+    <div id="example-5">
+        <select v-model="selected" multiple >
+          <option v-for="item in select_options" :key="item.id" v-bind:value="item.value">
+            {{item.text}}
+          </option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+    </div>
+  </div>
 </body>
 <script src="../../js/axios.js"></script>
 <script src="../../js/lodash.min.js"></script>

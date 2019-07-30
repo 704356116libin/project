@@ -74,19 +74,19 @@ var app7 = new Vue({
             { id: 2, text: '随便其他什么人吃的东西' }
         ]
     },
-    computed:{
-        colorClass:function(){
-            data={
-                red:false,
-                green:true
+    computed: {
+        colorClass: function () {
+            data = {
+                red: false,
+                green: true
             }
-            if(this.active){
-                data.red=true
-                data.green=false
+            if (this.active) {
+                data.red = true
+                data.green = false
             }
             return data
-          }
         }
+    }
 })
 //================侦听器demo=====================
 var wacthExample = new Vue({
@@ -103,7 +103,7 @@ var wacthExample = new Vue({
         }
     },
     //vue生命周期创建完成后调用
-    created:function(){
+    created: function () {
         // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
         // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
         // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
@@ -113,47 +113,173 @@ var wacthExample = new Vue({
     },
     methods: {
         getAnswer: function () {
-          if (this.question.indexOf('?') === -1) {
-            this.answer = 'Questions usually contain a question mark. ;-)'
-            return
-          }
-          this.answer = 'Thinking...'
-          var vm = this
-          axios.get('https://yesno.wtf/api')
-            .then(function (response) {
-              vm.answer = response.data.answer
-            })
-            .catch(function (error) {
-              vm.answer = 'Error! Could not reach the API. ' + error
-            })
+            if (this.question.indexOf('?') === -1) {
+                this.answer = 'Questions usually contain a question mark. ;-)'
+                return
+            }
+            this.answer = 'Thinking...'
+            var vm = this
+            axios.get('https://yesno.wtf/api')
+                .then(function (response) {
+                    vm.answer = response.data.answer
+                })
+                .catch(function (error) {
+                    vm.answer = 'Error! Could not reach the API. ' + error
+                })
         }
-      }
+    }
 })
 //===================绑定class style
-var app8=new Vue({
-  el:'#app-8', 
-  data:{
-      active:false,
-      switch_bg:true
-  },
-  computed:{
-      colorClass:function(){
-        data={
-            red:false,
-            green:true
+var app8 = new Vue({
+    el: '#app-8',
+    data: {
+        active: false,
+        switch_bg: true
+    },
+    computed: {
+        colorClass: function () {
+            data = {
+                red: false,
+                green: true
+            }
+            if (this.active) {
+                data.red = true
+                data.green = false
+            }
+            return data
+        },
+        bgClass: function () {
+            $data = {
+                bg: false
+            }
+            this.switch_bg ? data.bg = true : data.bg = false
+            return $data
         }
-        if(this.active){
-            data.red=true
-            data.green=false
+    }
+})
+// =====================vue 循环=========
+var app9 = new Vue({
+    el: '#app-9',
+    data: {
+        goods: [
+            {
+                id: 0,
+                name: 'iphone',
+                price: 1999
+            },
+            {
+                id: 1,
+                name: 'vivo',
+                price: 1388
+            },
+            {
+                id: 2,
+                name: '锤子',
+                price: 1222
+            },
+        ]
+    },
+    // 计算属性
+    computed: {
+        colorClass: function () {
+            data = {
+                red: false,
+                green: true
+            }
+            return data
+        },
+        bgClass: function () {
+            $data = {
+                bg: false
+            }
+            return $data
+        },
+        cars: function () {
+            data = {
+                id: 0,
+                name: '兰博基尼',
+                price: 123123
+            }
+            return data
         }
-        return data
-      },
-      bgClass:function(){
-        $data={
-            bg:false
+    },
+    methods: {
+        goods_filter: function (goods) {
+            return goods.filter(function (item) {
+                return item.price < 1999
+            })
         }
-        this.switch_bg?data.bg=true:data.bg=false
-        return $data
-      }
-  }
+    }
+})
+// 利用for循环+组件 写一个增删列表的组件
+Vue.component('goods-list', {
+    props: ['item','index'],
+    template: '\
+        <li>\
+        <p style="color:green">{{item.name}} {{index}}<button  v-on:click="$emit(\'remove\')">移除此项</button></p>\
+        </li>\
+    '
+})
+new Vue({
+    el: '#app-10',
+    data: {
+        model: {
+            name: '',
+            price: 0
+        },
+        goods: [
+            {
+                id: 0,
+                name: 'iphone',
+                price: 1999
+            },
+            {
+                id: 1,
+                name: 'vivo',
+                price: 1388
+            },
+            {
+                id: 2,
+                name: '锤子',
+                price: 1222
+            },
+        ],
+        next_index: 3
+    },
+    methods: {
+        add_new: function () {
+            console.log('添加-'+this.model.name)
+            this.goods.push({
+                id: this.next_index++,
+                name: this.model.name,
+                price: this.model.price
+            })
+        },
+        remove:function(index){
+            console.log('移除-'+this.goods[index].name)
+            this.goods.splice(index,1)
+        },
+        warn: function (message, event) {
+            console.log('点击事件查看',event)
+            // 现在我们可以访问原生事件对象
+            if (event) event.preventDefault()
+            alert(message)
+        }
+    }
+})
+// ============================表单数据绑定======================
+var app11=new Vue({
+    el:'#app-11',
+    data:{
+        text:'',//绑定文本
+        checked:false, //绑定单选框
+        checkedNames:[],
+        picked:'' ,//单选按钮参数
+        selected:'',//选择框绑定
+        select_options: [
+            { text: 'One', value: 'A' },
+            { text: 'Two', value: 'B' },
+            { text: 'Three', value: 'C' }
+        ]
+    }
 })
