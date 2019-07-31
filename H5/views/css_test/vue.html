@@ -113,6 +113,21 @@
         <button-sum v-on:sum="parent_sum($event)" :foo.sync="sum"></button-sum>
         <button-sum v-on:sum="parent_sum($event)" ></button-sum>
     </div>
+    <hr>
+    <span>插槽测试</span><br>
+    <div id="app-slot">
+      <h1>我是父组件的标题</h1>
+      <my-component>
+        <p>这是一些初始内容</p>
+        <p>这是更多的初始内容</p>
+      </my-component>
+    </div>
+    <app-layout>
+      <h1 slot="header">这里可能是一个页面标题</h1>
+      <p>主要内容的一个段落。</p>
+      <p>另一个主要段落。</p>
+      <p slot="footer">这里有一些联系信息</p>
+    </app-layout>
 </body>
 <script src="../../js/axios.js"></script>
 <script src="../../js/lodash.min.js"></script>
