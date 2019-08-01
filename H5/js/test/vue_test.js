@@ -1,4 +1,3 @@
-
 var app = new Vue({
     el: '#app',
     data: {
@@ -30,10 +29,15 @@ var app3 = new Vue({
 var app4 = new Vue({
     el: "#app-4",
     data: {
-        data: [
-            { value: "学习Python" },
-            { value: "学习Django" },
-            { value: "学习Vue.js" }
+        data: [{
+                value: "学习Python"
+            },
+            {
+                value: "学习Django"
+            },
+            {
+                value: "学习Vue.js"
+            }
         ]
     }
 })
@@ -68,10 +72,18 @@ Vue.component('my-item', {
 var app7 = new Vue({
     el: "#app-7",
     data: {
-        datas: [
-            { id: 0, text: '蔬菜' },
-            { id: 1, text: '奶酪' },
-            { id: 2, text: '随便其他什么人吃的东西' }
+        datas: [{
+                id: 0,
+                text: '蔬菜'
+            },
+            {
+                id: 1,
+                text: '奶酪'
+            },
+            {
+                id: 2,
+                text: '随便其他什么人吃的东西'
+            }
         ]
     },
     computed: {
@@ -282,4 +294,116 @@ var app11=new Vue({
             { text: 'Three', value: 'C' }
         ]
     }
+})
+
+Vue.component('blog-post', {
+    props: ['post'],
+    template: `
+      <div class="blog-post">
+        <h3>{{ post.title }}</h3>
+        <div v-html="post.content"></div>
+        <slot>asdada</slot>
+      </div>
+    `
+})
+new Vue({
+    el: '#app-x',
+    data: {
+        posts: [{
+                id: 1,
+                content: 'aaaa',
+                title: '879'
+            },
+            {
+                id: 2,
+                content: 'aaaa',
+                title: '879'
+            },
+            {
+                id: 3,
+                content: 'aaaa',
+                title: '879'
+            }
+        ],
+        postFontSize: 1
+    },
+    methods: {
+        big: function () {
+            return 0.1
+        }
+    }
+})
+// 选项卡测试
+Vue.component('tab-1', {
+    template: `
+      <div class="blog-post">
+        <h5>aaaaa</h5>
+      </div>
+    `
+})
+Vue.component('tab-2', {
+    template: `
+      <div class="blog-post">
+        <h5>bbbbb</h5>
+      </div>
+    `
+})
+Vue.component('tab-3', {
+    template: `
+      <div class="blog-post">
+        <h5>ccccc</h5>
+      </div>
+    `
+})
+new Vue({
+    el: '#app-xx',
+    data: {
+        current: 'tab-1'
+    },
+    methods: {
+        show_tab: function (index) {
+            this.current = 'tab-' + index
+        }
+    }
+})
+//测试组键传值验证验证
+Vue.component('user-info', {
+    props: {
+        username: String, //用户名必须为string类型
+        age: Number, //年龄必须为整数且必须0-100之间
+        sex: {
+            type: String,
+            default: '男'
+        },
+        money: {
+            validator: function (value) {
+                return value > 0 && value <= 100
+            }
+        }
+    },
+    template: '<div>\
+        <table>\
+            <th>\
+                <tr>姓名:{{this.username}}</tr>\
+                <tr>年龄:{{this.age}}</tr>\
+                <tr>性别:{{this.sex}}</tr>\
+                <tr>金币:{{this.money}}</tr>\
+                <slot></slot>\
+            </th>\
+        </table>\
+    </div>'
+})
+new Vue({
+    el: "#app-show-info",
+    data: {
+        data:[
+            {
+                id:1,
+                username: 'libin',
+                age: 24,
+                money: 67
+            }
+        ]
+    }
+        
 })
