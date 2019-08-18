@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 08/07/2019 21:24:58
+ Date: 18/08/2019 20:59:52
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `auth_permission`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `auth_permission_content_type_id_codename_01ab375a_uniq`(`content_type_id`, `codename`) USING BTREE,
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of auth_permission
@@ -100,6 +100,18 @@ INSERT INTO `auth_permission` VALUES (37, 'Can add goods', 10, 'add_goods');
 INSERT INTO `auth_permission` VALUES (38, 'Can change goods', 10, 'change_goods');
 INSERT INTO `auth_permission` VALUES (39, 'Can delete goods', 10, 'delete_goods');
 INSERT INTO `auth_permission` VALUES (40, 'Can view goods', 10, 'view_goods');
+INSERT INTO `auth_permission` VALUES (41, 'Can add factory', 11, 'add_factory');
+INSERT INTO `auth_permission` VALUES (42, 'Can change factory', 11, 'change_factory');
+INSERT INTO `auth_permission` VALUES (43, 'Can delete factory', 11, 'delete_factory');
+INSERT INTO `auth_permission` VALUES (44, 'Can view factory', 11, 'view_factory');
+INSERT INTO `auth_permission` VALUES (45, 'Can add goods factory', 12, 'add_goodsfactory');
+INSERT INTO `auth_permission` VALUES (46, 'Can change goods factory', 12, 'change_goodsfactory');
+INSERT INTO `auth_permission` VALUES (47, 'Can delete goods factory', 12, 'delete_goodsfactory');
+INSERT INTO `auth_permission` VALUES (48, 'Can view goods factory', 12, 'view_goodsfactory');
+INSERT INTO `auth_permission` VALUES (49, 'Can add demo', 13, 'add_demo');
+INSERT INTO `auth_permission` VALUES (50, 'Can change demo', 13, 'change_demo');
+INSERT INTO `auth_permission` VALUES (51, 'Can delete demo', 13, 'delete_demo');
+INSERT INTO `auth_permission` VALUES (52, 'Can view demo', 13, 'view_demo');
 
 -- ----------------------------
 -- Table structure for auth_user
@@ -125,7 +137,7 @@ CREATE TABLE `auth_user`  (
 -- Records of auth_user
 -- ----------------------------
 INSERT INTO `auth_user` VALUES (1, 'pbkdf2_sha256$120000$CcudPlKWtBOk$yK+Z2CzLEy5perXK4nuBzR5vl7XjHyI6wsTGuNGgQgw=', '2019-03-07 12:56:30.636843', 1, 'bin', '', '', '704356116@qq.com', 1, 1, '2019-03-07 12:56:21.312801');
-INSERT INTO `auth_user` VALUES (2, 'pbkdf2_sha256$120000$Dog5Iv5Qj7tU$7zy7kYrcLU2j5M4RPlFX6WUFlKRVCv2YrDjMUGHjkSA=', '2019-07-03 13:43:00.601528', 1, 'libin', '', '', '704356116@qq.com', 1, 1, '2019-07-03 13:42:29.306247');
+INSERT INTO `auth_user` VALUES (2, 'pbkdf2_sha256$120000$Dog5Iv5Qj7tU$7zy7kYrcLU2j5M4RPlFX6WUFlKRVCv2YrDjMUGHjkSA=', '2019-08-18 12:44:50.930346', 1, 'libin', '', '', '704356116@qq.com', 1, 1, '2019-07-03 13:42:29.306247');
 
 -- ----------------------------
 -- Table structure for auth_user_groups
@@ -175,7 +187,7 @@ CREATE TABLE `django_admin_log`  (
   INDEX `django_admin_log_user_id_c564eba6_fk_auth_user_id`(`user_id`) USING BTREE,
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_admin_log
@@ -183,6 +195,8 @@ CREATE TABLE `django_admin_log`  (
 INSERT INTO `django_admin_log` VALUES (1, '2019-07-04 13:36:02.494575', '2', '平板1\n', 2, '[{\"changed\": {\"fields\": [\"name\"]}}]', 9, 2);
 INSERT INTO `django_admin_log` VALUES (2, '2019-07-07 02:54:49.620675', '3', 'iphone', 1, '[{\"added\": {}}]', 9, 2);
 INSERT INTO `django_admin_log` VALUES (3, '2019-07-07 02:55:50.721956', '1', 'Goods object (1)', 1, '[{\"added\": {}}]', 10, 2);
+INSERT INTO `django_admin_log` VALUES (4, '2019-07-08 13:27:56.460446', '1', '华为', 1, '[{\"added\": {}}]', 11, 2);
+INSERT INTO `django_admin_log` VALUES (5, '2019-07-08 13:28:23.943424', '1', 'GoodsFactory object (1)', 1, '[{\"added\": {}}]', 12, 2);
 
 -- ----------------------------
 -- Table structure for django_content_type
@@ -194,7 +208,7 @@ CREATE TABLE `django_content_type`  (
   `model` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `django_content_type_app_label_model_76bd3d3b_uniq`(`app_label`, `model`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -204,8 +218,11 @@ INSERT INTO `django_content_type` VALUES (3, 'auth', 'group');
 INSERT INTO `django_content_type` VALUES (2, 'auth', 'permission');
 INSERT INTO `django_content_type` VALUES (4, 'auth', 'user');
 INSERT INTO `django_content_type` VALUES (5, 'contenttypes', 'contenttype');
+INSERT INTO `django_content_type` VALUES (13, 'honor', 'demo');
+INSERT INTO `django_content_type` VALUES (11, 'honor', 'factory');
 INSERT INTO `django_content_type` VALUES (10, 'honor', 'goods');
 INSERT INTO `django_content_type` VALUES (9, 'honor', 'goodsclass');
+INSERT INTO `django_content_type` VALUES (12, 'honor', 'goodsfactory');
 INSERT INTO `django_content_type` VALUES (7, 'polls', 'choice');
 INSERT INTO `django_content_type` VALUES (8, 'polls', 'question');
 INSERT INTO `django_content_type` VALUES (6, 'sessions', 'session');
@@ -220,7 +237,7 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -249,6 +266,10 @@ INSERT INTO `django_migrations` VALUES (27, 'honor', '0005_alter_honor_goods_hea
 INSERT INTO `django_migrations` VALUES (28, 'honor', '0006_alter_honor_goods_class_column_name_table', '2019-07-07 03:04:15.985374');
 INSERT INTO `django_migrations` VALUES (29, 'honor', '0007_alter_honor_goods_class_column_name', '2019-07-07 03:05:01.466802');
 INSERT INTO `django_migrations` VALUES (30, 'honor', '0008_alter_honor_goods_class_column_name', '2019-07-07 03:05:53.222294');
+INSERT INTO `django_migrations` VALUES (31, 'honor', '0009_add_factory_table', '2019-07-08 13:26:26.489895');
+INSERT INTO `django_migrations` VALUES (32, 'honor', '0010_alter_goods_model_table', '2019-07-08 14:01:52.053280');
+INSERT INTO `django_migrations` VALUES (33, 'honor', '0011_add_demo_model_table', '2019-07-11 13:45:49.855390');
+INSERT INTO `django_migrations` VALUES (34, 'honor', '0012_rename_honor_tables', '2019-07-11 14:11:38.721854');
 
 -- ----------------------------
 -- Table structure for django_session
@@ -267,6 +288,46 @@ CREATE TABLE `django_session`  (
 -- ----------------------------
 INSERT INTO `django_session` VALUES ('cjca3ldbsaabc5oqc1wkdbnwux0xneac', 'Yjg2YzlmMjc5YjcyMWYxZjY5NThlNjZlYjM4MDdhZGRhMGZiZDA5Nzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2YTdkMjNjOTMzYTFhMTM3MGFkMjAyYzI1Y2JmMmU0ZDc2NDAzM2E1In0=', '2019-07-17 13:43:00.605517');
 INSERT INTO `django_session` VALUES ('d7x8xedtrgj61vor19uhbbyeowpujpdt', 'NjA0NWRjMzdiZTQwYjBiNGE0MDZjYzYyYzY4OWQ2ZmU3MTdjNzlhYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwOTE4MThjMDliODhmMWYxZWFiZDY2N2U2NjVkMmY5YTE5YzA0ZDFlIn0=', '2019-03-21 12:56:30.640833');
+INSERT INTO `django_session` VALUES ('k6n9qbjzn3rpyhqdea3q0z26r53858y5', 'Yjg2YzlmMjc5YjcyMWYxZjY5NThlNjZlYjM4MDdhZGRhMGZiZDA5Nzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2YTdkMjNjOTMzYTFhMTM3MGFkMjAyYzI1Y2JmMmU0ZDc2NDAzM2E1In0=', '2019-09-01 12:44:50.934336');
+
+-- ----------------------------
+-- Table structure for goods_factory
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_factory`;
+CREATE TABLE `goods_factory`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_joined` date NOT NULL,
+  `factory_id_id` int(11) NOT NULL,
+  `goods_id_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `honor_goodsfactory_factory_id_id_3898c214_fk_honor_factory_id`(`factory_id_id`) USING BTREE,
+  INDEX `honor_goodsfactory_goods_id_id_b4f74835_fk_honor_goods_id`(`goods_id_id`) USING BTREE,
+  CONSTRAINT `honor_goodsfactory_factory_id_id_3898c214_fk_honor_factory_id` FOREIGN KEY (`factory_id_id`) REFERENCES `honor_factory` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `honor_goodsfactory_goods_id_id_b4f74835_fk_honor_goods_id` FOREIGN KEY (`goods_id_id`) REFERENCES `honor_goods` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of goods_factory
+-- ----------------------------
+INSERT INTO `goods_factory` VALUES (1, '2019-07-09', 1, 1);
+INSERT INTO `goods_factory` VALUES (2, '2019-07-08', 4, 1);
+INSERT INTO `goods_factory` VALUES (3, '2019-07-08', 4, 2);
+
+-- ----------------------------
+-- Table structure for honor_factory
+-- ----------------------------
+DROP TABLE IF EXISTS `honor_factory`;
+CREATE TABLE `honor_factory`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of honor_factory
+-- ----------------------------
+INSERT INTO `honor_factory` VALUES (1, '华为');
+INSERT INTO `honor_factory` VALUES (4, '苹果');
 
 -- ----------------------------
 -- Table structure for honor_goods
@@ -282,20 +343,21 @@ CREATE TABLE `honor_goods`  (
   `goodclass_id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `honor_goods_goodclass_id_adc190e0_fk_honor_goodsclass_id`(`goodclass_id`) USING BTREE,
-  CONSTRAINT `honor_goods_goodclass_id_adc190e0_fk_honor_goodsclass_id` FOREIGN KEY (`goodclass_id`) REFERENCES `honor_goodsclass` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `honor_goods_goodclass_id_adc190e0_fk_honor_goodsclass_id` FOREIGN KEY (`goodclass_id`) REFERENCES `honor_goods_class` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of honor_goods
 -- ----------------------------
 INSERT INTO `honor_goods` VALUES (1, 'iphone 8', 4999, 100, 'iphone 8 有着强大得功能', '', 3);
 INSERT INTO `honor_goods` VALUES (2, 'iphone x', 7999, 1000, 'iphone x 有着非常牛x的功能', '', 1);
+INSERT INTO `honor_goods` VALUES (3, '华为 P30', 8999, 1000, '华为 P30 有着非常牛x的功能', '', 1);
 
 -- ----------------------------
--- Table structure for honor_goodsclass
+-- Table structure for honor_goods_class
 -- ----------------------------
-DROP TABLE IF EXISTS `honor_goodsclass`;
-CREATE TABLE `honor_goodsclass`  (
+DROP TABLE IF EXISTS `honor_goods_class`;
+CREATE TABLE `honor_goods_class`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `is_show` int(11) NOT NULL,
@@ -307,11 +369,11 @@ CREATE TABLE `honor_goodsclass`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of honor_goodsclass
+-- Records of honor_goods_class
 -- ----------------------------
-INSERT INTO `honor_goodsclass` VALUES (1, '手机', 1, 0, '2019-07-07 02:49:45.199046', '2019-07-07 02:49:45.199046', 0);
-INSERT INTO `honor_goodsclass` VALUES (2, '平板', 1, 1, '2019-07-07 02:49:52.067635', '2019-07-07 02:49:52.067635', 0);
-INSERT INTO `honor_goodsclass` VALUES (3, 'iphone', 1, 3, '2019-07-07 02:54:42.000000', '2019-07-07 02:54:48.000000', 0);
+INSERT INTO `honor_goods_class` VALUES (1, '手机', 1, 0, '2019-07-07 02:49:45.199046', '2019-07-07 02:49:45.199046', 0);
+INSERT INTO `honor_goods_class` VALUES (2, '平板', 1, 1, '2019-07-07 02:49:52.067635', '2019-07-07 02:49:52.067635', 0);
+INSERT INTO `honor_goods_class` VALUES (3, 'iphone', 1, 3, '2019-07-07 02:54:42.000000', '2019-07-07 02:54:48.000000', 0);
 
 -- ----------------------------
 -- Table structure for polls_choice

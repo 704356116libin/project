@@ -11,6 +11,27 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+'''
+全局环境变量配置信息
+'''
+database={
+    'local':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    },
+    'homestade':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'homestead',
+        'PASSWORD': 'secret',
+        'HOST': '127.0.0.1',
+        'PORT': '33060',
+    }
+}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,14 +98,7 @@ WSGI_APPLICATION = 'hello_django.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'homestead',
-        'PASSWORD': 'secret',
-        'HOST': '127.0.0.1',
-        'PORT': '33060',
-    }
+    'default': database['local']
 }
 
 
