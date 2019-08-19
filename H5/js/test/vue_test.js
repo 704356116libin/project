@@ -401,6 +401,12 @@ new Vue({
             username: 'libin',
             age: 24,
             money: 67
+        },
+        {
+            id: 2,
+            username: 'libin',
+            age: 24,
+            money: 67
         }]
     }
 })

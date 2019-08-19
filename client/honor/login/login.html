@@ -5,8 +5,8 @@
         <title>登录页面</title>
         
         <!-- <link rel="stylesheet" href="../css/login.css"> -->
-        <script src="../../js/vue.js"></script>
-        
+     
+        <link rel="stylesheet" href="login.css">
     </head>
     <body>
         <div class="w">
@@ -43,7 +43,6 @@
                                     </div>
                                     <div class="mc">
                                         <div class="form">
-                                            <form action="" id="form-login" method="post" onsubmit="return false">
                                                 <div class="item item-fore1">
                                                     <label for="loginname" class="login-label name-label"></label>
                                                     <input id="loginname" type="text" class="itxt" name="loginname" tabindex="1" autocomplete="off" value="" placeholder="邮箱/用户名/已验证手机">
@@ -84,7 +83,6 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -102,19 +100,21 @@
                         <div class="links">
                             <my-footer
                                 v-for="post in data"
-                                :href="post.href"
+                                :url="post.url"
                                 :content="post.content"
+                                :key="post.id"
                                 >
                             </my-footer>
                         </div>
-                            
+                        <div class="copyright">
+                            <span v-html="copyright"></span>
+                        </div>
                     </div>
-                    <div class="copyright">
-                        Copyright&nbsp;©&nbsp;2019&nbsp;&nbsp;彬&nbsp;版权所有
-                    </div>
+                    
                 </div>
                 </div>
             </div>
     </body>
+    <script src="../../js/vue.js"></script>
     <script src="./login.js"></script>
 </html>
