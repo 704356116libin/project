@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>登录页面</title>
+        
+        <!-- <link rel="stylesheet" href="../css/login.css"> -->
+        <script src="../../js/vue.js"></script>
+        
+    </head>
+    <body>
+        <div class="w">
+            <div id="logo">
+                <a href="#" clstag="pageclick|keycount|20150112ABD|45" style="outline: rgb(109, 109, 109) none 0px;">
+                    <img src="../img/login/logo.png" alt="京东" width="170" height="60">
+                </a>
+                <b></b>
+            </div>
+                    <a href="#" target="_blank" class="q-link"><b></b>登录页面，调查问卷</a>
+            </div>
+            <div id="content">
+                <div class="tips-wrapper"><div class="tips-inner"><div class="cont-wrapper"><i class="icon-tips"></i><p>依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号验证！ 新版<a href="https://about.jd.com/privacy/" class="black" target="_blank">《京东隐私政策》</a>已上线，将更有利于保护您的个人隐私。</p></div></div></div>
+                <div class="login-wrap">
+                        <div class="w">
+                            <div class="login-form">
+                                <div class="tips-wrapper">
+                                    <div class="tips-inner">
+                                        <div class='cont-wrapper'>
+                                            <i class="icon-tips"></i>
+                                            <p>东东不会以任何理由要求您转账汇款，谨防诈骗。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="login-tab login-tab-l">
+                                    <a href="#" clstag="pageclick|keycount|login_pc_201804112|9" > 扫码登录</a>
+                                </div>
+                                <div class="login-tab login-tab-r">
+                                        <a href="#" clstag="pageclick|keycount|login_pc_201804112|10" class="checked">账户登录</a>
+                                </div>
+                                <div class="login-box" style="display:block; visibility:visible">
+                                    <div class="msg-wrap">
+                                        <div class="msg-error hide"></div>
+                                    </div>
+                                    <div class="mc">
+                                        <div class="form">
+                                            <form action="" id="form-login" method="post" onsubmit="return false">
+                                                <div class="item item-fore1">
+                                                    <label for="loginname" class="login-label name-label"></label>
+                                                    <input id="loginname" type="text" class="itxt" name="loginname" tabindex="1" autocomplete="off" value="" placeholder="邮箱/用户名/已验证手机">
+                                                    <span class="clear-btn"></span>
+                                                </div>
+                                                <div id="entry" class="item item-fore2" style="visibility: visible;">
+                                                    <label class="login-label pwd-label" for="nloginpwd"></label>
+                                                    <input type="password" id="nloginpwd" name="nloginpwd" class="itxt itxt-error" tabindex="2" autocomplete="off" placeholder="密码">
+                                                    <span class="clear-btn"></span>
+                                                    <span class="capslock" style="display: none;"><b></b>大小写锁定已打开</span>
+                                                </div>
+                                                <div class="item item-fore4">
+                                                    <div class="safe">
+                                                        <span></span>
+                                                        <span class="forget-pw-safe">
+                                                            <a href="#" class="" target="_blank" clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="item item-fore5">
+                                                    <div class="login-btn">
+                                                        <a href="#" class="btn-img btn-entry" id="loginsubmit" tabindex="6" clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                                                    </div>
+                                                </div>
+                                                <div class="coagent" id="kbCoagent">
+                                                        <ul>
+                                                            <li>
+                                                            <b></b>
+                                                            <a href="javascript:void(0)" onclick="" clstag="pageclick|keycount|login_pc_201804112|3" class="pdl"><b class="QQ-icon"></b><span>QQ</span></a>
+                                                                <span class="line">|</span>
+                                                                </li><li>
+                                                            <a href="javascript:void(0)" onclick="" clstag="pageclick|keycount|login_pc_201804112|4" class="pdl"><b class="weixin-icon"></b><span>微信</span></a>
+                                                            </li>
+                                                            <li class="extra-r">
+                                                            <div>
+                                                                <div class="regist-link"><a href="#" clstag="pageclick|keycount|login_pc_201804112|5" target="_blank"><b></b>立即注册</a></div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login-banner" >		              
+                            <div class="w">			         
+                                <div id="login-banner-bg" clstag="pageclick|keycount|20150112ABD|46" class="i-inner" >
+                                </div>		              
+                            </div>		           
+                        </div>
+                </div>
+                <div class="w">
+                    <div id="footer-2013">
+                        <div class="links">
+                            <my-footer
+                                v-for="post in data"
+                                :href="post.href"
+                                :content="post.content"
+                                >
+                            </my-footer>
+                        </div>
+                            
+                    </div>
+                    <div class="copyright">
+                        Copyright&nbsp;©&nbsp;2019&nbsp;&nbsp;彬&nbsp;版权所有
+                    </div>
+                </div>
+                </div>
+            </div>
+    </body>
+    <script src="./login.js"></script>
+</html>
