@@ -41,6 +41,32 @@
                                     <div class="msg-wrap">
                                         <div class="msg-error hide"></div>
                                     </div>
+                                    <div class="form" id="login-form">
+                                        <div class="item item-fore1">
+                                            <label for="loginname" class="login-label name-label"></label>
+                                            <input id="loginname" type="text" class="itxt" v-model="name" tabindex="1" autocomplete="off" value="" placeholder="邮箱/用户名/已验证手机">
+                                            <span class="clear-btn"></span>
+                                        </div>
+                                        <div id="entry" class="item item-fore2" style="visibility: visible;">
+                                            <label class="login-label pwd-label" for="nloginpwd"></label>
+                                            <input type="password" id="nloginpwd" v-model="password" class="itxt itxt-error" tabindex="2" autocomplete="off" placeholder="密码">
+                                            <span class="clear-btn"></span>
+                                            <span class="capslock" style="display: none;"><b></b>大小写锁定已打开</span>
+                                        </div>
+                                        <div class="item item-fore4">
+                                            <div class="safe">
+                                                <span></span>
+                                                <span class="forget-pw-safe">
+                                                    <a href="#" class="" target="_blank" clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="item item-fore5">
+                                            <div class="login-btn">
+                                                <a href="#" class="btn-img btn-entry" id="loginsubmit" tabindex="6" clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="mc" id="zzz">
                                          <my-login-footer></my-login-footer>
                                     </div>

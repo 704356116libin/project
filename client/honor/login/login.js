@@ -17,31 +17,6 @@ Vue.component('my-footer', {
 Vue.component('my-login-footer', {
     
     template: `
-    <div class="form">
-        <div class="item item-fore1">
-            <label for="loginname" class="login-label name-label"></label>
-            <input id="loginname" type="text" class="itxt" name="loginname" tabindex="1" autocomplete="off" value="" placeholder="邮箱/用户名/已验证手机">
-            <span class="clear-btn"></span>
-        </div>
-        <div id="entry" class="item item-fore2" style="visibility: visible;">
-            <label class="login-label pwd-label" for="nloginpwd"></label>
-            <input type="password" id="nloginpwd" name="nloginpwd" class="itxt itxt-error" tabindex="2" autocomplete="off" placeholder="密码">
-            <span class="clear-btn"></span>
-            <span class="capslock" style="display: none;"><b></b>大小写锁定已打开</span>
-        </div>
-        <div class="item item-fore4">
-            <div class="safe">
-                <span></span>
-                <span class="forget-pw-safe">
-                    <a href="#" class="" target="_blank" clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
-                </span>
-            </div>
-        </div>
-        <div class="item item-fore5">
-            <div class="login-btn">
-                <a href="#" class="btn-img btn-entry" id="loginsubmit" tabindex="6" clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
-            </div>
-        </div>
         <div class="coagent" id="kbCoagent">
             <ul>
                 <li><b></b>
@@ -55,8 +30,7 @@ Vue.component('my-login-footer', {
                     <a href="#" clstag="pageclick|keycount|login_pc_201804112|5" target="_blank">立即注册</a>
                 </li>
             </ul>
-        </div>
-    </div>`,
+        </div>`,
     methods: {
         clickQQ:function(){
             console.log('QQ')
