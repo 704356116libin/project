@@ -15,7 +15,7 @@ Vue.component('my-footer', {
  * 登陆框组件
  */
 Vue.component('my-login-footer', {
-    
+
     template: `
         <div class="coagent" id="kbCoagent">
             <ul>
@@ -32,19 +32,22 @@ Vue.component('my-login-footer', {
             </ul>
         </div>`,
     methods: {
-        clickQQ:function(){
+        clickQQ: function () {
             console.log('QQ')
             alert('点击了QQ登录')
         },
-        clickWx:function(){
+        clickWx: function () {
             console.log('WX')
             alert('点击了WX登录')
         }
     }
 })
 new Vue({
-    el: '#zzz',
+    el: '#login-footer',
 })
+/**
+ * 底部导航数据实例
+ */
 var footer = new Vue({
     el: '#footer-2013',
     data: {
@@ -90,5 +93,30 @@ var footer = new Vue({
             }
         ],
         copyright: 'Copyright&nbsp;©&nbsp;2019&nbsp;&nbsp;彬&nbsp;版权所有'
+    }
+})
+/**
+ * 登录输入框实例
+
+/**
+ * 登录页面实例
+ */
+var login = new Vue({
+    el:"#content",
+    data:{
+        password: '',
+        name: '',
+        login_url: '#',
+        reset_pwd_url: '#',
+        imgs:{
+            lgin_banner_bg:['../img/login/login-banner1.png','../img/login/bg-2.jpg'],//登录页面背景图面组
+            logo:''//头部logo图
+        }
+    },
+    methods:{
+        login: function (e) {
+            console.log(e)
+            alert('点击了登录按钮:用户名-'+this.name+'密码-'+this.password)
+        }
     }
 })

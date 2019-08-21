@@ -360,7 +360,6 @@ li {
 }
 /* 登录页面banner背景图样式 */
 #login-banner-bg{
-    background: url(../img/login/login-banner1.png) 0px 0px no-repeat;
     background-color: #e93854
 }
 .login-wrap .login-banner {

@@ -12,7 +12,7 @@
         <div class="w">
             <div id="logo">
                 <a href="#" clstag="pageclick|keycount|20150112ABD|45" style="outline: rgb(109, 109, 109) none 0px;">
-                    <img src="../img/login/logo.png" alt="京东" width="170" height="60">
+                    <img src="../img/login/logo.png" alt="京东" >
                 </a>
                 <b></b>
             </div>
@@ -57,17 +57,17 @@
                                             <div class="safe">
                                                 <span></span>
                                                 <span class="forget-pw-safe">
-                                                    <a href="#" class="" target="_blank" clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
+                                                    <a :href="reset_pwd_url" class="" target="_blank" clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="item item-fore5">
                                             <div class="login-btn">
-                                                <a href="#" class="btn-img btn-entry" id="loginsubmit" tabindex="6" clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                                                <a :href="login_url" @click='login' class="btn-img btn-entry" id="loginsubmit" tabindex="6" clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mc" id="zzz">
+                                    <div class="mc" id="login-footer">
                                          <my-login-footer></my-login-footer>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="login-banner" >		              
                             <div class="w">			         
-                                <div id="login-banner-bg" clstag="pageclick|keycount|20150112ABD|46" class="i-inner" >
+                                <div id="login-banner-bg" clstag="pageclick|keycount|20150112ABD|46" class="i-inner" :style="{background:'url('+imgs.lgin_banner_bg[0]+') 0px 0px no-repeat'}" >
                                 </div>		              
                             </div>		           
                         </div>
