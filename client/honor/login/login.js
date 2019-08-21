@@ -20,11 +20,11 @@ Vue.component('my-login-footer', {
         <div class="coagent" id="kbCoagent">
             <ul>
                 <li><b></b>
-                <a href="javascript:void(0)" v-on:click="clickQQ" clstag="pageclick|keycount|login_pc_201804112|3" class="pdl"><b class="QQ-icon"></b><span>QQ</span></a>
+                <a @click="clickQQ" href="javascript:void(0)"  clstag="pageclick|keycount|login_pc_201804112|3" class="pdl"><b class="QQ-icon"></b><span>QQ</span></a>
                     <span class="line">|</span>
                 </li>
                 <li>
-                <a href="javascript:void(0)" v-on:click="clickWx" clstag="pageclick|keycount|login_pc_201804112|4" class="pdl"><b class="weixin-icon"></b><span>微信</span></a>
+                <a  @click="clickWx" href="javascript:void(0)"clstag="pageclick|keycount|login_pc_201804112|4" class="pdl"><b class="weixin-icon"></b><span>微信</span></a>
                 </li>
                 <li class="extra-r">
                     <a href="#" clstag="pageclick|keycount|login_pc_201804112|5" target="_blank">立即注册</a>
@@ -41,9 +41,6 @@ Vue.component('my-login-footer', {
             alert('点击了WX登录')
         }
     }
-})
-new Vue({
-    el: '#login-footer',
 })
 /**
  * 底部导航数据实例
@@ -95,28 +92,59 @@ var footer = new Vue({
         copyright: 'Copyright&nbsp;©&nbsp;2019&nbsp;&nbsp;彬&nbsp;版权所有'
     }
 })
-/**
- * 登录输入框实例
+
 
 /**
  * 登录页面实例
  */
 var login = new Vue({
-    el:"#content",
-    data:{
+    el: "#content",
+    data: {
         password: '',
         name: '',
         login_url: '#',
         reset_pwd_url: '#',
-        imgs:{
-            lgin_banner_bg:['../img/login/login-banner1.png','../img/login/bg-2.jpg'],//登录页面背景图面组
-            logo:''//头部logo图
-        }
+        bg_index: 0, //登陆背景图索引
+        imgs: {
+            login_banner_bgs: ['../img/login/login-banner1.png', '../img/login/bg-2.jpg'], //登录页面背景图面组
+            logo: '' //头部logo图
+        },
+        timer: null
     },
-    methods:{
+    methods: {
         login: function (e) {
             console.log(e)
-            alert('点击了登录按钮:用户名-'+this.name+'密码-'+this.password)
+            alert('点击了登录按钮:用户名-' + this.name + '密码-' + this.password)
+        },
+        // 动态切换底部背景轮播图
+        setTimer() {
+            if (this.timer == null) {
+                this.timer = setInterval(() => {
+                    // 计算共有几张背景图
+                    let count = this.imgs.login_banner_bgs.length;
+                    if (this.bg_index == (count - 1)) {
+                        this.bg_index = 0
+                    } else {
+                        this.bg_index += 1
+                    }
+                }, 4000)
+            }
         }
+    },
+    computed: {
+        login_banner_bg: function () {
+            return this.imgs.login_banner_bgs[this.bg_index]
+        }
+    },
+    created: function () {
+        // 每次进入界面时，先清除之前的所有定时器，然后启动新的定时器
+        clearInterval(this.timer)
+        this.timer = null
+        this.setTimer()
+    },
+    destroyed: function () {
+        // 每次离开当前界面时，清除定时器
+        clearInterval(this.timer)
+        this.timer = null
     }
 })
