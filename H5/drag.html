@@ -8,6 +8,13 @@
     td{color: brown}
 </style>
 <script>
+var a=10
+for(let i=0;i<a;i++){
+    document.write("<p onclick='show("+i+")'>"+i+"</p>")
+}
+function show (i){
+    document.getElementById('show').innerHTML=i
+}
 function allowDrop(ev)
 {
     console.log('allowDrop 执行了！--该事件表示用来接收拖拽过来的控件');
@@ -46,6 +53,6 @@ function drop(ev)
 <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 <br>
 
-
+<p id="show"></p>
 </body>
 </html>
