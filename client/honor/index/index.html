@@ -4,9 +4,7 @@
         <meta charset="utf-8"/>
         <title>商城网站测试</title>
         <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/index.css">
-        <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../js/index.js"></script>
+        <link rel="stylesheet" href="./index.css">
     </head>
     <body>
         <div class="banner">
@@ -97,267 +95,251 @@
                 </div>
             </div>
         </div>
-        <div class="container1">
-                <div class="swap">
-                    <ul class="img-wrap">
-                        <li class="img-itm" style="display: none;">
-                            <img src="../img/a62c3c8dcc506d241b26272a506c265e.jpg">
-                        </li>
-                        <li class="img-itm" style="display: none;">
-                            <img src="../img/04b2c6ca437a8bfacd72254fe028a70b.jpg">
-                        </li>
-                        <li class="img-itm" style="display: none;">
-                            <img src="../img/07cd880d456642bb060e00121b975be7.jpg">
-                        </li>
-                        <li class="img-itm" style="display: none;">
-                            <img src="../img/1.jpg">
-                        </li>
-                        <li class="img-itm" style="display: list-item;">
-                            <img src="../img/2.jpg">
-                        </li>
-                    </ul>
-                    <ul class="ban-list">
-                            <li class="ban"></li>
-                            <li class="ban active"></li>
-                            <li class="ban"></li>
-                            <li class="ban"></li>
-                            <li class="ban"></li>
-                    </ul>
-                    <div class="tab-ban left"></div>
-                    <div class="tab-ban right"></div>
-                </div>
-                <div class="detail">
-                    <div id="d-left1">
-                        <ul>
-                            <li id="a1"><a href="#">荣耀8X</a></li>
-                            <li><a href="#">概述</a></li>
-                            <li><a href="#">产品详情</a></li>
-                            <li><a href="#">规格参数</a></li>
-                            <li><a href="#">新闻评测</a></li>
-                            <li><a href="#">内容精选</a></li>
-                            <li><a href="#">产品活动</a></li>
-                            <li><a href="#">相关视频</a></li>
+        <div id="index-content">
+            <div class="container1">
+                    <div class="swap">
+                        <ul class="img-wrap">
+                            <li class="img-itm" style="display: list-item;" >
+                                <img :src="banner_img" />
+                            </li>
+                        </ul>
+                        <ul class="ban-list">
+                                <li v-for="(item,index) in banner_imgs" :class="index==1?'ban':'ban active'"></li>
                         </ul>
                     </div>
-                </div>
-                <div class="detail-1">
-					<div id="a1">
-						<a href=""><img src="../img/a3.jpg"></a>
-					</div>
-						 
-                    <div id="a2">
-                        <a href=""></a><img src="../img/a2.jpg">
+                    <div class="detail">
+                        <div id="d-left1">
+                            <ul>
+                                <li id="a1"><a href="#">荣耀8X</a></li>
+                                <li><a href="#">概述</a></li>
+                                <li><a href="#">产品详情</a></li>
+                                <li><a href="#">规格参数</a></li>
+                                <li><a href="#">新闻评测</a></li>
+                                <li><a href="#">内容精选</a></li>
+                                <li><a href="#">产品活动</a></li>
+                                <li><a href="#">相关视频</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div id="a3">
-                    <a href="#">
-                        <img src="../img/a4.jpg">
-                    </a>
-                    </div>
-                    <div id="a4"><a href="#">
-                        <img src="../img/a1.jpg">
-                    </a>
-                    </div>
-                </div>
-                <div class="prod-items">
-					<div class="mdmdmd">
-						
-					</div>
-					<div class="box-hd">
-					<h3 class="title">手机</h3>
-				    </div>
-                    <div class="item">
+                    <div class="detail-1">
+                        <div id="a1">
+                            <a href=""><img src="../img/a3.jpg"></a>
+                        </div>
+                            
+                        <div id="a2">
+                            <a href=""></a><img src="../img/a2.jpg">
+                        </div>
+                        <div id="a3">
                         <a href="#">
-                            <img src="../img/a.jpg" alt="">
+                            <img src="../img/a4.jpg">
                         </a>
-                    </div>
-                    <div class="item">
-                        <div class="title">荣耀8X</div>
-                        <div class="desc">千元屏霸</div>
-                        <a href="#">
-                            <img src="../img/6.jpg" alt="">
+                        </div>
+                        <div id="a4"><a href="#">
+                            <img src="../img/a1.jpg">
                         </a>
+                        </div>
                     </div>
-                    <div class="item">
-                        <div class="title">荣耀8X Max</div>
-                        <div class="desc">千元大屏 随身影院</div>
-                        <a href="#">
-                            <img src="../img/b.jpg" alt="">
-                        </a>
+                    <div class="prod-items">
+                        <div class="mdmdmd">
+                            
+                        </div>
+                        <div class="box-hd">
+                        <h3 class="title">手机</h3>
+                        </div>
+                        <div class="item">
+                            <a href="#">
+                                <img src="../img/a.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀8X</div>
+                            <div class="desc">千元屏霸</div>
+                            <a href="#">
+                                <img src="../img/6.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀8X Max</div>
+                            <div class="desc">千元大屏 随身影院</div>
+                            <a href="#">
+                                <img src="../img/b.jpg" alt="">
+                            </a>
+                        </div>
+                        
+                        <div class="item">
+                            <div class="title">荣耀Note 10</div>
+                            <div class="desc">更大 更快 更Cool</div>
+                            <a href="#">
+                                <img src="../img/c.jpg" alt="">
+                            </a>
+                        </div>
+                        
+                        <div class="item">
+                            <div class="title">荣耀Play</div>
+                            <div class="desc">突破   让快更快</div>
+                            <a href="#">
+                                <img src="../img/5.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀9i</div>
+                            <div class="desc">千元潮美旗舰</div>
+                            <a href="#">
+                                <img src="../img/d.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀畅玩7</div>
+                            <div class="desc">小巧全面屏 通话大音量</div>
+                            <a href="#">
+                                <img src="../img/e.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀10</div>
+                            <div class="desc">会 变 色 更 潮 美</div>
+                            <a href="#">
+                                <img src="../img/13.jpg" alt="">
+                            </a>
+                        </div>
                     </div>
-                    
-                    <div class="item">
-                        <div class="title">荣耀Note 10</div>
-                        <div class="desc">更大 更快 更Cool</div>
-                        <a href="#">
-                            <img src="../img/c.jpg" alt="">
-                        </a>
-                    </div>
-                    
-                    <div class="item">
-                        <div class="title">荣耀Play</div>
-                        <div class="desc">突破   让快更快</div>
-                        <a href="#">
-                            <img src="../img/5.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <div class="title">荣耀9i</div>
-                        <div class="desc">千元潮美旗舰</div>
-                        <a href="#">
-                            <img src="../img/d.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <div class="title">荣耀畅玩7</div>
-                        <div class="desc">小巧全面屏 通话大音量</div>
-                        <a href="#">
-                            <img src="../img/e.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="item">
-                        <div class="title">荣耀10</div>
-                        <div class="desc">会 变 色 更 潮 美</div>
-                        <a href="#">
-                            <img src="../img/13.jpg" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="prod-items">
-		            	
-		            <div class="box-hd">
-					<h3 class="title">平板</h3>
-				</div>
-				<div class="item">
-					<a href="#">
-						<img src="../img/b1.jpg" alt="">
-					</a>
-				</div>
-		        <div class="item">
-		        	<div class="title">荣耀magicbook-锐龙版</div>
-		        	<div class="desc">高性能金属轻薄本</div>
-		        	<a href="#">
-		        		<img src="../img/b2.jpg" alt="">
-		        	</a>
-		        </div>
-		        <div class="item">
-		        	<div class="title">荣耀MagicBook</div>
-		        	<div class="desc">独显轻薄</div>
-		        	<a href="#">
-		        		<img src="../img/b2.jpg" alt="">
-		        	</a>
-		        </div>
-		        
-		        <div class="item">
-		        	<div class="title">荣耀畅玩平板2</div>
-		        	<div class="desc">持久畅快  更痛快</div>
-		        	<a href="#">
-		        		<img src="../img/b3.jpg" alt="">
-		        	</a>
-		        </div>
-		
-                </div>
-                <div class="prod-items">
-		            	
-                <div class="box-hd">
-                <h3 class="title">穿戴设备</h3>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img src="../img/c1.jpg" alt="">
-                </a>
-            </div>
-            <div class="item">
-                <div class="title">荣耀手环4</div>
-                <div class="desc">AMOLED触控大彩屏心率手环</div>
-                <a href="#">
-                    <img src="../img/c2.jpg" alt="">
-                </a>
-            </div>
-            <div class="item">
-                <div class="title">荣耀手表S1</div>
-                <div class="desc">看到改变</div>
-                <a href="#">
-                    <img src="../img/c3.jpg" alt="">
-                </a>
-            </div>
-            
-            <div class="item">
-                <div class="title">荣耀畅玩手表A1</div>
-                <div class="desc">精致随行</div>
-                <a href="#">
-                    <img src="../img/c4.jpg" alt="">
-                </a>
-            </div>
-    
-                </div>
-                <div class="prod-items">
-		            	
-            <div class="box-hd">
-            <h3 class="title">智能家庭</h3>
-        </div>
-        <div class="item">
-            <a href="#">
-                <img src="../img/d1.jpg" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <div class="title">荣耀路由2</div>
-            <div class="desc">智能体验  快人一步</div>
-            <a href="#">
-                <img src="../img/d2.jpg" alt="">
-            </a>
-        </div>
-        <div class="item">
-            <div class="title">荣耀路由X1增强版</div>
-            <div class="desc">不见天线 稳不掉线</div>
-            <a href="#">
-                <img src="../img/d3.jpg" alt="">
-            </a>
-        </div>
-        
-        <div class="item">
-            <div class="title">荣耀路由X1</div>
-            <div class="desc">不见天线 稳不掉线</div>
-            <a href="#">
-                <img src="../img/d4.jpg" alt="">
-            </a>
-        </div>
-
-                </div>
-                <div class="prod-items">
+                    <div class="prod-items">
                             
                         <div class="box-hd">
-                        <h3 class="title">配件</h3>
+                        <h3 class="title">平板</h3>
                     </div>
                     <div class="item">
                         <a href="#">
-                            <img src="../img/f1.jpg" alt="">
+                            <img src="../img/b1.jpg" alt="">
                         </a>
                     </div>
                     <div class="item">
-                        <div class="title">荣耀自拍杆</div>
-                        <div class="desc">发现更美的自己</div>
+                        <div class="title">荣耀magicbook-锐龙版</div>
+                        <div class="desc">高性能金属轻薄本</div>
                         <a href="#">
-                            <img src="../img/f2.jpg" alt="">
+                            <img src="../img/b2.jpg" alt="">
                         </a>
                     </div>
                     <div class="item">
-                        <div class="title">荣耀小口哨</div>
-                        <div class="desc">随时听你的</div>
+                        <div class="title">荣耀MagicBook</div>
+                        <div class="desc">独显轻薄</div>
                         <a href="#">
-                            <img src="../img/f3.jpg" alt="">
+                            <img src="../img/b2.jpg" alt="">
                         </a>
                     </div>
                     
                     <div class="item">
-                        <div class="title">荣耀引擎耳机2</div>
-                        <div class="desc">一副耳机，两种音乐态度</div>
+                        <div class="title">荣耀畅玩平板2</div>
+                        <div class="desc">持久畅快  更痛快</div>
                         <a href="#">
-                            <img src="../img/f4.jpg" alt="">
+                            <img src="../img/b3.jpg" alt="">
                         </a>
                     </div>
             
+                    </div>
+                    <div class="prod-items">
+                            
+                    <div class="box-hd">
+                    <h3 class="title">穿戴设备</h3>
                 </div>
+                <div class="item">
+                    <a href="#">
+                        <img src="../img/c1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <div class="title">荣耀手环4</div>
+                    <div class="desc">AMOLED触控大彩屏心率手环</div>
+                    <a href="#">
+                        <img src="../img/c2.jpg" alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <div class="title">荣耀手表S1</div>
+                    <div class="desc">看到改变</div>
+                    <a href="#">
+                        <img src="../img/c3.jpg" alt="">
+                    </a>
+                </div>
+                
+                <div class="item">
+                    <div class="title">荣耀畅玩手表A1</div>
+                    <div class="desc">精致随行</div>
+                    <a href="#">
+                        <img src="../img/c4.jpg" alt="">
+                    </a>
+                </div>
+        
+                    </div>
+                    <div class="prod-items">
+                            
+                <div class="box-hd">
+                <h3 class="title">智能家庭</h3>
+            </div>
+            <div class="item">
+                <a href="#">
+                    <img src="../img/d1.jpg" alt="">
+                </a>
+            </div>
+            <div class="item">
+                <div class="title">荣耀路由2</div>
+                <div class="desc">智能体验  快人一步</div>
+                <a href="#">
+                    <img src="../img/d2.jpg" alt="">
+                </a>
+            </div>
+            <div class="item">
+                <div class="title">荣耀路由X1增强版</div>
+                <div class="desc">不见天线 稳不掉线</div>
+                <a href="#">
+                    <img src="../img/d3.jpg" alt="">
+                </a>
+            </div>
+            
+            <div class="item">
+                <div class="title">荣耀路由X1</div>
+                <div class="desc">不见天线 稳不掉线</div>
+                <a href="#">
+                    <img src="../img/d4.jpg" alt="">
+                </a>
+            </div>
+
+                    </div>
+                    <div class="prod-items">
+                                
+                            <div class="box-hd">
+                            <h3 class="title">配件</h3>
+                        </div>
+                        <div class="item">
+                            <a href="#">
+                                <img src="../img/f1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀自拍杆</div>
+                            <div class="desc">发现更美的自己</div>
+                            <a href="#">
+                                <img src="../img/f2.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="title">荣耀小口哨</div>
+                            <div class="desc">随时听你的</div>
+                            <a href="#">
+                                <img src="../img/f3.jpg" alt="">
+                            </a>
+                        </div>
+                        
+                        <div class="item">
+                            <div class="title">荣耀引擎耳机2</div>
+                            <div class="desc">一副耳机，两种音乐态度</div>
+                            <a href="#">
+                                <img src="../img/f4.jpg" alt="">
+                            </a>
+                        </div>
+                
+                    </div>
+            </div>
         </div>
         <footer class="d-footer hidden-xs">
             <div class="container-footer">
@@ -414,5 +396,7 @@
                 </div>
             </div>
         </footer>
+        <script src="../../js/vue.js"></script>
+        <script type="text/javascript" src="./index.js"></script>
     </body>
 </html>
