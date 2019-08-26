@@ -1,6 +1,3 @@
-// import honor from '../honor'
-// document.write('<script src="../honor.js"><\/script>')
-
 /*
  *底部导航组件
  */

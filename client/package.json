@@ -4,9 +4,13 @@
   "description": "荣耀网站前端vue重构（前后端分离）",
   "main": "index.js",
   "dependencies": {
-    "webpack": "^4.39.2"
+    "axios": "^0.19.0",
+    "vue": "^2.6.10"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
