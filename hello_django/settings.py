@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 '''
-全局环境变量配置信息
+全局环境变量配置信息--数据库
 '''
 database={
     'local':{
@@ -30,6 +30,14 @@ database={
         'PASSWORD': 'secret',
         'HOST': '127.0.0.1',
         'PORT': '33060',
+    },
+    'company':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
