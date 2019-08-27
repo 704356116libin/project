@@ -1,4 +1,4 @@
-const Vue = require('vue')
+
 /*
  *底部导航组件
  */
