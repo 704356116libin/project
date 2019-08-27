@@ -1,3 +1,4 @@
+const Vue = require('vue')
 /*
  *底部导航组件
  */
@@ -88,8 +89,8 @@ var footer = new Vue({
         ],
         copyright: 'Copyright&nbsp;©&nbsp;2019&nbsp;&nbsp;彬&nbsp;版权所有'
     },
-    methods:{
-        
+    methods: {
+
     }
 })
 
