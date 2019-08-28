@@ -173,8 +173,7 @@ var app8 = new Vue({
 var app9 = new Vue({
     el: '#app-9',
     data: {
-        goods: [
-            {
+        goods: [{
                 id: 0,
                 name: 'iphone',
                 price: 1999
@@ -225,7 +224,7 @@ var app9 = new Vue({
 })
 // 利用for循环+组件 写一个增删列表的组件
 Vue.component('goods-list', {
-    props: ['item','index'],
+    props: ['item', 'index'],
     template: '\
         <li>\
         <p style="color:green">{{item.name}} {{index}}<button  v-on:click="$emit(\'remove\')">移除此项</button></p>\
@@ -239,8 +238,7 @@ new Vue({
             name: '',
             price: 0
         },
-        goods: [
-            {
+        goods: [{
                 id: 0,
                 name: 'iphone',
                 price: 1999
@@ -260,19 +258,19 @@ new Vue({
     },
     methods: {
         add_new: function () {
-            console.log('添加-'+this.model.name)
+            console.log('添加-' + this.model.name)
             this.goods.push({
                 id: this.next_index++,
                 name: this.model.name,
                 price: this.model.price
             })
         },
-        remove:function(index){
-            console.log('移除-'+this.goods[index].name)
-            this.goods.splice(index,1)
+        remove: function (index) {
+            console.log('移除-' + this.goods[index].name)
+            this.goods.splice(index, 1)
         },
         warn: function (message, event) {
-            console.log('点击事件查看',event)
+            console.log('点击事件查看', event)
             // 现在我们可以访问原生事件对象
             if (event) event.preventDefault()
             alert(message)
@@ -280,18 +278,26 @@ new Vue({
     }
 })
 // ============================表单数据绑定======================
-var app11=new Vue({
-    el:'#app-11',
-    data:{
-        text:'',//绑定文本
-        checked:false, //绑定单选框
-        checkedNames:[],
-        picked:'' ,//单选按钮参数
-        selected:'',//选择框绑定
-        select_options: [
-            { text: 'One', value: 'A' },
-            { text: 'Two', value: 'B' },
-            { text: 'Three', value: 'C' }
+var app11 = new Vue({
+    el: '#app-11',
+    data: {
+        text: '', //绑定文本
+        checked: false, //绑定单选框
+        checkedNames: [],
+        picked: '', //单选按钮参数
+        selected: '', //选择框绑定
+        select_options: [{
+                text: 'One',
+                value: 'A'
+            },
+            {
+                text: 'Two',
+                value: 'B'
+            },
+            {
+                text: 'Three',
+                value: 'C'
+            }
         ]
     }
 })
@@ -397,17 +403,18 @@ new Vue({
     el: "#app-show-info",
     data: {
         data: [{
-            id: 1,
-            username: 'libin',
-            age: 24,
-            money: 67
-        },
-        {
-            id: 2,
-            username: 'libin',
-            age: 24,
-            money: 67
-        }]
+                id: 1,
+                username: 'libin',
+                age: 24,
+                money: 67
+            },
+            {
+                id: 2,
+                username: 'libin',
+                age: 24,
+                money: 67
+            }
+        ]
     }
 })
 // 测试父子组件间的通信
@@ -427,20 +434,20 @@ Vue.component('button-sum', {
     }
 })
 new Vue({
-    el:"#app-event",
-    data:function(){
+    el: "#app-event",
+    data: function () {
         return {
-            sum:0
+            sum: 0
         }
     },
-    methods:{
-        parent_sum:function(step){
-            this.sum+=step;
+    methods: {
+        parent_sum: function (step) {
+            this.sum += step;
         }
     }
 })
-Vue.component('my-component',function(){
-    template:'\
+Vue.component('my-component', function () {
+    template: '\
     <div>\
     <h2>我是子组件的标题</h2>\
     <slot>\
@@ -449,8 +456,8 @@ Vue.component('my-component',function(){
     </div>\
     '
 })
-Vue.component('app-layout',{
-    template:'\
+Vue.component('app-layout', {
+    template: '\
     <div class="container">\
     <header>\
       <slot name="header"></slot>\
@@ -462,4 +469,63 @@ Vue.component('app-layout',{
       <slot name="footer"></slot>\
     </footer>\
   </div>'
+})
+/**
+ * 动画测试组件
+ */
+Vue.component('my-animal', {
+    props: {
+        show1: Boolean,
+        show2: Boolean,
+        show3: Boolean,
+    },
+    template: `
+    <div width="100%">
+        <div id="animal">
+            <button @click="show_1">过度</button>
+            <transition name="fade">
+            <p v-if="show1">Hello ！！</p>
+            </transition>
+        </div>
+        <div id="animal-2">
+            <button @click="show_2">过度2</button>
+                <transition name="slide">
+                <p v-if="show2">动画过度</p>
+            </transition>
+        </div>
+        <div id="animal-2">
+            <button @click="show_3">缩放动画</button>
+            <transition name="scale">
+                <button v-if="show3">缩放组键</button>
+            </transition>
+        </div>
+    </div>`,
+    methods: {
+        show_1: function () {
+            this.show1 = !this.show1
+        },
+        show_2: function () {
+            this.show2 = !this.show2
+        },
+        show_3: function () {
+            this.show3 = !this.show3
+        },
+
+    },
+    computed: {
+
+    }
+
+})
+/**
+ * 动画测试
+ */
+new Vue({
+    el: "#animal",
+    data() {
+        return {
+            show1: false,
+            show2: false,
+        }
+    }
 })
