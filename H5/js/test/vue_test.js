@@ -283,9 +283,10 @@ var app11 = new Vue({
     data: {
         text: '', //绑定文本
         checked: false, //绑定单选框
+        show_text: false, //是否展示输入框中的跟随信息
         checkedNames: [],
         picked: '', //单选按钮参数
-        selected: '', //选择框绑定
+        selected: [], //选择框绑定
         select_options: [{
                 text: 'One',
                 value: 'A'
@@ -299,6 +300,14 @@ var app11 = new Vue({
                 value: 'C'
             }
         ]
+    },
+    // 监听输入框数据变动,&设置中间状态
+    watch: {
+        text: function (new_text, old_text) {
+            console.log('属性监听', '新:' + new_text + "----旧:" + old_text)
+            this.show_text = new_text !== '' ? true : false
+            this.text = new_text
+        }
     }
 })
 

@@ -52,4 +52,15 @@ color: blue;
       transform: scale(1);
     }
 }
+/* vue表单输入跟随展示动画 */
+.anm-text-enter-active{
+  transition: all .5s ease;
+}
+.anm-text-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.anm-text-enter, .anm-text-leave-to {
+transform: translateX(5px) scaleX(0.5);
+opacity: 0;
+}
 
