@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'hello_django.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': database['local']
+    'default': database['company']
 }
 
 
