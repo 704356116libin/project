@@ -103,3 +103,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 H5/copy_honor/views/hello_ajango.code-workspace
+node_modules/
