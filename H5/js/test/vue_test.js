@@ -301,6 +301,14 @@ var app11 = new Vue({
             }
         ]
     },
+    methods: {
+        hide_show_text: function () {
+            this.show_text = false
+        },
+        open_show_text: function () {
+            this.show_text = true
+        }
+    },
     // 监听输入框数据变动,&设置中间状态
     watch: {
         text: function (new_text, old_text) {
@@ -537,4 +545,71 @@ new Vue({
             show2: false,
         }
     }
+})
+/**
+ * 测试父子组件事件
+ */
+Vue.component('base-checkbox', {
+    model: {
+        prop: 'checked',
+        event: 'change'
+    },
+    props: {
+        checked: Boolean
+    },
+    template: `
+    <div>
+      <input
+        type="checkbox"
+        v-bind:checked="checked"
+        v-on:change="$emit('change', $event.target.checked)"
+      >
+      <p>{{checked}}</p>
+    </div>      
+    `
+})
+var app12 = new Vue({
+    el: "#app-12",
+    data: function () {
+        return {
+            lovingVue: true,
+            label: '这是label',
+            value: '这是value'
+        }
+    }
+})
+/**
+ * 
+ */
+Vue.component('base-input', {
+    inheritAttrs: false,
+    props: ['label', 'value'],
+    computed: {
+        inputListeners: function () {
+            var vm = this
+            // `Object.assign` 将所有的对象合并为一个新对象
+            return Object.assign({},
+                // 我们从父级添加所有的监听器
+                this.$listeners,
+                // 然后我们添加自定义监听器，
+                // 或覆写一些监听器的行为
+                {
+                    // 这里确保组件配合 `v-model` 的工作
+                    input: function (event) {
+                        vm.$emit('input', event.target.value)
+                    }
+                }
+            )
+        }
+    },
+    template: `
+      <label>
+        {{ label }}
+        <input
+          v-bind="$attrs"
+          v-bind:value="value"
+          v-on="inputListeners"
+        >
+      </label>
+    `
 })

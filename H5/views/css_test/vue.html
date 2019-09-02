@@ -124,11 +124,10 @@
   </div>
   <hr style="color: cadetblue;">
   <div id="app-11">
-    <input type="text" v-model="text">
+    <input type="text" v-model="text" @blur='hide_show_text' @focus="open_show_text">
     <transition name="anm-text">
       <div v-if="show_text">
-        <p>input : {{text}}</p>
-        <textarea  id="text-area" v-model="text" cols="30" rows="10"></textarea><br>
+        <p>input 😢 : {{text}}</p>
       </div>
   </transition>
     <input type="checkbox" id="checkbox" v-model="checked">
@@ -219,6 +218,11 @@
         :show1="show1"
         :show2="show2"
       ></my-animal>
+    </div>
+    <div id="app-12">
+      <h5>测试父子组件事件</h5>
+      <base-checkbox v-model="lovingVue"></base-checkbox>
+      <base-input :label="label" :value="value"></base-input>
     </div>
     </div>
 </body>
