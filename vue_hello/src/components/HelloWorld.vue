@@ -36,20 +36,14 @@ export default {
   props: {
     msg: String
   },
-  created:function() {
-    console.log('created');
-    this.$http({
-      method: 'get',
-          //这里的路径是和main.js中的baseURL拼接而来的
-      url: 'http://www.baidu.com',
-      data: {}
-      })
-      .then(function(response){
-        console.log('1212',response);
+  created() {
+    this.$http.get('/honor/hello_honor',{
+      }).then(function(response){
+      console.log('1111',response);
       }).catch(function(error){
-        console.log('1212124124',error);
-    })
-  },
+      console.log('2222',error);
+      })
+  }
 }
 </script>
 
