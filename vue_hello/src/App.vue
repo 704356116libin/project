@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+     <Header msg="Welcome to Your Vue.js App"/>
     </div>
     <router-view/>
   </div>
@@ -17,7 +16,7 @@
   color: #2c3e50;
 }
 #nav {
-  padding: 30px;
+  
 }
 
 #nav a {
@@ -29,3 +28,14 @@
   color: #42b983;
 }
 </style>
+<script>
+// @ is an alias to /src
+import Header from '@/components/Header.vue'
+
+export default {
+  name: 'app',
+  components: {
+    Header
+  }
+}
+</script>
