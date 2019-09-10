@@ -23,11 +23,11 @@ export default {
         },
         {
           id:2,
-          url:'https://xrs.ixiaochengxu.cc/2018-12-14_5c132a9a1c45f.png'
+          url:'http://www.duoguan.com/d/file/slide/2019-03-05/4cca3e04be5a1d7592811dc09f50e00e.png'
         },
         {
           id:3,
-          url:'https://xrs.ixiaochengxu.cc/2018-12-14_5c132a9a1c45f.png'
+          url:'http://www.duoguan.com/d/file/slide/2019-04-17/1ff3ba7a6c9c7a82e1f29aca26c0a64f.png'
         },
         {
           id:4,

@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <Banner/>
+    <Banner :style="{width:'100%'}" id='banner'/>
     <div>
       <h2>展示信息</h2>
       <h4>小程序，大未来</h4>
+      <el-backtop target="#banner"></el-backtop>
     </div>
     <Card/>
   </div>
