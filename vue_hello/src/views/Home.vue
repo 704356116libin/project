@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <Banner :style="{width:'100%'}" id='banner'/>
+    <Banner :style="{width:'100%'}" calss='banner'/>
     <div>
       <h2>展示信息</h2>
       <h4>小程序，大未来</h4>
-      <el-backtop target="#banner"></el-backtop>
+      <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
     </div>
     <Card/>
   </div>

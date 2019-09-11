@@ -1,11 +1,11 @@
 <template>
   <div id="card">
-    <el-row style="margin:20px 150px 10px 150px;">
-      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0"  :style="[index%3==0?'':style.item_margin_right]">
-        <el-card :body-style="{ padding: '0px'}" shadow="hover">
+    <el-row class="">
+      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0"  >
+        <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-card']">
           <img :src="o.url" class="image">
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span>好吃的汉堡{{index}}</span>
             <div class="bottom clearfix">
               <time class="time">{{ currentDate }}</time>
             </div>
@@ -52,7 +52,7 @@ export default {
        ],
        currentDate:new Date(),
        style:{
-         item_margin_right:'30px'
+         item_margin_right:'3px'
        }
       };
   },
@@ -94,6 +94,13 @@ export default {
   
   .clearfix:after {
       clear: both
+  }
+  .ite-card{
+    margin: 5%;
+    
+  }
+  .el-row{
+    margin: 2% 5% 0 5%; 
   }
 </style>
  
