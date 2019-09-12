@@ -3,8 +3,10 @@
     <div id="nav">
      <Header msg="Welcome to Your Vue.js App"/>
     </div>
+    
     <router-view/>
   </div>
+  
 </template>
 
 <style>
@@ -35,7 +37,8 @@ import Header from '@/components/Header.vue'
 export default {
   name: 'app',
   components: {
-    Header
+    Header,
+  
   }
 }
 </script>
