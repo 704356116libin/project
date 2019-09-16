@@ -1,18 +1,15 @@
 <template>
   <div id="card">
     <div>
-      <h2>展示信息</h2>
-      <h4>小程序，大未来</h4>
+      <h2>案例展示</h2>
+      <h4>每一个都用心打造</h4>
     </div>
     <el-row class="">
-      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0"  >
+      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0" :style="{width:'447px',height:'200px'}" >
         <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-card']">
-          <img :src="o.url" class="image">
+          <img :src="o.url" class="product-image">
           <div style="padding: 14px;">
-            <span>好吃的汉堡{{index}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-            </div>
+            <span>好吃的汉堡</span>
           </div>
         </el-card>
     </el-col>
@@ -22,7 +19,7 @@
 
 <script>
 export default {
-  name: 'Card',
+  name: 'ProductCard',
   props: {
     
   },
@@ -85,8 +82,9 @@ export default {
     float: right;
   }
 
-  .image {
+  .product-image {
     width: 100%;
+    height:160px;
     display: block;
   }
 
@@ -100,7 +98,7 @@ export default {
       clear: both
   }
   .ite-card{
-    margin: 5%;
+    margin: 10%;
     
   }
   .el-row{
