@@ -1,0 +1,482 @@
+body{
+    /* width: 100%;
+    background: #f6f6f6;
+    font-size: 16px; */
+    background: #f6f6f6;
+    margin: 0%
+}
+html{
+    width: 100%;
+}
+div{
+    display: block;
+}
+.banner{
+    width: 100%;
+    height: 40px;
+    /*设置导航栏的背景颜色*/
+    background-image: linear-gradient(to bottom,dodgerblue 0px,deepskyblue 100%);
+    position: relative;
+}
+.banner .container1 {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    height: 40px;
+}
+/*全局容器的样式*/
+.container1 {
+    width: 100%;
+    position: relative;
+    margin: 0px auto;
+}
+/*设置ul标签下的a标签显示样式*/
+ul, a {
+    /*隐藏小圆点*/
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+#left1 {
+    float: left;
+    position: absolute;
+    height: 100%;
+    width: 30%;
+    left: 50%;
+}
+#left2 {
+    position: absolute;
+    float: left;
+    left: 80%;
+    width: 20%;
+    height: 100%;
+    margin-right: 20px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+#left1 ul li {
+    float: left;
+    padding-top: 2%;
+}
+/*分类鼠标导航滑过样式*/
+#left1 ul li a:hover {
+    color: bisque;
+}
+/*导航登陆注册鼠标滑过样式*/
+#left2 ul li a:hover {
+    color: limegreen;
+}
+#left2 ul li {
+    float: left;
+    padding-top: 2%;
+} 
+
+
+/* ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+} */
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.banner a, b {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+/*导航栏样式*/
+.nav{
+    width: 100%;
+    height: 70px;
+    border-bottom: 2px solid whitesmoke;
+    position: relative;
+    background: white;
+}
+.nav .container1{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+.logo {
+    /* z-index: 9999; */
+    width: 15%;
+    height: 70px;
+    float: left;
+    position: absolute;
+}
+.logo img{
+    width: 100%;
+    height: 70px;
+    float: left;
+    position: absolute;
+}
+.header-nav{
+    width:65%;
+    height: 70px;
+    float: left;
+    background: white;
+    position: relative;
+    left: 15%;
+}
+.header-nav ul{
+    width:100%;
+    height: 100%;
+    
+}
+.header-nav li{
+    float: left;
+    width: 12.5%;
+    padding:23px 0px;
+    list-style: none;
+    font-size: 16px;
+    text-align: center;
+}
+.header-nav .child:hover{
+    border-bottom: 2px solid #00BFFF;
+    border-bottom-width: 2px;
+}
+.header-nav parent{
+    float: left;
+    width: 12.5%;
+    padding: 29% 14%;
+    font-size: 16px;
+    text-align: center;
+}
+.header-nav parent:hover{
+    float: left;
+    width: 12.5%;
+    padding: 29% 14%;
+    font-size: 16px;
+    text-align: center;
+}
+.parent {
+    position: relative;
+}
+/*产品子级菜单样式*/
+.header-nav ul #child {
+    width:100%;
+    opacity: 0;
+    float: left;
+    position: absolute;
+    background-image: linear-gradient(to bottom,dodgerblue 0px,deepskyblue 100%);
+    top: 70px;
+    /* left: -510px;
+    right: 10px; */
+    height: 250px;
+}
+.header-nav ul #child dl {
+    width: 130px;
+    height: 220px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: block;
+    float: left;
+    margin-left: 10px;
+    text-align: left;
+    padding-top: 15px;
+}
+.header-nav ul #child #r1 {
+    width: 20px;
+    height: 220px
+}
+
+/*定义导航栏下a的颜色*/
+.header-nav a{
+    text-decoration: none;
+    color: darkgray;
+}
+/*搜索框的样式*/
+.search{
+    float: right;
+    width: 20%;
+    height: 70px;
+    position: relative;
+    margin-left: 20px;
+}
+.input-search{
+    float: left;
+    line-height: 32px;
+    border: 1px solid deepskyblue;
+    margin: 20px auto;
+
+}
+.search img{
+    float: left;
+    margin: 20px auto;
+}
+/*轮播图样式*/
+.swap{
+    position: relative;
+    width: 80%;
+    height: 600px;
+    margin: 0 auto;
+}
+.swap ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.swap ul img{
+   width: 100%;
+   height: 100%;
+   margin:0  ;
+   
+}
+.img-itm{
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.ban-list {
+    position: absolute;
+    right: 3%;
+    bottom: 2%;
+    width: 10%;
+    height: 3%;
+    /* background-color: red; */
+}
+.ban {
+    float: left;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #cdcdcd;
+    background-color: #DEB887;
+    border-radius: 50%;
+    margin-left: 8px;
+}
+.ban:hover{
+    background: #fcfcfc;
+    border-color:#f0eeee ;
+}
+.left {
+    left: 100px;
+    background-position-x: 83px;
+}
+.tab-ban {
+    position: absolute;
+    top: 192px;
+    width: 41px;
+    height: 69px;
+    background: url(../img/icon-slides.png);
+}
+.right {
+    right: 100px;
+    background-position-x: 43px;
+}
+/*轮播图小圆点选中样式*/
+.active{
+    background: #fcfcfc;
+    border-color:#f0eeee ;
+}
+/*商品详情模块样式*/
+.detail {
+    position: relative;
+    background: #ddd;
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+.detail a{
+    text-decoration: none;
+    color: teal
+}
+.detail li:hover{
+    border-bottom: 2px solid #00BFFF;
+    color: rgb(71, 166, 255)
+}
+#d-left1 ul li {
+    float: left;
+    list-style: none;
+    width: 10%;
+    height: 32px;
+    font-size: 15px;
+    text-align: center;
+}
+#d-left1 ul {
+    margin: 0;
+    padding: 13px 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+/*商品方块儿图(详细)样式*/
+.detail-1 {
+    width: 80%;
+    height: 200px;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+/*设置图片的过度动画 */
+.detail-1 div {
+    transition: all 300ms linear;
+}
+.detail-1 div:hover{
+    transform: scale(1.03);
+}
+.detail-1 div img {
+    margin-right: 1.3%;
+}
+.detail-1 div:last-child img {
+    margin-right: 0%;
+}
+.detail-1 img {
+    width: 24%;
+    height: 200px;
+    float: left;
+}
+/*商品分类图样式*/
+.prod-items {
+    width: 80%;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 1.3%;
+}
+.prod-items:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.prod-items .mdmdmd {
+    position: absolute;
+    top: -100px;
+}
+.prod-items .box-hd {
+    position: relative;
+    height: 30px;
+    margin-bottom: 30px;
+}
+.prod-items .box-hd .title {
+    border-left: 4px solid #00b5e2;
+    font-size: 24px;
+    line-height: 30px;
+    padding-left: 7px;
+}
+.item {
+    float: left;
+    background: #fff;
+    width: 24%;
+    height: 350px;
+    margin-right: 1%;
+    margin-bottom: 20px;
+    padding: 0px 0 20px;
+    text-align: center;
+    transition: all 500ms linear;
+    position: relative;
+}
+.item div:last-child  {
+    margin-right: 0%;
+}
+/*文字悬浮样式*/
+.item .title {
+    font-size: 18px;
+    margin-bottom: 5px;
+    padding-top: 10%;
+    position: relative;
+}
+.item .desc {
+    position: relative;
+    color: #707070;
+    margin-bottom: 20px;
+}
+.item:hover{
+    transform: scale(1.03);
+}
+/*底部样式*/
+.container-footer {
+    width: 100%;
+}
+.d-footer {
+    padding: 30px 0 15px;
+    background: #00a0ea;
+    color: #fff;
+    width: 99%;
+}
+.d-footer h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+:after, :before {
+    box-sizing: border-box;
+}
+.d-footer .f-copyright {
+    /* margin: 30px -15px 0; */
+    text-align: center;
+}
+.d-footer h1, h2, h3, h4, h5, h6, li, p, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.d-footer li {
+    margin: 5px 0;
+    font-size: 13px;
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.row div{
+    float: left;
+}
+.row:before {
+    content: " ";
+    display: table;
+} 
+ .col-md-12,.col-md-4,.col-sm-12,.col-sm-4  {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* text-align: center; */
+}
+.d-footer a {
+    color: #fff;
+    font-size: 13px;
+}
+a, a:hover {
+    text-decoration: none;
+}
+.col-md-4 .col-sm-4{
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/*单独定义页面尾部a标签的样式*/
+.help-a{
+    margin-left: 4%;
+}
+#h3-help{
+    margin-left: 4%;
+}
+#h3-join{
+    margin-left: 4%;
+}
+.ddd{
+    width: 100px;
+    text-align: center;
+}
