@@ -1,36 +1,36 @@
 <template>
-  <div id="footer">
+  <div id="footer" class="footer">
     <el-row :gutter="10">
       <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
+        <div class="grid-content ">
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
+        <div class="grid-content ">
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
+        <div class="grid-content ">
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
-          <el-link type="info">信息链接</el-link><br/>
+        <div class="grid-content ">
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
+          <el-link type="info" class="info">信息链接</el-link><br/>
         </div>
       </el-col>
     </el-row>
@@ -79,5 +79,11 @@ export default {
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  .footer{
+    background:#fff;
+  }
+  .info{
+    margin-left: 0%;
   }
 </style>

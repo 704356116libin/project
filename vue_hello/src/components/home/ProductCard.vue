@@ -5,10 +5,10 @@
       <h4>每一个都用心打造</h4>
     </div>
     <el-row class="">
-      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0" :style="{width:'447px',height:'200px'}" >
+      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0" :style="{width:'33.3%',height:'200px'}" >
         <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-card']">
           <img :src="o.url" class="product-image">
-          <div style="padding: 14px;">
+          <div class="card-text">
             <span>好吃的汉堡</span>
           </div>
         </el-card>
@@ -28,27 +28,27 @@ export default {
        cards:[
         {
           id:1,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         },
         {
           id:2,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         },
         {
           id:3,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         },
         {
           id:4,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         },
         {
           id:5,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         },
         {
           id:6,
-          url:'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
+          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
         }
        ],
        currentDate:new Date(),
@@ -98,11 +98,15 @@ export default {
       clear: both
   }
   .ite-card{
-    margin: 10%;
+    margin: 0% 10% 10% 0%;
     
   }
   .el-row{
-    margin: 2% 5% 0 5%; 
+   
+  }
+  .card-text{
+    padding-top: 5px ;
+    padding-bottom: 5px;
   }
 </style>
  
