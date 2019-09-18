@@ -2,7 +2,7 @@
   <div>
     <el-menu
     :default-active="activeIndex2"
-    class="el-menu-demo"
+    class="el-menu-demo header-menu"
     mode="horizontal"
     @select="handleSelect"
     background-color="#fff"
@@ -23,8 +23,13 @@
     </el-submenu>
     <el-menu-item index="3" >消息中心</el-menu-item>
     <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-  </el-menu>
+    <el-menu-item class='header-login'>
+      <a href="/login">登陆</a>
+    </el-menu-item>
+
+    </el-menu>
   </div>
+ 
 </template>
 
 <script>
@@ -58,5 +63,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .header-menu{
+    width: 100%;
+  }
+  .header-login{
+    height: 100%;
+    width: 30%;
+    margin-left: 70%;
+    text-align: center;
+  }
 </style>
