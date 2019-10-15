@@ -16,6 +16,14 @@ class LazyEncoder(DjangoJSONEncoder):
             return str(obj)
         return super().default(obj)
 '''
+用户登录接口(需要返回用户基础信息)
+'''
+def login(request):
+    # 重新生成用户 token 
+
+    # 将用户基础信息返回给前端
+    return HttpResponse(json.dumps({}))
+'''
 创建用户时进行数据合法性校验,并返回一个字典
 '''
 # def add_verify(data):
