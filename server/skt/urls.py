@@ -20,4 +20,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),#授权视图
     # path('polls/', include('polls.urls')),#插入投票应用路由组
     path('honor/',include('honor.urls')),#插入荣耀网站展示路由组
+    path('Auth/',include('Auth.urls')),#插入荣耀网站展示路由组
 ]

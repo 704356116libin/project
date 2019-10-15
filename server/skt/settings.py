@@ -69,6 +69,7 @@ INSTALLED_APPS = [
 
     'polls.apps.PollsConfig',#demo
     'honor.apps.HonorConfig',#荣耀网站
+    'Auth.apps.AuthConfig'
 ]
 
 MIDDLEWARE = [
