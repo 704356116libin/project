@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-     <Header msg="Welcome to Your Vue.js App"/>
-    </div>
+
     
     <router-view/>
   </div>
@@ -33,12 +31,12 @@
 </style>
 <script>
 // @ is an alias to /src
-import Header from '@/components/Header.vue'
+
 
 export default {
   name: 'app',
   components: {
-    Header,
+ 
   
   }
 }

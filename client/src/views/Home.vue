@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Header msg="Welcome to Your Vue.js App"/>
     <Banner :style="{width:'100%'}" calss='banner'/>
     <Card/>
     <ProductCard/>
@@ -11,6 +12,7 @@
 
 <script>
 /*引入轮播图组件*/
+import Header from '@/components/Header.vue'
 import Banner from '@/components/Banner.vue'
 import Card from '@/components/home/Card.vue'
 import ProductCard from '@/components/home/ProductCard.vue'
@@ -21,7 +23,8 @@ export default {
     Banner,
     Card,
     Footer,
-    ProductCard
+    ProductCard,
+   
   }
 }
 </script>
