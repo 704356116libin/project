@@ -24,7 +24,7 @@ export default {
     Card,
     Footer,
     ProductCard,
-   
+    Header
   }
 }
 </script>

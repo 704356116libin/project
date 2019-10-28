@@ -1,11 +1,12 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth.models import User
+from .models import *
 # from ..Application.Until.ResponseUntil import *
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q
 import json
+import time
 # Create your views here.
 '''
 模型转为json必须函数
@@ -39,7 +40,8 @@ def add_user(request):
     verify_data = {'status':True,'msg':'校验成功'}
     # 先进行数据合法性校验
     if(verify_data['status']):
-        u = User.objects.create_user('SKT牛逼','123456@qq.com','123456')
+        format = '%Y-%m-%d %H:%M:%S'
+        u = User(password='123',username='bin',phone='16638638285',created_at=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         u.save()
         return HttpResponse("用户创建成功")
     else:

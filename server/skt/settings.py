@@ -17,7 +17,7 @@ import os
 database={
     'local':{
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
+        'NAME': 'my_project',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'skt.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': database['company']
+    'default': database['local']
 }
 
 
