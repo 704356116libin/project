@@ -8,6 +8,9 @@
         <el-form-item label="密码">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="login">登陆</el-button>
+        </el-form-item>
       </el-form>
     </el-tab-pane>
     <el-tab-pane label="二维码登陆" name="second">暂未开放功能</el-tab-pane>
@@ -33,12 +36,15 @@ export default {
           resource: '',
           desc: ''
         },
-        activeName: 'second'
+        activeName: 'first'
       };
   },
   methods: {
     handleClick(tab, event) {
         console.log(tab, event);
+    },
+    login:function(){
+      console.log('点击了login')
     }
   }
 

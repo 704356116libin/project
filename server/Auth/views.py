@@ -1,7 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
-# from ..Application.Until.ResponseUntil import *
+# from ..Application.Until.ResponseUntil as response
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q

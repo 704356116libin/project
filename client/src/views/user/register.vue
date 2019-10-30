@@ -1,7 +1,6 @@
 <template>
   <div class="register">
     <RegisterForm/>
-    
   </div>
 </template>
 
