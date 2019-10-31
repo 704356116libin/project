@@ -43,7 +43,8 @@ def add_user(request):
         format = '%Y-%m-%d %H:%M:%S'
         u = User(password='123',username='bin',phone='16638638285',created_at=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         u.save()
-        return HttpResponse("用户创建成功")
+        # 字典转json
+        return HttpResponse(json.dumps(verify_data))
     else:
         return HttpResponse(verify_data['msg'])
 '''

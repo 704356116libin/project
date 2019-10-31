@@ -45,6 +45,12 @@ export default {
     },
     login:function(){
       console.log('点击了login')
+      this.$http.get('/Auth/add_user',{
+        }).then(function(response){
+        console.log('1111',response);
+        }).catch(function(error){
+        console.log('2222',error);
+        })
     }
   }
 
