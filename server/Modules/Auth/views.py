@@ -11,19 +11,27 @@ import time
 '''
 模型转为json必须函数
 '''
+
+
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
         if isinstance(obj, User):
             return str(obj)
         return super().default(obj)
+
+
 '''
 用户登录接口(需要返回用户基础信息)
 '''
+
+
 def login(request):
-    # 重新生成用户 token 
+    # 重新生成用户 token
 
     # 将用户基础信息返回给前端
     return HttpResponse(json.dumps({}))
+
+
 '''
 创建用户时进行数据合法性校验,并返回一个字典
 '''
@@ -34,33 +42,44 @@ def login(request):
 '''
 创建一个站内用户
 '''
+
+
 def add_user(request):
-    data = request.GET
+    data = request.POST
     # verify_data = add_verify(data)
-    verify_data = {'status':True,'msg':'校验成功'}
+    verify_data = {'status': True, 'msg': '校验成功'}
     # 先进行数据合法性校验
     if(verify_data['status']):
         format = '%Y-%m-%d %H:%M:%S'
-        u = User(password='123',username='bin',phone='16638638285',created_at=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        u = User(password=data['password'], username=data['name'], phone='16638638285',
+                 created_at=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         u.save()
         # 字典转json
         return HttpResponse(json.dumps(verify_data))
     else:
         return HttpResponse(verify_data['msg'])
+
+
 '''
 修改用户的密码
 '''
+
+
 def change_password(request):
     # 取出查询的条件
     username = request.POST['username']
     email = request.POST['email']
-    u = User.objects.get(Q(username = username)|Q(email = email))
-    return HttpResponse({'id':111,'username':u.username})
+    u = User.objects.get(Q(username=username) | Q(email=email))
+    return HttpResponse({'id': 111, 'username': u.username})
+
+
 '''
 查询出站内的用户
 '''
+
+
 def get_normal_user(request):
-    data = User.objects.filter(Q(is_superuser = 0)|Q(username__startswith = 'l'))
-    u = User.objects.get(id =1)
-    return HttpResponse(json.dumps({'id':u.id,'username':u.username}))
+    data = User.objects.filter(Q(is_superuser=0) | Q(username__startswith='l'))
+    u = User.objects.get(id=1)
+    return HttpResponse(json.dumps({'id': u.id, 'username': u.username}))
     return HttpResponse(serialize('json', data, cls=LazyEncoder))

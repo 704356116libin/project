@@ -16,6 +16,7 @@ class User(models.Model):
     ali_oppenid = models.CharField(max_length = 150,default = '')#扩展支付宝登录字段
     qq_oppenid = models.CharField(max_length = 150,default = '')#扩展qq登录字段
     git_hub_oppenid = models.CharField(max_length = 150,default = '')#扩展github登录字段
+    header_img = models.CharField(max_length = 255,default = '') #用户头像字段
     last_login = models.CharField(max_length = 150,default = '') #上次登录时间 
     created_at = models.CharField(max_length = 150,default = '') #记录创建时间
     updated_at = models.CharField(max_length = 150,default = '') #记录更新时间
