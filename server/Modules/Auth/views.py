@@ -45,7 +45,7 @@ def login(request):
 
 
 def add_user(request):
-    data = request.POST
+    data = request.POST.dict()
     # verify_data = add_verify(data)
     verify_data = {'status': True, 'msg': '校验成功'}
     # 先进行数据合法性校验

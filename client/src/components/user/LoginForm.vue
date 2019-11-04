@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   name: "LoginForm",
   props: {},
@@ -82,10 +83,10 @@ export default {
       //   });
       //post请求方式
       this.$http
-        .post("/Auth/add_user", {
+        .post("/Auth/add_user",qs.stringify({
          name: that.form.name,
          password: that.form.password
-        })
+        }))
         .then(function(response) {
           console.log("1111", response);
         })
