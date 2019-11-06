@@ -59,9 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',#消息框架
     'django.contrib.staticfiles',#管理静态文件的框架
 
-    'polls.apps.PollsConfig',#demo
-    'honor.apps.HonorConfig',#荣耀网站
-    'Auth.apps.AuthConfig'
+    'Auth.apps.AuthConfig'#用户授权模块
 ]
 
 MIDDLEWARE = [
@@ -101,7 +99,7 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': database['company']
+    'default': database['local']
 }
 
 
