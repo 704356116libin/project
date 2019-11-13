@@ -30,6 +30,14 @@ database={
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+    },
+    'server':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bin_db',
+        'USER': 'root',
+        'PASSWORD': '70435616',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
@@ -99,7 +107,7 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': database['local']
+    'default': database['server']#勿传服务器
 }
 
 
