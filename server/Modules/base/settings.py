@@ -34,8 +34,8 @@ database={
     'server':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bin_db',
-        'USER': 'root',
-        'PASSWORD': '70435616',
+        'USER': 'bin_db',
+        'PASSWORD': '704356116',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
