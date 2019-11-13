@@ -36,7 +36,7 @@ database={
         'NAME': 'bin_db',
         'USER': 'bin_db',
         'PASSWORD': '704356116',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
