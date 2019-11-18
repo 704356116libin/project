@@ -39,11 +39,21 @@
         </div>
       </div>
     </el-tab-pane>
+    <el-date-picker
+      v-model="value1"
+      type="daterange"
+      align="right"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :picker-options="pickerOptions"
+    ></el-date-picker>
   </el-tabs>
 </template>
 
 <script>
-import qs from 'qs'
+import qs from "qs";
 export default {
   name: "LoginForm",
   props: {},
@@ -51,12 +61,49 @@ export default {
     return {
       form: {
         name: "",
-        password:""
+        password: ""
       },
       visible: true,
       activeName: "first",
       fits: ["cover"],
-      url:"https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+      url:
+        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "最近一周",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近一个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit("pick", [start, end]);
+            }
+          },
+          {
+            text: "最近三个月",
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit("pick", [start, end]);
+            }
+          }
+        ],
+        onPick(min,max) {
+          // 这里可以写执行之后的逻辑 用户选择一次时间范围会触发两次
+          console.log(Date.parse(min))
+        }
+      },
+      value1: ""
     };
   },
   methods: {
@@ -64,12 +111,10 @@ export default {
       console.log(tab, event);
     },
     // 表单提交前验证
-    validator:function(){
-
-    },
+    validator: function() {},
     login: function() {
       console.log("点击了login");
-      let that = this
+      let that = this;
       // this.$http.get("/Auth/add_user", {
       //     params: {
       //       a: 12345
@@ -83,10 +128,13 @@ export default {
       //   });
       //post请求方式
       this.$http
-        .post("/Auth/add_user",qs.stringify({
-         name: that.form.name,
-         password: that.form.password
-        }))
+        .post(
+          "/Auth/add_user",
+          qs.stringify({
+            name: that.form.name,
+            password: that.form.password
+          })
+        )
         .then(function(response) {
           console.log("1111", response);
         })
@@ -96,7 +144,10 @@ export default {
     },
     changePass(value) {
       this.visible = !(value === "show");
-    } //判断渲染，true:暗文显示，false:明文显示
+    }, //判断渲染，true:暗文显示，false:明文显示
+    demo: function(maxDate, minDate) {
+      console.log(maxDate, minDate);
+    }
   }
 };
 </script>
