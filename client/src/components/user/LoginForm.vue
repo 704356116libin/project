@@ -49,14 +49,19 @@
       end-placeholder="结束日期"
       :picker-options="pickerOptions"
     ></el-date-picker>
+    <Menu />
   </el-tabs>
 </template>
 
 <script>
+import Menu from '@/components/tool/tree/Menu.vue'
 import qs from "qs";
 export default {
   name: "LoginForm",
   props: {},
+  components: {
+   Menu
+  },
   data() {
     return {
       form: {
@@ -97,11 +102,7 @@ export default {
               picker.$emit("pick", [start, end]);
             }
           }
-        ],
-        onPick(min,max) {
-          // 这里可以写执行之后的逻辑 用户选择一次时间范围会触发两次
-          console.log(Date.parse(min))
-        }
+        ]
       },
       value1: ""
     };
