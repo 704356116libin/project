@@ -1,0 +1,140 @@
+<extend name="Model/common_index" />
+
+<block name="header_css">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="__PUBLIC__/static/element-ui/element-2.12.0.css">
+
+  <style type="text/css">
+    .custom-tree-node {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      padding-right: 8px;
+    }
+  </style>
+</block>
+
+<!-- 页面的内容部分 -->
+<block name="content">
+  <div class="wrapper wrapper-content animated fadeInUp">
+
+      <div class="custom-tree-container" >
+        <!--<el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>-->
+        <div class="block" v-loading="loading" >
+          <el-tree
+                  :data="data"
+                  class="filter-tree"
+                  show-checkbox
+                  node-key="id"
+
+                  :expand-on-click-node="false"
+                  @check-change="check_change"
+                  :filter-node-method="filterNode"
+                  ref="tree"
+          >
+              <span class="custom-tree-node" slot-scope="{node,data}">
+                <span>{{ data.title }}</span>
+                <span>{{ data.sign }}</span>
+                    <span>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => edit(node,data)">
+                        新增
+                      </el-button>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => edit(node,data)">
+                        编辑
+                      </el-button>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => remove(node, data)">
+                        删除
+                      </el-button>
+                    </span>
+                </span>
+          </el-tree>
+        </div>
+
+
+      </div>
+  </div>
+</block>
+
+
+<!-- 页面中的 底部js 控制部分 -->
+<block name="js_control">
+  <!-- 引入组件库 -->
+  <script src="__PUBLIC__/static/element-ui/vue-2.6.10.js"></script>
+  <script src="__PUBLIC__/static/element-ui/element-2.12.0.js"></script>
+  <script src="__PUBLIC__/static/axios.min.js"></script>
+  <script>
+    let id = 1000;
+    //分页条
+    new Vue({
+      el: '.custom-tree-container',
+      data: () => {
+        return {
+          data: [],
+          filterText: '',
+          loading:true
+        };
+      },
+      methods: {
+        // 新增
+        add(node,data){
+
+        },
+        //编辑
+        edit(node,data) {
+          console.log(node,data)
+        },
+        //删除
+        remove(node, data) {
+          const parent = node.parent;
+          const children = parent.data.children || parent.data;
+          const index = children.findIndex(d => d.id === data.id);
+          children.splice(index, 1);
+        },
+        filterNode(value, data) {
+          if (!value) return true;
+          return data.label.indexOf(value) !== -1;
+        },
+        check_change:function (a,b,c) {
+          console.log(a,b,c)
+        }
+      },
+      watch: {
+        filterText(val) {
+          this.$refs.tree.filter(val);
+        }
+      },
+      /**
+       * 创建前进行数据加载
+       */
+      created:function(){
+        let that = this
+        axios.get('http://mofang.51daoteng.com/api/module/DuoguanMenu/index')
+                .then(function (response) {
+                  console.log(response.data.data)
+                  that.data = JSON.parse(JSON.stringify(response.data.data))
+                  that.loading = false
+                })
+                .catch(function (error) {
+                  console.log('2222',error);
+                  that.loading = false
+                })
+                .then(function () {
+
+                });
+
+      }
+
+    })
+  </script>
+</block>

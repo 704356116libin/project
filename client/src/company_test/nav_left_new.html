@@ -1,0 +1,227 @@
+<nav class="nav-l">
+    <div class="nav-l-main">
+
+        <ul class="unstyle no-margins no-padding">
+			<li><i class="fa fa-star"></i><span> 功能模块</span></li>
+			<li><i class="fa fa-line-chart"></i><span> 营销插件</span></li>
+			<li><i class="fa fa-home"></i><span> 基础配置</span></li>
+			<li><i class="fa fa-puzzle-piece"></i><span> 项目发布</span></li>
+            <li><i class="fa fa-sitemap"></i><span> 用户营销</span></li>
+			<li><i class="fa fa-cog"></i><span> 高级配置</span></li>
+
+		</ul>
+    </div>
+    <div class="nav-l-sub">
+        <div class="nav-l-menu sidebar-collapse">
+			<!--功能模块-->
+			<ul class="nav-l-item">
+				<h2><i class="fa fa-star"></i> 功能模块</h2>
+				<if condition="$appInfo.app_type eq 8">
+				<li>
+					<a class="J_menuItem_2" href="{:U('public/myaddons',array('publicid'=>$appInfo['app_id']))}" id="mkgl">
+						<span class="nav-label">模块管理</span>
+					</a>
+				</li>
+				</if>
+
+				<if condition="$myinfo.is_init neq 0 ">
+					{:hook('frankol_model', $list_data)}
+				</if>
+			</ul>
+			<!--营销插件-->
+			<ul class="nav-l-item">
+				<h2><i class="fa fa-line-chart"></i> 营销插件</h2>
+				<if condition="$appInfo.app_type eq 8">
+					<li>
+						<a class="J_menuItem_2" href="{:U('public/myMarketing',array('publicid'=>$appInfo['app_id']))}" id="mkgl">
+							<span class="nav-label">插件管理</span>
+						</a>
+					</li>
+				</if>
+				<if condition="$myinfo.is_init neq 0 ">
+					{:hook('frankol_model', $list_data_fit)}
+				</if>
+			</ul>
+			<!--基础配置-->
+            <ul class="nav-l-item">
+                <h2><i class="fa fa-home"></i> 基础配置</h2>
+                    <switch name="appInfo.app_type">
+                        <case value="3">
+							<li>  <a class="J_menuItem_2" href="{:U('Home/mini/mpwx_edit',array('apid'=>$appInfo['id']))}">公众号配置</a> </li>
+                        </case>
+                        <case value="2">
+							<li> <a class="J_menuItem_2" href="{:U('Home/mini/mpwx_edit',array('apid'=>$appInfo['id']))}">公众号配置</a> </li>
+                        </case>
+                        <case value="8">
+							<li> <a class="J_menuItem_2" href="{:U('Home/mini/edit',array('apid'=>$appInfo['id']))}">小程序配置</a> </li>
+
+							<li> <a class="J_menuItem_2" href="{:U('Home/DataAnalysis/index',array('apid'=>$appInfo['id']))}">数据统计</a> </li>
+                        </case>
+                        <!-- 暂无数据！ -->
+                    </switch>
+
+				<if condition="(session('is_agent') && !session('agent_channel')) || session('mid') == 1">
+					<li ><a class="J_menuItem_2" href=" {:U('Home/mini/qrcodejump')}">一码通</a></li>
+				</if>
+
+            </ul>
+			<!--发布管理-->
+			<ul class="nav-l-item">
+                    <h2><i class="fa fa-puzzle-piece"></i> 项目管理</h2>
+					<li>
+						<if condition="($appInfo['app_type'] eq 8) && ($appInfo['app_create_type'] eq 1)">
+							<a class="J_menuItem_2" href="{:U('Home/Publish/lists',array('apid'=>$appInfo['id']))}">项目发布
+							</a>
+							<if condition="$woyun eq 1">
+							<a class="J_menuItem_2" href="{:U('Home/Xpackage/lists',array('apid'=>$appInfo['id']))}">项目下载
+							</a>
+							</if>
+							<elseif condition="($appInfo['app_type'] eq 8) && ($appInfo['app_create_type'] eq 0)"/>
+							<!--手动-->
+							<a class="J_menuItem_2" href="{:U('Home/Xpackage/lists',array('apid'=>$appInfo['id']))}">项目发布</a>
+						</if>
+					</li>
+                </ul>
+			<!--用户营销-->
+			<ul class="nav-l-item">
+				<h2><i class="fa fa-puzzle-piece"></i> 用户营销</h2>
+				<if condition="$appInfo.app_type eq 8">
+				<li class="nav-l-drop">
+					<h3>
+						用户中心
+						<i class="fa fa-caret-right"></i>
+					</h3>
+					<ul>
+						<li><a class="J_menuItem_2" href="{:addons_url('DuoguanUser://User/index')}">用户列表</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Card://Card/config')}">会员设置</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Card://Member/lists')}">会员管理</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Card://MemberTransition/lists')}">会员交易</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Card://MemberMarketing/lists')}">会员营销</a></li>
+					</ul>
+				</li>
+				<li class="nav-l-drop">
+					<h3>
+						福包管理
+						<i class="fa fa-caret-right"></i>
+					</h3>
+					<ul>
+						<li><a class="J_menuItem_2" href="{:addons_url('Wallet://Wallet/config')}">配置管理</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Wallet://Bonus/index')}">红包管理</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Wallet://Cash/cashlists')}">提现管理</a></li>
+					</ul>
+				</li>
+				<li class="nav-l-drop">
+					<h3>
+						积分商城
+						<i class="fa fa-caret-right"></i>
+					</h3>
+					<ul>
+						<li><a class="J_menuItem_2" href="{:addons_url('DuoguanIntegral://Goods/index')}">商品管理</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('DuoguanIntegral://Order/index')}">订单管理</a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('DuoguanIntegral://DuoguanIntegral/config')}">配置管理</a></li>
+						<li><a class="J_menuItem_2" href="{:U('Home/Print/index/module/duoguanintegral')}">打印机管理</a></li>
+					</ul>
+				</li>
+				<li class="nav-l-drop">
+					<h3>
+						核销管理
+						<i class="fa fa-caret-right"></i>
+					</h3>
+					<ul>
+						<li><a class="J_menuItem_2" href="{:addons_url('Examuser://Examuser/index')}"><b>核销人员</b></a></li>
+						<li><a class="J_menuItem_2" href="{:addons_url('Examuser://ExamuserList/index')}"><b>核销记录</b></a></li>
+					</ul>
+				</li>
+					<li><a class="J_menuItem_2" href="{:addons_url('Card://ExtensionGroup/index')}">推广组管理</a></li>
+					<li><a class="J_menuItem_2" href="{:addons_url('Distribution://Distribution/fxconfig')}">分销管理</a></li>
+				<li ><a class="J_menuItem_2" href="{:addons_url('Card://Coupon/lists')}">优惠券</a></li>
+						<li ><a class="J_menuItem_2" href=" {:addons_url('Message://Index/index')}">群发消息</a></li>
+				</if>
+			</ul>
+			<!--高级配置-->
+			<ul class="nav-l-item">
+				<h2><i class="fa fa-cog"></i> 高级配置</h2>
+				<if condition="$appInfo.app_type eq 8">
+					<li>
+						<a class="J_menuItem_2" href="{:U('public/setPublicActionPass',array('publicid'=>$appInfo['app_id']))}" id="mkgl">
+							<span class="nav-label">安全密码设置</span>
+						</a>
+					</li>
+					<if condition="(session('is_agent') AND !session('agent_channel')) OR (session('user_auth.uid') eq 1)">
+						<li><a class="J_menuItem_2" href="{:U('Public/public_copy_agentlist',array('publicid'=>$appInfo['app_id'],'type'=>$public_info[type]))}">分身配置</a></li>
+					</if>
+					<li><a class="J_menuItem_2" href="{:U('Public/WeixinTemplate',array('publicid'=>$public_info[id]))}">微信模板消息管理</a></li>
+
+					<li ><a class="J_menuItem_2" href="{:addons_url('DuoguanUser://User/miniLinks')}"><span class="nav-label">功能链接</span></a></li>
+					<li ><a class="J_menuItem_2" href="{:addons_url('DgPromotion://Index/index')}"><span class="nav-label">流量主广告配置</span></a></li>
+					<li><a class="J_menuItem_2" href="{:addons_url('DuoguanUser://User/address')}"><span class="nav-label">收货地址配置</span></a></li>
+                    <li><a class="J_menuItem_2" href="{:addons_url('Jurisdiction://Jurisdiction/index')}"><span class="nav-label">权限配置</span></a></li>
+                    <li><a class="J_menuItem_2" href="{:addons_url('Operatinguser://Operatinguser/index')}"><span class="nav-label">运营人员</span></a></li>
+					<li><a class="J_menuItem_2" href="{:U('Public/logistics')}">物流查询配置</a></li>
+					<li><a class="J_menuItem_2" href="{:addons_url('DuoguanUser://AliContact/aliContactConfig')}">支付宝客服配置</a></li>
+					<li><a class="J_menuItem_2" href="{:addons_url('ImgMaterial://List/index')}">素材库</a></li>
+					<li><a class="J_menuItem_2" href="{:addons_url('DuoguanMenu://DuoguanMenu/new_menu_admin')}">新菜单管理</a></li>
+				</if>
+
+				<if condition="($appInfo.app_type eq 2) OR ($appInfo.app_type eq 3) ">
+					<li><a class="J_menuItem_2" href="{:U('Public/addons_temp')}">公众号配置</a></li>
+				</if>
+
+
+
+			</ul>
+        </div>
+    </div>
+</nav>
+
+<script type="text/javascript">
+
+    // new menu
+    $(".nav-l-menu").on("click", "h3", function() {
+        var menuUl = $(this).next("ul");
+        if (menuUl.is(":hidden")) {
+            menuUl.slideDown().closest("li").siblings().find("ul").slideUp();
+            menuUl.closest("li").siblings().find("i").removeClass("active");
+            $(this).find("i").addClass("active");
+            if (menuUl.find("a").hasClass("active")) {
+                $(this).removeClass("active");
+            } else {
+                $(".nav-l-menu a.active").closest("ul").prev("h3").addClass("active");
+            }
+        } else {
+            menuUl.slideUp().siblings("ul").slideUp();
+            $(this).find("i").removeClass("active");
+            if (menuUl.find("a").hasClass("active")) {
+                $(this).addClass("active");
+            }
+        }
+
+    })
+    $(".nav-l-menu").on("click", "a", function() {
+        $(this).addClass("active")
+        var aLi         = $(this).closest("li").siblings();
+        var aLiDrop     = $(this).closest(".nav-l-drop").siblings();
+        aLi.find("a").removeClass("active");
+        aLi.find("h3").removeClass("active");
+        aLi.find("i").removeClass("active");
+        aLi.find("ul").slideUp();
+        aLiDrop.find("a").removeClass("active");
+        aLiDrop.find("h3").removeClass("active");
+        aLiDrop.find("i").removeClass("active");
+        aLiDrop.find("ul").slideUp();
+        return false;
+    })
+
+    function myTab(tabTit, tabCon, events) {
+        $(tabTit).find("li:first").addClass("active");
+        $(tabCon).find(".nav-l-item:first").show();
+        $(tabTit).on(events,"li",function(){
+            $(this).addClass("active").siblings("li").removeClass("active");
+            var tIndex = $(tabTit).find("li").index(this);
+            $(tabCon).find(".nav-l-item").eq(tIndex).show().siblings().hide();
+        })
+    }
+
+    myTab(".nav-l-main", ".nav-l-menu", "click");
+
+</script>
