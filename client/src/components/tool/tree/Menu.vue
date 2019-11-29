@@ -1,7 +1,7 @@
 <template>
   <div class="custom-tree-container">
     <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
-    <div class="block">
+    <div class="block" v-loading="loading">
       <p>使用 render-content</p>
       <el-tree
         :data="data"
@@ -77,7 +77,8 @@ export default {
     ];
     return {
       data: JSON.parse(JSON.stringify(data)),
-      filterText: ''
+      filterText: '',
+      loading:true
     };
   },
   methods: {
