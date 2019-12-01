@@ -1,20 +1,63 @@
 <template>
   <div class="custom-tree-container">
-    <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
-    <div class="block" v-loading="loading">
-      <p>使用 render-content</p>
-      <el-tree
-        :data="data"
-        class="filter-tree"
-        show-checkbox
-        node-key="id"
-        default-expand-all
-        :expand-on-click-node="false"
-        :filter-node-method="filterNode"
-        :render-content="renderContent"
-        ref="tree"
-      ></el-tree>
-    </div>
+     <div class="custom-tree-container" >
+        <!--<el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>-->
+        <div class="block" v-loading="loading" >
+          <el-tree
+                  :data="data"
+                  class="filter-tree"
+                  show-checkbox
+                  node-key="link"
+                  :expand-on-click-node="false"
+                  @check-change="check_change"
+                  :filter-node-method="filterNode"
+                  :default-checked-keys="default_key"
+                  ref="tree"
+          >
+              <span class="custom-tree-node" slot-scope="{node,data}">
+                <span>{{ data.title }}</span>
+                <span>{{ data.sign }}</span>
+                    <span>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => add(node,data)">
+                        新增
+                      </el-button>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => edit(node,data)">
+                        编辑
+                      </el-button>
+                      <el-button
+                              type="text"
+                              size="mini"
+                              @click="() => remove(node, data)">
+                        删除
+                      </el-button>
+                    </span>
+                </span>
+          </el-tree>
+        </div>
+<el-dialog title="菜单编辑" :visible.sync="dialogFormVisible">
+  <el-form :model="form">
+    <el-form-item label="名称" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="路径" :label-width="formLabelWidth">
+      <el-input v-model="form.link" autocomplete="off"></el-input>
+    </el-form-item><el-form-item label="排序" :label-width="formLabelWidth">
+      <el-input v-model="form.sort" autocomplete="off"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+  </div>
+</el-dialog>
+<el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+      </div>
     
   </div>
 </template>
@@ -26,104 +69,13678 @@ export default {
   name: "Menu",
   data() {
     const data = [
-      {
-        id: 1,
-        label: "一级 1",
-        children: [
-          {
-            id: 4,
-            label: "二级 1-1",
-            children: [
-              {
-                id: 9,
-                label: "三级 1-1-1"
-              },
-              {
-                id: 10,
-                label: "三级 1-1-2"
-              }
-            ]
-          }
+    {
+        "sign": "admin_menu",
+        "id": 1,
+        "title": "功能模块",
+        "pid": 0,
+        "sort": 1,
+        "link": null,
+        "is_self": 0,
+        "db_name": "manage_menu",
+        "children": [
+            {
+                "sign": "manage_menu",
+                "id": "f527",
+                "title": "活动报名",
+                "pid": "0",
+                "sort": 3,
+                "addons": "DuoguanActivity",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f591",
+                        "title": "基本配置",
+                        "pid": "527",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanActivity://Config/config/activity/hidden",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 130,
+                                "title": "基本配置",
+                                "pid": 591,
+                                "sort": 1,
+                                "addons": "DuoguanActivity",
+                                "link": "DuoguanActivity://Config/config/activity/hidden",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 133,
+                                "title": "分享设置",
+                                "pid": 591,
+                                "sort": 1,
+                                "addons": "DuoguanActivity",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f535",
+                        "title": "活动模板管理",
+                        "pid": "527",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanActivity://ActivityTemp/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 177,
+                                "title": "活动模板管理",
+                                "pid": 535,
+                                "sort": 1,
+                                "addons": "DuoguanActivity",
+                                "link": "DuoguanActivity://ActivityTemp/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 181,
+                                        "title": "新增",
+                                        "pid": 177,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://ActivityTemp/addTempName",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 279,
+                                        "title": "新增模板内容",
+                                        "pid": 177,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://ActivityTemp/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 282,
+                                        "title": "编辑模板分类名称",
+                                        "pid": 177,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://ActivityTemp/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f528",
+                        "title": "活动管理",
+                        "pid": "527",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanActivity://Activity/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 285,
+                                "title": "活动管理",
+                                "pid": 528,
+                                "sort": 1,
+                                "addons": "DuoguanActivity",
+                                "link": "DuoguanActivity://Activity/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 606,
+                                        "title": "查看报名用户",
+                                        "pid": 285,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://Activity/userLists",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 607,
+                                        "title": "设置抽奖",
+                                        "pid": 285,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://Activity/prize",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 608,
+                                        "title": "编辑",
+                                        "pid": 285,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivity",
+                                        "link": "DuoguanActivity://Activity/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f663",
+                "title": "微答题",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWenda",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f664",
+                        "title": "基本配置",
+                        "pid": "663",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWenda://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 231,
+                                "title": "基本配置",
+                                "pid": 664,
+                                "sort": 1,
+                                "addons": "DuoguanWenda",
+                                "link": "DuoguanWenda://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 232,
+                                "title": "分享设置",
+                                "pid": 664,
+                                "sort": 2,
+                                "addons": "DuoguanWenda",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f665",
+                        "title": "题库管理",
+                        "pid": "663",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanWenda://Question/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 964,
+                                "title": "题库管理",
+                                "pid": 665,
+                                "sort": 1,
+                                "addons": "DuoguanWenda",
+                                "link": "DuoguanWenda://Question/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 966,
+                                        "title": "新增",
+                                        "pid": 964,
+                                        "sort": 1,
+                                        "addons": "DuoguanWenda",
+                                        "link": "DuoguanWenda://Question/add",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f681",
+                        "title": "记录管理",
+                        "pid": "663",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanWenda://Active/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 186,
+                                "title": "活动记录",
+                                "pid": 681,
+                                "sort": 1,
+                                "addons": "DuoguanWenda",
+                                "link": "DuoguanWenda://Active/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 967,
+                                        "title": "排行榜",
+                                        "pid": 186,
+                                        "sort": 1,
+                                        "addons": "DuoguanWenda",
+                                        "link": "DuoguanWenda://Active/top",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 237,
+                                "title": "问答记录",
+                                "pid": 681,
+                                "sort": 2,
+                                "addons": "DuoguanWenda",
+                                "link": "DuoguanWenda://Record/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 240,
+                                "title": "人员记录",
+                                "pid": 681,
+                                "sort": 3,
+                                "addons": "DuoguanWenda",
+                                "link": "DuoguanWenda://User/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 968,
+                                        "title": "邀请人列表",
+                                        "pid": 240,
+                                        "sort": 1,
+                                        "addons": "DuoguanWenda",
+                                        "link": "DuoguanWenda://User/ulists",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 969,
+                                        "title": "查看",
+                                        "pid": 240,
+                                        "sort": 2,
+                                        "addons": "DuoguanWenda",
+                                        "link": "DuoguanWenda://User/detail",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f655",
+                "title": "家政接单",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanHousemaking",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f656",
+                        "title": "审核中心",
+                        "pid": "655",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://StoreVerify/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f658",
+                        "title": "店铺中心",
+                        "pid": "655",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://StoreManage/cancompany",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 667,
+                                "title": "新增",
+                                "pid": 658,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Swiper/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 668,
+                                "title": "编辑",
+                                "pid": 658,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Swiper/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 669,
+                                "title": "删除",
+                                "pid": 658,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Swiper/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f786",
+                        "title": "钱包管理",
+                        "pid": "655",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://Purse/cash",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f670",
+                        "title": "招商中心",
+                        "pid": "655",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://Sales/buscompany",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f705",
+                        "title": "配置中心",
+                        "pid": "655",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://Range/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1619",
+                        "title": "信用分管理",
+                        "pid": "655",
+                        "sort": 112,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://CreditScore/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1641",
+                        "title": "商务合作",
+                        "pid": "655",
+                        "sort": 113,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Cooperation/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1646",
+                        "title": "报名活动管理",
+                        "pid": "655",
+                        "sort": 114,
+                        "addons": "",
+                        "link": "DuoguanHousemaking://Activity/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f648",
+                "title": "活动报名（升级版）",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanChargeActivity",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f652",
+                        "title": "活动管理",
+                        "pid": "648",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanChargeActivity://Activity/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 140,
+                                "title": "活动管理",
+                                "pid": 652,
+                                "sort": 1,
+                                "addons": "DuoguanChargeActivity",
+                                "link": "DuoguanChargeActivity://Activity/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 166,
+                                        "title": "活动管理",
+                                        "pid": 140,
+                                        "sort": 1,
+                                        "addons": "DuoguanChargeActivity",
+                                        "link": "DuoguanChargeActivity://Activity/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 169,
+                                        "title": "编辑",
+                                        "pid": 140,
+                                        "sort": 1,
+                                        "addons": "DuoguanChargeActivity",
+                                        "link": "DuoguanChargeActivity://Activity/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 170,
+                                        "title": "复制",
+                                        "pid": 140,
+                                        "sort": 1,
+                                        "addons": "DuoguanChargeActivity",
+                                        "link": "DuoguanChargeActivity://Activity/copy",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 173,
+                                        "title": "报名数据",
+                                        "pid": 140,
+                                        "sort": 1,
+                                        "addons": "DuoguanChargeActivity",
+                                        "link": "DuoguanChargeActivity://Activity/userlist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 665,
+                                        "title": "报名数据",
+                                        "pid": 140,
+                                        "sort": 1,
+                                        "addons": "DuoguanChargeActivity",
+                                        "link": "DuoguanChargeActivity://ActivityData/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 141,
+                                "title": "基本配置",
+                                "pid": 652,
+                                "sort": 1,
+                                "addons": "DuoguanChargeActivity",
+                                "link": "DuoguanChargeActivity://Activity/configInfo",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 143,
+                                "title": "分享配置",
+                                "pid": 652,
+                                "sort": 1,
+                                "addons": "DuoguanChargeActivity",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f637",
+                "title": "超级导航",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DgNav",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f640",
+                        "title": "导航管理",
+                        "pid": "637",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DgNav://Navigation/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 536,
+                                "title": "导航管理",
+                                "pid": 640,
+                                "sort": 1,
+                                "addons": "DgNav",
+                                "link": "DgNav://Navigation/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 553,
+                                        "title": "新增",
+                                        "pid": 536,
+                                        "sort": 1,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Navigation/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 554,
+                                        "title": "编辑",
+                                        "pid": 536,
+                                        "sort": 2,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Navigation/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 555,
+                                        "title": "删除",
+                                        "pid": 536,
+                                        "sort": 3,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Navigation/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 556,
+                                        "title": "搜索",
+                                        "pid": 536,
+                                        "sort": 4,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Navigation/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 557,
+                                        "title": "跳转",
+                                        "pid": 536,
+                                        "sort": 5,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Navigation/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 541,
+                                "title": "轮播管理",
+                                "pid": 640,
+                                "sort": 1,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/lbtconfig",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1042,
+                                        "title": "轮播管理",
+                                        "pid": 541,
+                                        "sort": 1,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Carousel/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1043,
+                                        "title": "轮播管理-新增",
+                                        "pid": 541,
+                                        "sort": 2,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Carousel/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1044,
+                                        "title": "轮播管理-编辑",
+                                        "pid": 541,
+                                        "sort": 3,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Carousel/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1045,
+                                        "title": "轮播管理-删除",
+                                        "pid": 541,
+                                        "sort": 4,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Carousel/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1046,
+                                        "title": "轮播管理-搜索",
+                                        "pid": 541,
+                                        "sort": 5,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Carousel/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 544,
+                                "title": "分类管理",
+                                "pid": 640,
+                                "sort": 2,
+                                "addons": "DgNav",
+                                "link": "DgNav://Cate/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 558,
+                                        "title": "新增",
+                                        "pid": 544,
+                                        "sort": 1,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Cate/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 559,
+                                        "title": "编辑",
+                                        "pid": 544,
+                                        "sort": 2,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Cate/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 560,
+                                        "title": "删除",
+                                        "pid": 544,
+                                        "sort": 3,
+                                        "addons": "DgNav",
+                                        "link": "DgNav://Cate/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 548,
+                                "title": "分享设置",
+                                "pid": 640,
+                                "sort": 3,
+                                "addons": "DgNav",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f633",
+                "title": "人气大比拼",
+                "pid": "0",
+                "sort": 0,
+                "addons": "MarketingLike",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f634",
+                        "title": "活动管理",
+                        "pid": "633",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingLike://Index/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f630",
+                "title": "万能表单",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanForm",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f631",
+                        "title": "表单管理",
+                        "pid": "630",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanForm://Index/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f659",
+                        "title": "表单配置",
+                        "pid": "630",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanForm://Config/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f623",
+                "title": "集字活动",
+                "pid": "0",
+                "sort": 0,
+                "addons": "MarketingWord",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f624",
+                        "title": "活动管理",
+                        "pid": "623",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingWord://Index/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f625",
+                        "title": "参与记录",
+                        "pid": "623",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingWord://Myword/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f614",
+                "title": "活动推广",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanActivityPromot",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f615",
+                        "title": "基础配置",
+                        "pid": "614",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanActivityPromot://ActivityBase/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 160,
+                                "title": "基础配置",
+                                "pid": 615,
+                                "sort": 1,
+                                "addons": "DuoguanActivityPromot",
+                                "link": "DuoguanActivityPromot://ActivityBase/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 162,
+                                "title": "用户列表",
+                                "pid": 615,
+                                "sort": 1,
+                                "addons": "DuoguanActivityPromot",
+                                "link": "DuoguanActivityPromot://ActivityPromotUser/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 253,
+                                        "title": "搜索",
+                                        "pid": 162,
+                                        "sort": 2,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPromotUser/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 171,
+                                "title": "分享设置",
+                                "pid": 615,
+                                "sort": 2,
+                                "addons": "DuoguanActivityPromot",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f616",
+                        "title": "活动管理",
+                        "pid": "614",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanActivityPromot://Activity/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 280,
+                                "title": "活动管理",
+                                "pid": 616,
+                                "sort": 1,
+                                "addons": "DuoguanActivityPromot",
+                                "link": "DuoguanActivityPromot://Activity/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 283,
+                                        "title": "新增",
+                                        "pid": 280,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://Activity/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 284,
+                                        "title": "编辑",
+                                        "pid": 280,
+                                        "sort": 2,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://Activity/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 290,
+                                        "title": "分销设置",
+                                        "pid": 280,
+                                        "sort": 3,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityDistributionConfig/distribution",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 293,
+                                        "title": "访问人数",
+                                        "pid": 280,
+                                        "sort": 4,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://Activity/userlist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 295,
+                                        "title": "删除",
+                                        "pid": 280,
+                                        "sort": 5,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://Activity/delete",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f618",
+                        "title": "订单管理",
+                        "pid": "614",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanActivityPromot://ActivityPay/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 260,
+                                "title": "订单管理",
+                                "pid": 618,
+                                "sort": 1,
+                                "addons": "DuoguanActivityPromot",
+                                "link": "DuoguanActivityPromot://ActivityPay/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 262,
+                                        "title": "导出",
+                                        "pid": 260,
+                                        "sort": 1,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/activityoutput",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 266,
+                                        "title": "搜索",
+                                        "pid": 260,
+                                        "sort": 2,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 271,
+                                        "title": "取消订单",
+                                        "pid": 260,
+                                        "sort": 3,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/cancelOrder",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 272,
+                                        "title": "发货",
+                                        "pid": 260,
+                                        "sort": 4,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/sendOutGoods",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 274,
+                                        "title": "确认收货",
+                                        "pid": 260,
+                                        "sort": 5,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/confirmGoods",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 277,
+                                        "title": "查看",
+                                        "pid": 260,
+                                        "sort": 6,
+                                        "addons": "DuoguanActivityPromot",
+                                        "link": "DuoguanActivityPromot://ActivityPay/view",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f611",
+                "title": "WIFI一键连",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWifi",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f612",
+                        "title": "WIFI管理",
+                        "pid": "611",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWifi://Article/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f621",
+                        "title": "分享设置",
+                        "pid": "611",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Home/Public/addons_share/module/duoguan_wifi",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f605",
+                "title": "幸运大转盘",
+                "pid": "0",
+                "sort": 0,
+                "addons": "MarketingLuckDraw",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f622",
+                        "title": "奖品管理",
+                        "pid": "605",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingLuckDraw://Jiang/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f606",
+                        "title": "活动管理",
+                        "pid": "605",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "MarketingLuckDraw://Index/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f607",
+                        "title": "抽奖记录",
+                        "pid": "605",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "MarketingLuckDraw://Log/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f594",
+                "title": "微培训",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanTrain",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f595",
+                        "title": "基本配置",
+                        "pid": "594",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanTrain://Shop/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 26,
+                                "title": "消息配置",
+                                "pid": 595,
+                                "sort": 3,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 28,
+                                "title": "机构管理",
+                                "pid": 595,
+                                "sort": 1,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Shop/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 124,
+                                        "title": "新增机构",
+                                        "pid": 28,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Shop/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 616,
+                                        "title": "编辑机构",
+                                        "pid": 28,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Shop/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 617,
+                                        "title": "删除机构",
+                                        "pid": 28,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Shop/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 44,
+                                "title": "老师管理",
+                                "pid": 595,
+                                "sort": 2,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Teacher/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 619,
+                                        "title": "添加老师",
+                                        "pid": 44,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Teacher/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 620,
+                                        "title": "编辑老师",
+                                        "pid": 44,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Teacher/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 621,
+                                        "title": "删除老师",
+                                        "pid": 44,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Teacher/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 46,
+                                "title": "数据导入",
+                                "pid": 595,
+                                "sort": 4,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 111,
+                                "title": "分享设置",
+                                "pid": 595,
+                                "sort": 5,
+                                "addons": "DuoguanTrain",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f599",
+                        "title": "课程管理",
+                        "pid": "594",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanTrain://TiyanClass/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 77,
+                                "title": "体验课管理",
+                                "pid": 599,
+                                "sort": 1,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://TiyanClass/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 622,
+                                        "title": "新增体验课",
+                                        "pid": 77,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://TiyanClass/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 623,
+                                        "title": "编辑体验课",
+                                        "pid": 77,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://TiyanClass/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 624,
+                                        "title": "删除体验课",
+                                        "pid": 77,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://TiyanClass/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 82,
+                                "title": "精品课分类",
+                                "pid": 599,
+                                "sort": 2,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://FineClass/cateindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 625,
+                                        "title": "新增精品课分类",
+                                        "pid": 82,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/cateadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 626,
+                                        "title": "编辑精品课分类",
+                                        "pid": 82,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/cateedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 628,
+                                        "title": "删除精品课分类",
+                                        "pid": 82,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/catedel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 84,
+                                "title": "视频实录",
+                                "pid": 599,
+                                "sort": 4,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Video/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 638,
+                                        "title": "新增视频",
+                                        "pid": 84,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Video/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 639,
+                                        "title": "编辑视频",
+                                        "pid": 84,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Video/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 640,
+                                        "title": "删除视频",
+                                        "pid": 84,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Video/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 91,
+                                "title": "精品课列表",
+                                "pid": 599,
+                                "sort": 3,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://FineClass/classindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 631,
+                                        "title": "新增精品课",
+                                        "pid": 91,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/classadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 632,
+                                        "title": "编辑精品课",
+                                        "pid": 91,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/classedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 634,
+                                        "title": "删除精品课",
+                                        "pid": 91,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://FineClass/classdel",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f601",
+                        "title": "报名预约",
+                        "pid": "594",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanTrain://Bespeak/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 99,
+                                "title": "预约管理",
+                                "pid": 601,
+                                "sort": 1,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Bespeak/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 644,
+                                        "title": "预约详情",
+                                        "pid": 99,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Bespeak/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 646,
+                                        "title": "取消预约",
+                                        "pid": 99,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Bespeak/CancelBclass",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 103,
+                                "title": "体验课报名管理",
+                                "pid": 601,
+                                "sort": 2,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Enroll/tyindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 650,
+                                        "title": "体验课报名详情",
+                                        "pid": 103,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Enroll/tyinfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 656,
+                                        "title": "体验课后台报名",
+                                        "pid": 103,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Enroll/addBmty",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 105,
+                                "title": "精品课报名管理",
+                                "pid": 601,
+                                "sort": 3,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Enroll/jpindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 657,
+                                        "title": "精品课后台报名",
+                                        "pid": 105,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Enroll/addBmjp",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 661,
+                                        "title": "精品课报名详情",
+                                        "pid": 105,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://Enroll/jpinfo",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f608",
+                        "title": "课表管理",
+                        "pid": "594",
+                        "sort": 9,
+                        "addons": "",
+                        "link": "DuoguanTrain://ClassTable/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 666,
+                                "title": "课表管理",
+                                "pid": 608,
+                                "sort": 1,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://ClassTable/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 670,
+                                        "title": "新增课表",
+                                        "pid": 666,
+                                        "sort": 1,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://ClassTable/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 671,
+                                        "title": "编辑课表",
+                                        "pid": 666,
+                                        "sort": 2,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://ClassTable/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 673,
+                                        "title": "删除课表",
+                                        "pid": 666,
+                                        "sort": 3,
+                                        "addons": "DuoguanTrain",
+                                        "link": "DuoguanTrain://ClassTable/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1649",
+                        "title": "统计报表",
+                        "pid": "594",
+                        "sort": 12,
+                        "addons": "",
+                        "link": "DuoguanTrain://Report/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 220,
+                                "title": "统计报表",
+                                "pid": 1649,
+                                "sort": 1,
+                                "addons": "DuoguanTrain",
+                                "link": "DuoguanTrain://Report/index",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f581",
+                "title": "电话本",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanTel",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f582",
+                        "title": "基本配置",
+                        "pid": "581",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanTel://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 145,
+                                "title": "基本配置",
+                                "pid": 582,
+                                "sort": 1,
+                                "addons": "DuoguanTel",
+                                "link": "DuoguanTel://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 150,
+                                "title": "分享设置",
+                                "pid": 582,
+                                "sort": 4,
+                                "addons": "DuoguanTel",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 164,
+                                "title": "地图密钥配置",
+                                "pid": 582,
+                                "sort": 2,
+                                "addons": "DuoguanTel",
+                                "link": "home://public/addons_mapkey",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 168,
+                                "title": "数据导入",
+                                "pid": 582,
+                                "sort": 3,
+                                "addons": "DuoguanTel",
+                                "link": "DuoguanTel://Import/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f584",
+                        "title": "电话管理",
+                        "pid": "581",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanTel://Article/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 178,
+                                "title": "电话管理",
+                                "pid": 584,
+                                "sort": 1,
+                                "addons": "DuoguanTel",
+                                "link": "DuoguanTel://Article/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 681,
+                                        "title": "新增电话",
+                                        "pid": 178,
+                                        "sort": 1,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Article/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 682,
+                                        "title": "编辑电话",
+                                        "pid": 178,
+                                        "sort": 2,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Article/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 683,
+                                        "title": "删除电话",
+                                        "pid": 178,
+                                        "sort": 3,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Article/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 179,
+                                "title": "分类管理",
+                                "pid": 584,
+                                "sort": 2,
+                                "addons": "DuoguanTel",
+                                "link": "DuoguanTel://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 685,
+                                        "title": "新增分类",
+                                        "pid": 179,
+                                        "sort": 1,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 686,
+                                        "title": "编辑分类",
+                                        "pid": 179,
+                                        "sort": 2,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 688,
+                                        "title": "删除分类",
+                                        "pid": 179,
+                                        "sort": 3,
+                                        "addons": "DuoguanTel",
+                                        "link": "DuoguanTel://Category/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f672",
+                "title": "微点赞",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDianzan",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f673",
+                        "title": "活动管理",
+                        "pid": "672",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDianzan://Activity/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 228,
+                                "title": "活动管理",
+                                "pid": 673,
+                                "sort": 1,
+                                "addons": "DuoguanDianzan",
+                                "link": "DuoguanDianzan://Activity/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 450,
+                                        "title": "新增活动",
+                                        "pid": 228,
+                                        "sort": 2,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 453,
+                                        "title": "作品展示",
+                                        "pid": 228,
+                                        "sort": 3,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/zuopin",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 460,
+                                        "title": "添加作品",
+                                        "pid": 228,
+                                        "sort": 4,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/add_activity",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 466,
+                                        "title": "搜索作品",
+                                        "pid": 228,
+                                        "sort": 6,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/search_zuopin",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 474,
+                                        "title": "活动商品添加",
+                                        "pid": 228,
+                                        "sort": 7,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 970,
+                                        "title": "编辑未通过的原因",
+                                        "pid": 228,
+                                        "sort": 2,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://Activity/reason",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 229,
+                                "title": "分享设置",
+                                "pid": 673,
+                                "sort": 2,
+                                "addons": "DuoguanDianzan",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f674",
+                        "title": "作品管理",
+                        "pid": "672",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDianzan://ActivityList/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 255,
+                                "title": "作品管理",
+                                "pid": 674,
+                                "sort": 1,
+                                "addons": "DuoguanDianzan",
+                                "link": "DuoguanDianzan://ActivityList/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 971,
+                                        "title": "编辑未通过原因",
+                                        "pid": 255,
+                                        "sort": 2,
+                                        "addons": "DuoguanDianzan",
+                                        "link": "DuoguanDianzan://ActivityList/reason",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f677",
+                "title": "跑腿接单(试用版)",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanRuning",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f772",
+                        "title": "接单报表",
+                        "pid": "677",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanRuning://SetWxc/echart",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f678",
+                        "title": "基本配置",
+                        "pid": "677",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanRuning://DuoguanRuning/config",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f679",
+                        "title": "骑手审核",
+                        "pid": "677",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanRuning://SetWxc/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f680",
+                        "title": "订单记录",
+                        "pid": "677",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanRuning://DuoguanRuning/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f684",
+                        "title": "店铺管理",
+                        "pid": "677",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanRuning://DuoguanMarket/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f686",
+                "title": "高级预约",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanBooking",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f688",
+                        "title": "基本配置",
+                        "pid": "686",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBooking://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 563,
+                                "title": "店铺配置",
+                                "pid": 688,
+                                "sort": 1,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 565,
+                                "title": "分享设置",
+                                "pid": 688,
+                                "sort": 2,
+                                "addons": "DuoguanBooking",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 567,
+                                "title": "数据导入",
+                                "pid": 688,
+                                "sort": 3,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Copy/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f689",
+                        "title": "服务管理",
+                        "pid": "686",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanBooking://Service/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 568,
+                                "title": "服务管理",
+                                "pid": 689,
+                                "sort": 1,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Service/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 575,
+                                        "title": "新增",
+                                        "pid": 568,
+                                        "sort": 1,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Service/editServiceInfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 582,
+                                        "title": "删除",
+                                        "pid": 568,
+                                        "sort": 2,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Service/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 583,
+                                        "title": "编辑",
+                                        "pid": 568,
+                                        "sort": 3,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Service/editServiceInfo",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 578,
+                                "title": "分类管理",
+                                "pid": 689,
+                                "sort": 2,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 584,
+                                        "title": "新增",
+                                        "pid": 578,
+                                        "sort": 1,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 585,
+                                        "title": "编辑",
+                                        "pid": 578,
+                                        "sort": 2,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 586,
+                                        "title": "禁用",
+                                        "pid": 578,
+                                        "sort": 3,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Category/setStatus",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 587,
+                                        "title": "删除",
+                                        "pid": 578,
+                                        "sort": 4,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Category/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 725,
+                                "title": "新增",
+                                "pid": 689,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Category/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 726,
+                                "title": "编辑",
+                                "pid": 689,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Category/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 728,
+                                "title": "删除",
+                                "pid": 689,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Category/del",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 729,
+                                "title": "搜索",
+                                "pid": 689,
+                                "sort": 4,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Category/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f691",
+                        "title": "订单管理",
+                        "pid": "686",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanBooking://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 588,
+                                "title": "订单管理",
+                                "pid": 691,
+                                "sort": 1,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 590,
+                                        "title": "搜索",
+                                        "pid": 588,
+                                        "sort": 1,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Order/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 591,
+                                        "title": "接单",
+                                        "pid": 588,
+                                        "sort": 2,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Order/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 592,
+                                        "title": "拒绝",
+                                        "pid": 588,
+                                        "sort": 3,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Order/refuse",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 593,
+                                        "title": "查看",
+                                        "pid": 588,
+                                        "sort": 4,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Order/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 589,
+                                "title": "退款管理",
+                                "pid": 691,
+                                "sort": 2,
+                                "addons": "DuoguanBooking",
+                                "link": "DuoguanBooking://Refund/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 595,
+                                        "title": "搜索",
+                                        "pid": 589,
+                                        "sort": 0,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Refund/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 596,
+                                        "title": "退款",
+                                        "pid": 589,
+                                        "sort": 2,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Refund/refundorder",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 609,
+                                        "title": "拒绝",
+                                        "pid": 589,
+                                        "sort": 3,
+                                        "addons": "DuoguanBooking",
+                                        "link": "DuoguanBooking://Refund/refuserefund",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1651",
+                "title": "赠品库",
+                "pid": "0",
+                "sort": 0,
+                "addons": "MarketingGift",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1652",
+                        "title": "赠品库",
+                        "pid": "1651",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "MarketingGift://Index/config",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1644",
+                "title": "每日签到",
+                "pid": "0",
+                "sort": 0,
+                "addons": "Sign",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1645",
+                        "title": "每日签到",
+                        "pid": "1644",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Sign://Sign/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1627",
+                "title": " 撩客雷达",
+                "pid": "0",
+                "sort": 0,
+                "addons": "ServiceCard",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1628",
+                        "title": "客服名片",
+                        "pid": "1627",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ServiceCard://User/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1620",
+                "title": "智慧党建",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanPartyBuild",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1621",
+                        "title": "基本配置",
+                        "pid": "1620",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 829,
+                                "title": "基本配置",
+                                "pid": 1621,
+                                "sort": 1,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 833,
+                                "title": "党员分类",
+                                "pid": 1621,
+                                "sort": 2,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Config/labellist",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 850,
+                                        "title": "添加标签",
+                                        "pid": 833,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/addlabel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1004,
+                                        "title": "编辑",
+                                        "pid": 833,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/editlabel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1010,
+                                        "title": "编辑",
+                                        "pid": 833,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/editlabel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1049,
+                                "title": "轮播图管理",
+                                "pid": 1621,
+                                "sort": 3,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Config/slideshowlist",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1050,
+                                        "title": "轮播图管理",
+                                        "pid": 1049,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/slideshowaddinfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1051,
+                                        "title": "轮播图管理",
+                                        "pid": 1049,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/editslide",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1052,
+                                "title": "服务站点",
+                                "pid": 1621,
+                                "sort": 4,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Config/servicesitelist",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1053,
+                                        "title": "服务站点",
+                                        "pid": 1052,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Config/serviceadd",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1623",
+                        "title": "积分管理",
+                        "pid": "1620",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://ScoreConfig/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 224,
+                                "title": "积分配置",
+                                "pid": 1623,
+                                "sort": 1,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://ScoreConfig/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 225,
+                                "title": "基础积分",
+                                "pid": 1623,
+                                "sort": 2,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://ScoreBase/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 281,
+                                        "title": "新增基础积分标签",
+                                        "pid": 225,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://ScoreBase/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 286,
+                                        "title": "修改基础积分标签",
+                                        "pid": 225,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://ScoreBase/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 226,
+                                "title": "个性积分",
+                                "pid": 1623,
+                                "sort": 3,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://ScoreCountry/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 297,
+                                        "title": "新增个性积分标签",
+                                        "pid": 226,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://ScoreCountry/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 298,
+                                        "title": "修改个性积分标签",
+                                        "pid": 226,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://ScoreCountry/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 227,
+                                "title": "积分排行",
+                                "pid": 1623,
+                                "sort": 4,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Rank/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1622",
+                        "title": "支部管理",
+                        "pid": "1620",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://Branch/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1626",
+                        "title": "发布通知",
+                        "pid": "1620",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://Notify/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1054,
+                                "title": "通知管理",
+                                "pid": 1626,
+                                "sort": 1,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Notify/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1056,
+                                        "title": "增加通知",
+                                        "pid": 1054,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Notify/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1057,
+                                        "title": "编辑通知",
+                                        "pid": 1054,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Notify/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1055,
+                                "title": "奖惩公示",
+                                "pid": 1626,
+                                "sort": 2,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://Notify/rewardlist",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1058,
+                                        "title": "增加公示",
+                                        "pid": 1055,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Notify/addreward",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1059,
+                                        "title": "编辑公示",
+                                        "pid": 1055,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://Notify/editreward",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1667",
+                        "title": "党建学习",
+                        "pid": "1620",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://PartyStudy/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1060,
+                                "title": "党建学习",
+                                "pid": 1667,
+                                "sort": 1,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://PartyStudy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1061,
+                                "title": "轮播图管理",
+                                "pid": 1667,
+                                "sort": 2,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://PartyStudy/slideshowlist",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1064,
+                                        "title": "轮播图管理",
+                                        "pid": 1061,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://PartyStudy/slideshowaddinfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1065,
+                                        "title": "轮播图管理",
+                                        "pid": 1061,
+                                        "sort": 2,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://PartyStudy/slideshoweditinfo",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1062,
+                                "title": "分类管理",
+                                "pid": 1667,
+                                "sort": 3,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://PartyStudy/labellist",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1063,
+                                "title": "打卡记录",
+                                "pid": 1667,
+                                "sort": 4,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://PartyStudy/punchcard",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1630",
+                        "title": "审核管理",
+                        "pid": "1620",
+                        "sort": 9,
+                        "addons": "",
+                        "link": "DuoguanPartyBuild://CheckContents/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 996,
+                                "title": "审核管理",
+                                "pid": 1630,
+                                "sort": 1,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://CheckContents/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1005,
+                                        "title": "去审核",
+                                        "pid": 996,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://CheckContents/tocheck",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 998,
+                                "title": "审核通过",
+                                "pid": 1630,
+                                "sort": 2,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://CheckContents/checkyes",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1000,
+                                        "title": "查看文章",
+                                        "pid": 998,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://CheckContents/lookcontent",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 999,
+                                "title": "审核未通过",
+                                "pid": 1630,
+                                "sort": 3,
+                                "addons": "DuoguanPartyBuild",
+                                "link": "DuoguanPartyBuild://CheckContents/checkno",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1001,
+                                        "title": "查看",
+                                        "pid": 999,
+                                        "sort": 1,
+                                        "addons": "DuoguanPartyBuild",
+                                        "link": "DuoguanPartyBuild://CheckContents/lookcontentno",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1613",
+                "title": "工人接单",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWorker",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1614",
+                        "title": "基本配置",
+                        "pid": "1613",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWorker://Config/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1615",
+                        "title": "店铺管理",
+                        "pid": "1613",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWorker://Market/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1616",
+                        "title": "工人管理",
+                        "pid": "1613",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWorker://Worker/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1617",
+                        "title": "订单记录",
+                        "pid": "1613",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWorker://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 223,
+                                "title": "订单记录",
+                                "pid": 1617,
+                                "sort": 1,
+                                "addons": "DuoguanWorker",
+                                "link": "DuoguanWorker://Order/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1618",
+                        "title": "接单报表",
+                        "pid": "1613",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWorker://Order/report",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1610",
+                "title": "任务有奖",
+                "pid": "0",
+                "sort": 0,
+                "addons": "MarketingTask",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1611",
+                        "title": "任务活动管理",
+                        "pid": "1610",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingTask://Index/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1612",
+                        "title": "参与记录",
+                        "pid": "1610",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "MarketingTask://Partake/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1604",
+                "title": "旅游",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanTourism",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1605",
+                        "title": "导游管理",
+                        "pid": "1604",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanTourism://TourGuide/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1606",
+                        "title": "景区管理",
+                        "pid": "1604",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanTourism://ScenicArea/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1607",
+                        "title": "轮播管理",
+                        "pid": "1604",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanTourism://Swiper/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1006,
+                                "title": "轮播管理",
+                                "pid": 1607,
+                                "sort": 1,
+                                "addons": "DuoguanTourism",
+                                "link": "DuoguanTourism://Swiper/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1007,
+                                "title": "分享设置",
+                                "pid": 1607,
+                                "sort": 2,
+                                "addons": "DuoguanTourism",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1591",
+                "title": "智慧政务",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanZhengWu",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1592",
+                        "title": "基本配置",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 153,
+                                "title": "基本配置",
+                                "pid": 1592,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 155,
+                                "title": "首页轮播管理",
+                                "pid": 1592,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Config/swiper",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 156,
+                                "title": "分享设置",
+                                "pid": 1592,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1593",
+                        "title": "阳光政务",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Government/swiper",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 691,
+                                "title": "轮播图配置",
+                                "pid": 1593,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/swiper",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 695,
+                                "title": "栏目版块",
+                                "pid": 1593,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/cateindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 700,
+                                        "title": "新增栏目版块",
+                                        "pid": 695,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 701,
+                                        "title": "编辑栏目版块",
+                                        "pid": 695,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 702,
+                                        "title": "删除栏目版块",
+                                        "pid": 695,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/cate_del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 697,
+                                "title": "政务文章",
+                                "pid": 1593,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/article",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 706,
+                                        "title": "新增政务文章",
+                                        "pid": 697,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/article_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 707,
+                                        "title": "编辑政务文章",
+                                        "pid": 697,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/article_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 710,
+                                        "title": "删除政务文章",
+                                        "pid": 697,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Government/article_del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1594",
+                        "title": "风采展示",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Style/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 713,
+                                "title": "地理人文",
+                                "pid": 1594,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Style/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 716,
+                                "title": "风采文章",
+                                "pid": 1594,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Style/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 718,
+                                        "title": "新增风采",
+                                        "pid": 716,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Style/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 720,
+                                        "title": "编辑风采",
+                                        "pid": 716,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Style/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 721,
+                                        "title": "删除风采",
+                                        "pid": 716,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Style/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1595",
+                        "title": "公众信箱",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Mail/cateindex",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 722,
+                                "title": "分类管理",
+                                "pid": 1595,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/cateindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 737,
+                                        "title": "新增分类",
+                                        "pid": 722,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 738,
+                                        "title": "编辑分类",
+                                        "pid": 722,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 739,
+                                        "title": "删除分类",
+                                        "pid": 722,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/cate_del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 723,
+                                "title": "部门管理",
+                                "pid": 1595,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/branchindex",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 750,
+                                        "title": "新增部门",
+                                        "pid": 723,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/branch_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 751,
+                                        "title": "编辑部门",
+                                        "pid": 723,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/branch_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 753,
+                                        "title": "删除部门",
+                                        "pid": 723,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/branch_del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 724,
+                                "title": "来信管理",
+                                "pid": 1595,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 758,
+                                        "title": "来信详情",
+                                        "pid": 724,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 759,
+                                        "title": "回复来信",
+                                        "pid": 724,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Mail/toReply",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1596",
+                        "title": "办事指南",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Guide/cate",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 761,
+                                "title": "分类管理",
+                                "pid": 1596,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Guide/cate",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 764,
+                                        "title": "新增分类",
+                                        "pid": 761,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 765,
+                                        "title": "编辑分类",
+                                        "pid": 761,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/cate_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 766,
+                                        "title": "删除分类",
+                                        "pid": 761,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/cate_del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 763,
+                                "title": "办事指南",
+                                "pid": 1596,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Guide/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 767,
+                                        "title": "新增指南",
+                                        "pid": 763,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 768,
+                                        "title": "编辑指南",
+                                        "pid": 763,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 771,
+                                        "title": "删除指南",
+                                        "pid": 763,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Guide/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1597",
+                        "title": "民意征集",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Vote/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 75,
+                                "title": "民意征集",
+                                "pid": 1597,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Vote/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 775,
+                                        "title": "新增民意投票",
+                                        "pid": 75,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Vote/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 776,
+                                        "title": "编辑民意投票",
+                                        "pid": 75,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Vote/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 777,
+                                        "title": "删除",
+                                        "pid": 75,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Vote/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1598",
+                        "title": "服务单位",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://Unit/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 778,
+                                "title": "服务单位",
+                                "pid": 1598,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Unit/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 780,
+                                        "title": "新增单位",
+                                        "pid": 778,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Unit/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 782,
+                                        "title": "编辑单位",
+                                        "pid": 778,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Unit/addedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 783,
+                                        "title": "删除单位",
+                                        "pid": 778,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://Unit/delete",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1609",
+                        "title": "文件管理",
+                        "pid": "1591",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanZhengWu://File/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 788,
+                                "title": "文件管理",
+                                "pid": 1609,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://File/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 791,
+                                        "title": "新增文件",
+                                        "pid": 788,
+                                        "sort": 1,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://File/addeidt",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 792,
+                                        "title": "编辑文件",
+                                        "pid": 788,
+                                        "sort": 2,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://File/addeidt",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 793,
+                                        "title": "删除文件",
+                                        "pid": 788,
+                                        "sort": 3,
+                                        "addons": "DuoguanZhengWu",
+                                        "link": "DuoguanZhengWu://File/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f759",
+                "title": "礼品卡",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanGiftCard",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f760",
+                        "title": "基本配置",
+                        "pid": "759",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 94,
+                                "title": "首页配置",
+                                "pid": 760,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 97,
+                                "title": "分享设置",
+                                "pid": 760,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f761",
+                        "title": "卡项管理",
+                        "pid": "759",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Goods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 101,
+                                "title": "卡项管理",
+                                "pid": 761,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Goods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 106,
+                                        "title": "新增编辑",
+                                        "pid": 101,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Goods/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 109,
+                                        "title": "推广配置",
+                                        "pid": 101,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Goods/extend",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 110,
+                                        "title": "推广列表",
+                                        "pid": 101,
+                                        "sort": 3,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Reward/extendlist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 300,
+                                        "title": "删除",
+                                        "pid": 101,
+                                        "sort": 4,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Goods/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 303,
+                                        "title": "搜索",
+                                        "pid": 101,
+                                        "sort": 5,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Goods/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 598,
+                                        "title": "推广列表搜索",
+                                        "pid": 101,
+                                        "sort": 0,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Reward/extendlist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 599,
+                                        "title": "推广列表导出",
+                                        "pid": 101,
+                                        "sort": 0,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Reward/export_data",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 102,
+                                "title": "标签管理",
+                                "pid": 761,
+                                "sort": 2,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://CardTag/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 112,
+                                        "title": "新增编辑",
+                                        "pid": 102,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://CardTag/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 309,
+                                        "title": "删除",
+                                        "pid": 102,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://CardTag/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 104,
+                                "title": "批量制卡",
+                                "pid": 761,
+                                "sort": 3,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Order/list",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 118,
+                                        "title": "新增",
+                                        "pid": 104,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/addOrder",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 120,
+                                        "title": "查看",
+                                        "pid": 104,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/pinfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 313,
+                                        "title": "禁用启用",
+                                        "pid": 104,
+                                        "sort": 3,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/seCardStatus",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 314,
+                                        "title": "导出",
+                                        "pid": 104,
+                                        "sort": 4,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/exportCard",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 319,
+                                        "title": "搜索",
+                                        "pid": 104,
+                                        "sort": 5,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/list",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 322,
+                                        "title": "二维码",
+                                        "pid": 104,
+                                        "sort": 6,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/getWxcode",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 764,
+                                "title": "新增分类",
+                                "pid": 761,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Guide/cate_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 765,
+                                "title": "编辑分类",
+                                "pid": 761,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Guide/cate_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 766,
+                                "title": "删除分类",
+                                "pid": 761,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Guide/cate_del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f775",
+                        "title": "活动管理",
+                        "pid": "759",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Order/activity",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 323,
+                                "title": "活动管理",
+                                "pid": 775,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Order/activity",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 332,
+                                        "title": "添加",
+                                        "pid": 323,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/addActivity",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 336,
+                                        "title": "查看",
+                                        "pid": 323,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/ainfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 338,
+                                        "title": "导出",
+                                        "pid": 323,
+                                        "sort": 3,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/exportActivity",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 339,
+                                        "title": "搜索",
+                                        "pid": 323,
+                                        "sort": 4,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/activity",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f762",
+                        "title": "订单管理",
+                        "pid": "759",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 126,
+                                "title": "订单管理",
+                                "pid": 762,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 135,
+                                        "title": "查看",
+                                        "pid": 126,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 341,
+                                        "title": "搜索",
+                                        "pid": 126,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 127,
+                                "title": "配送管理",
+                                "pid": 762,
+                                "sort": 2,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Order/exam_shipping",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 343,
+                                        "title": "筛选",
+                                        "pid": 127,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/exam_shipping",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 345,
+                                        "title": "导出",
+                                        "pid": 127,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/exportData",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 348,
+                                        "title": "发货",
+                                        "pid": 127,
+                                        "sort": 3,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Order/set_shipping_status",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 129,
+                                "title": "核销记录",
+                                "pid": 762,
+                                "sort": 3,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Record/examList",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 349,
+                                        "title": "搜索",
+                                        "pid": 129,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Record/examList",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 351,
+                                        "title": "导出",
+                                        "pid": 129,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Record/exportData",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 132,
+                                "title": "买单订单管理",
+                                "pid": 762,
+                                "sort": 4,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buyorder/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 354,
+                                        "title": "搜索",
+                                        "pid": 132,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buyorder/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 356,
+                                        "title": "导出",
+                                        "pid": 132,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buyorder/exportData",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f768",
+                        "title": "买单管理",
+                        "pid": "759",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Buy/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 359,
+                                "title": "买单管理",
+                                "pid": 768,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buy/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 360,
+                                        "title": "新增编辑",
+                                        "pid": 359,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buy/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 361,
+                                        "title": "删除",
+                                        "pid": 359,
+                                        "sort": 2,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buy/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 362,
+                                        "title": "查看二维码",
+                                        "pid": 359,
+                                        "sort": 3,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buy/getWxcode",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 365,
+                                        "title": "搜索",
+                                        "pid": 359,
+                                        "sort": 4,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Buy/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1648",
+                        "title": "推广记录",
+                        "pid": "759",
+                        "sort": 8,
+                        "addons": "",
+                        "link": "DuoguanGiftCard://Reward/memberList",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 371,
+                                "title": "推广记录",
+                                "pid": 1648,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Reward/memberList",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 375,
+                                        "title": "推广记录",
+                                        "pid": 371,
+                                        "sort": 1,
+                                        "addons": "DuoguanGiftCard",
+                                        "link": "DuoguanGiftCard://Reward/rewardList",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f738",
+                "title": "微批发",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWholesale",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f739",
+                        "title": "基本配置",
+                        "pid": "738",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanWholesale://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 76,
+                                "title": "基本配置",
+                                "pid": 739,
+                                "sort": 1,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 79,
+                                "title": "打印机配置",
+                                "pid": 739,
+                                "sort": 1,
+                                "addons": "DuoguanWholesale",
+                                "link": "home://print/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 802,
+                                        "title": "打印机新增",
+                                        "pid": 79,
+                                        "sort": 1,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "home://print/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 83,
+                                "title": "轮播图管理",
+                                "pid": 739,
+                                "sort": 3,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Slide/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 163,
+                                        "title": "轮播图添加",
+                                        "pid": 83,
+                                        "sort": 1,
+                                        "addons": "duoguanwholesale",
+                                        "link": "DuoguanWholesale://Slide/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 871,
+                                        "title": "轮播图编辑",
+                                        "pid": 83,
+                                        "sort": 2,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Slide/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 95,
+                                "title": "分享设置",
+                                "pid": 739,
+                                "sort": 4,
+                                "addons": "DuoguanWholesale",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f742",
+                        "title": "商品管理",
+                        "pid": "738",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanWholesale://Goods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 872,
+                                "title": "商品管理",
+                                "pid": 742,
+                                "sort": 1,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Goods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 902,
+                                        "title": "商品添加",
+                                        "pid": 872,
+                                        "sort": 1,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Goods/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 903,
+                                        "title": "商品编辑",
+                                        "pid": 872,
+                                        "sort": 2,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Goods/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 873,
+                                "title": "分类管理",
+                                "pid": 742,
+                                "sort": 2,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 874,
+                                        "title": "分类管理新增",
+                                        "pid": 873,
+                                        "sort": 1,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Category/append",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 875,
+                                        "title": "分类管理编辑",
+                                        "pid": 873,
+                                        "sort": 1,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Category/modify",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f743",
+                        "title": "订单管理",
+                        "pid": "738",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanWholesale://Order/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f744",
+                        "title": "客户管理",
+                        "pid": "738",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanWholesale://Client/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 879,
+                                "title": "客户管理",
+                                "pid": 744,
+                                "sort": 1,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Client/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 880,
+                                "title": "客户等级管理",
+                                "pid": 744,
+                                "sort": 1,
+                                "addons": "DuoguanWholesale",
+                                "link": "DuoguanWholesale://Grade/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 890,
+                                        "title": "客户等级添加",
+                                        "pid": 880,
+                                        "sort": 1,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Grade/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 891,
+                                        "title": "客户等级编辑",
+                                        "pid": 880,
+                                        "sort": 2,
+                                        "addons": "DuoguanWholesale",
+                                        "link": "DuoguanWholesale://Grade/info",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f707",
+                "title": "桶装水",
+                "pid": "0",
+                "sort": 0,
+                "addons": "BaoZhenWater",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f708",
+                        "title": "基础配置",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Config/setting",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f709",
+                        "title": "分类管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://StoreCategory/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f710",
+                        "title": "门店管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Config/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f711",
+                        "title": "商家管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://StoreEnter/pendingStores",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f712",
+                        "title": "提现管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Cash/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f713",
+                        "title": "广告管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Swiper/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f714",
+                        "title": "集市配置",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Market/config",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f715",
+                        "title": "集市商品分类管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Market/category",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f716",
+                        "title": "集市商品管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://Market/goods",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 718,
+                                "title": "新增风采",
+                                "pid": 716,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Style/addedit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 720,
+                                "title": "编辑风采",
+                                "pid": 716,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Style/addedit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 721,
+                                "title": "删除风采",
+                                "pid": 716,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Style/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f717",
+                        "title": "订单管理",
+                        "pid": "707",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "BaoZhenWater://PlatformStats/orders",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f692",
+                "title": "婚庆（内测版）",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWedding",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f694",
+                        "title": "基础设置",
+                        "pid": "692",
+                        "sort": -3,
+                        "addons": "",
+                        "link": "DuoguanWedding://Merchant/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 18,
+                                "title": "商家设置",
+                                "pid": 694,
+                                "sort": 1,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Merchant/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 23,
+                                "title": "轮播图管理",
+                                "pid": 694,
+                                "sort": 2,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Slideshow/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 316,
+                                        "title": "新增轮播图",
+                                        "pid": 23,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Slideshow/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 321,
+                                        "title": "编辑轮播图",
+                                        "pid": 23,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Slideshow/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 25,
+                                "title": "优惠券管理",
+                                "pid": 694,
+                                "sort": 4,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Card/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 53,
+                                        "title": "搜索",
+                                        "pid": 25,
+                                        "sort": 0,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Card/searchTitle",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 325,
+                                        "title": "新增优惠券",
+                                        "pid": 25,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Card/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 328,
+                                        "title": "修改优惠券",
+                                        "pid": 25,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Card/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 330,
+                                        "title": "领取明细",
+                                        "pid": 25,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Card/detail",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 27,
+                                "title": "分享设置",
+                                "pid": 694,
+                                "sort": 5,
+                                "addons": "DuoguanWedding",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f699",
+                        "title": "案例管理",
+                        "pid": "692",
+                        "sort": -2,
+                        "addons": "",
+                        "link": "DuoguanWedding://Case/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 30,
+                                "title": "案例管理",
+                                "pid": 699,
+                                "sort": 2,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Case/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 56,
+                                        "title": "搜索",
+                                        "pid": 30,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Case/search",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 434,
+                                        "title": "案例管理",
+                                        "pid": 30,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Case/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 438,
+                                        "title": "编辑案例",
+                                        "pid": 30,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Case/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 32,
+                                "title": "案例分类",
+                                "pid": 699,
+                                "sort": 3,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://CaseCategory/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 442,
+                                        "title": "新增案例分类",
+                                        "pid": 32,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://CaseCategory/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 446,
+                                        "title": "修改案例分类",
+                                        "pid": 32,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://CaseCategory/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f697",
+                        "title": "套餐管理",
+                        "pid": "692",
+                        "sort": -1,
+                        "addons": "",
+                        "link": "DuoguanWedding://Product/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 34,
+                                "title": "套餐管理",
+                                "pid": 697,
+                                "sort": 2,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Product/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 61,
+                                        "title": "搜索",
+                                        "pid": 34,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Product/search",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 411,
+                                        "title": "新增套餐内容",
+                                        "pid": 34,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Product/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 413,
+                                        "title": "服务内容",
+                                        "pid": 34,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Product/server",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 419,
+                                        "title": "编辑套餐内容",
+                                        "pid": 34,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Product/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 35,
+                                "title": "套餐分类",
+                                "pid": 697,
+                                "sort": 3,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Package/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 425,
+                                        "title": "新增套餐分类",
+                                        "pid": 35,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Package/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 427,
+                                        "title": "修改套餐分类",
+                                        "pid": 35,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Package/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 706,
+                                "title": "新增政务文章",
+                                "pid": 697,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/article_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 707,
+                                "title": "编辑政务文章",
+                                "pid": 697,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/article_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 710,
+                                "title": "删除政务文章",
+                                "pid": 697,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Government/article_del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f701",
+                        "title": "客户管理",
+                        "pid": "692",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanWedding://Manageuser/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 37,
+                                "title": "客户管理",
+                                "pid": 701,
+                                "sort": 2,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Manageuser/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 368,
+                                        "title": "添加用户信息",
+                                        "pid": 37,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/adduser",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 378,
+                                        "title": "任务列表",
+                                        "pid": 37,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/task",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 381,
+                                        "title": "修改任务",
+                                        "pid": 37,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/edittask",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 391,
+                                        "title": "婚礼进度",
+                                        "pid": 37,
+                                        "sort": 4,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/plan",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 396,
+                                        "title": "添加婚礼进度",
+                                        "pid": 37,
+                                        "sort": 5,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/addplan",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 401,
+                                        "title": "修改婚礼进度",
+                                        "pid": 37,
+                                        "sort": 6,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/editplan",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 405,
+                                        "title": "婚礼云文件",
+                                        "pid": 37,
+                                        "sort": 7,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/cloud",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 408,
+                                        "title": "修改云文件",
+                                        "pid": 37,
+                                        "sort": 8,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/editcloud",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 972,
+                                        "title": "添加任务",
+                                        "pid": 37,
+                                        "sort": 8,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/addtask",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 974,
+                                        "title": "添加婚礼云文件",
+                                        "pid": 37,
+                                        "sort": 9,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/addcloud",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 975,
+                                        "title": "修改用户信息",
+                                        "pid": 37,
+                                        "sort": 10,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Manageuser/edituser",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 38,
+                                "title": "预约管理",
+                                "pid": 701,
+                                "sort": 3,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Manageuser/appointment",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f700",
+                        "title": "内容管理",
+                        "pid": "692",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanWedding://Dynamic/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 41,
+                                "title": "动态管理",
+                                "pid": 700,
+                                "sort": 1,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Dynamic/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 65,
+                                        "title": "搜索",
+                                        "pid": 41,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Dynamic/search",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 346,
+                                        "title": "添加动态",
+                                        "pid": 41,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Dynamic/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 347,
+                                        "title": "编辑动态",
+                                        "pid": 41,
+                                        "sort": 3,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Dynamic/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 69,
+                                "title": "任务模板",
+                                "pid": 700,
+                                "sort": 2,
+                                "addons": "DuoguanWedding",
+                                "link": "DuoguanWedding://Tasktemplate/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 353,
+                                        "title": "新增商家任务",
+                                        "pid": 69,
+                                        "sort": 1,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Tasktemplate/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 358,
+                                        "title": "修改商家任务",
+                                        "pid": 69,
+                                        "sort": 2,
+                                        "addons": "DuoguanWedding",
+                                        "link": "DuoguanWedding://Tasktemplate/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f577",
+                "title": "附近家政",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanHouseKeeping",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f685",
+                        "title": "统计中心",
+                        "pid": "577",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Statistics/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f586",
+                        "title": "配置中心",
+                        "pid": "577",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Config/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f654",
+                        "title": "商品中心",
+                        "pid": "577",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Category/serviceCategory",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f579",
+                        "title": "订单中心",
+                        "pid": "577",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Order/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f627",
+                        "title": "信息中心",
+                        "pid": "577",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Suggest/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f795",
+                        "title": "渠道中心",
+                        "pid": "577",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Channel/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f770",
+                        "title": "代金券管理",
+                        "pid": "577",
+                        "sort": 20,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://Coupon/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f778",
+                        "title": "大转盘管理",
+                        "pid": "577",
+                        "sort": 21,
+                        "addons": "",
+                        "link": "DuoguanHouseKeeping://LuckDraw/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 780,
+                                "title": "新增单位",
+                                "pid": 778,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Unit/addedit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 782,
+                                "title": "编辑单位",
+                                "pid": 778,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Unit/addedit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 783,
+                                "title": "删除单位",
+                                "pid": 778,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Unit/delete",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1629",
+                        "title": "垃圾分类小游戏",
+                        "pid": "577",
+                        "sort": 112,
+                        "addons": "",
+                        "link": "HKRubbishAdmin://DetailsUser/typeinfo",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1640",
+                        "title": "垃圾分类渠道中心",
+                        "pid": "577",
+                        "sort": 113,
+                        "addons": "",
+                        "link": "HKRubbishAdmin://Channel/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1643",
+                        "title": "垃圾分类统计中心",
+                        "pid": "577",
+                        "sort": 114,
+                        "addons": "",
+                        "link": "HKRubbishAdmin://Data/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f566",
+                "title": "微砍价",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanBargain",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f567",
+                        "title": "砍价配置",
+                        "pid": "566",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBargain://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 114,
+                                "title": "基本配置",
+                                "pid": 567,
+                                "sort": 1,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 117,
+                                "title": "轮播管理",
+                                "pid": 567,
+                                "sort": 1,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanUser://DuoguanSwiper/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 172,
+                                        "title": "砍价轮播图添加",
+                                        "pid": 117,
+                                        "sort": 1,
+                                        "addons": "duoguanbargain",
+                                        "link": "DuoguanUser://DuoguanSwiper/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1008,
+                                        "title": "砍价轮播图编辑",
+                                        "pid": 117,
+                                        "sort": 2,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanUser://DuoguanSwiper/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 121,
+                                "title": "打印管理",
+                                "pid": 567,
+                                "sort": 2,
+                                "addons": "DuoguanBargain",
+                                "link": "home://print/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 858,
+                                        "title": "打印机配置添加",
+                                        "pid": 121,
+                                        "sort": 1,
+                                        "addons": "DuoguanBargain",
+                                        "link": "Home://print/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 122,
+                                "title": "分享设置",
+                                "pid": 567,
+                                "sort": 3,
+                                "addons": "DuoguanBargain",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 123,
+                                "title": "店铺管理",
+                                "pid": 567,
+                                "sort": 4,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Store/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 176,
+                                        "title": "砍价店铺添加",
+                                        "pid": 123,
+                                        "sort": 1,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Store/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 859,
+                                        "title": "店铺编辑",
+                                        "pid": 123,
+                                        "sort": 2,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Store/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 861,
+                                        "title": "自提点编辑",
+                                        "pid": 123,
+                                        "sort": 3,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Store/selfaddress",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 866,
+                                        "title": "自提点添加",
+                                        "pid": 123,
+                                        "sort": 4,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Store/selfadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 949,
+                                        "title": "砍价店铺自提点编辑",
+                                        "pid": 123,
+                                        "sort": 5,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Store/selfedit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f570",
+                        "title": "砍价商品",
+                        "pid": "566",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBargain://Goods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 844,
+                                "title": "商品管理",
+                                "pid": 570,
+                                "sort": 1,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Goods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 848,
+                                        "title": "商品管理添加",
+                                        "pid": 844,
+                                        "sort": 1,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Goods/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 950,
+                                        "title": "砍价商品编辑",
+                                        "pid": 844,
+                                        "sort": 2,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Goods/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 951,
+                                        "title": "砍价商品订单列表",
+                                        "pid": 844,
+                                        "sort": 3,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Order/goodslist",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 845,
+                                "title": "分类管理",
+                                "pid": 570,
+                                "sort": 2,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 846,
+                                        "title": "分类管理添加",
+                                        "pid": 845,
+                                        "sort": 1,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Category/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 952,
+                                        "title": "砍价商品分类编辑",
+                                        "pid": 845,
+                                        "sort": 2,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Category/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f572",
+                        "title": "砍价订单",
+                        "pid": "566",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBargain://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 842,
+                                "title": "订单管理",
+                                "pid": 572,
+                                "sort": 1,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Order/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 843,
+                                "title": "参与记录",
+                                "pid": 572,
+                                "sort": 2,
+                                "addons": "DuoguanBargain",
+                                "link": "DuoguanBargain://Record/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 954,
+                                        "title": "砍价商品查看用户",
+                                        "pid": 843,
+                                        "sort": 1,
+                                        "addons": "DuoguanBargain",
+                                        "link": "DuoguanBargain://Record/help",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f437",
+                "title": "拼车",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanPinChe",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f506",
+                        "title": "基本配置",
+                        "pid": "437",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanPinChe://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 522,
+                                "title": "添加分类",
+                                "pid": 506,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market/category_add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 526,
+                                "title": "编辑分类",
+                                "pid": 506,
+                                "sort": 3,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market/category_edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f438",
+                        "title": "拼车管理",
+                        "pid": "437",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanPinChe://PinChe/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f539",
+                        "title": "车主管理",
+                        "pid": "437",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanPinChe://Examine/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f439",
+                        "title": "分享设置",
+                        "pid": "437",
+                        "sort": 99,
+                        "addons": "",
+                        "link": "Home/Public/addons_share/module/duoguan_pinche",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f428",
+                "title": "微预约",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanReservation",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f429",
+                        "title": "配置管理",
+                        "pid": "428",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanReservation://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 655,
+                                "title": "店铺配置",
+                                "pid": 429,
+                                "sort": 1,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 678,
+                                "title": "消息配置",
+                                "pid": 429,
+                                "sort": 2,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Config/news",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 679,
+                                "title": "分享设置",
+                                "pid": 429,
+                                "sort": 3,
+                                "addons": "DuoguanReservation",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 680,
+                                "title": "数据导入",
+                                "pid": 429,
+                                "sort": 4,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Copy/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f541",
+                        "title": "字段管理",
+                        "pid": "428",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanReservation://Config/field",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 930,
+                                "title": "字段管理",
+                                "pid": 541,
+                                "sort": 1,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Config/field",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 938,
+                                        "title": "编辑字段",
+                                        "pid": 930,
+                                        "sort": 1,
+                                        "addons": "DuoguanReservation",
+                                        "link": "DuoguanReservation://Config/fieldEdit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1042,
+                                "title": "轮播管理",
+                                "pid": 541,
+                                "sort": 1,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1043,
+                                "title": "轮播管理-新增",
+                                "pid": 541,
+                                "sort": 2,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1044,
+                                "title": "轮播管理-编辑",
+                                "pid": 541,
+                                "sort": 3,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1045,
+                                "title": "轮播管理-删除",
+                                "pid": 541,
+                                "sort": 4,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/del",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1046,
+                                "title": "轮播管理-搜索",
+                                "pid": 541,
+                                "sort": 5,
+                                "addons": "DgNav",
+                                "link": "DgNav://Carousel/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f430",
+                        "title": "分类管理",
+                        "pid": "428",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanReservation://Category/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 959,
+                                "title": "分类管理",
+                                "pid": 430,
+                                "sort": 1,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 960,
+                                        "title": "分类管理",
+                                        "pid": 959,
+                                        "sort": 1,
+                                        "addons": "DuoguanReservation",
+                                        "link": "DuoguanReservation://Category/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f431",
+                        "title": "订单管理",
+                        "pid": "428",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanReservation://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 92,
+                                "title": "订单管理",
+                                "pid": 431,
+                                "sort": 1,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 693,
+                                        "title": "查看详情",
+                                        "pid": 92,
+                                        "sort": 2,
+                                        "addons": "DuoguanReservation",
+                                        "link": "DuoguanReservation://Order/orderDetails",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 93,
+                                "title": "退款管理",
+                                "pid": 431,
+                                "sort": 2,
+                                "addons": "DuoguanReservation",
+                                "link": "DuoguanReservation://OrderRefund/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 432,
+                                "title": "新增",
+                                "pid": 431,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 433,
+                                "title": "编辑",
+                                "pid": 431,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 435,
+                                "title": "删除",
+                                "pid": 431,
+                                "sort": 3,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/del",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 437,
+                                "title": "进入管理",
+                                "pid": 431,
+                                "sort": 4,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/jumpUrl",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 440,
+                                "title": "云喇叭绑定",
+                                "pid": 431,
+                                "sort": 5,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/horn_bind",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 443,
+                                "title": "微信消息用户绑定",
+                                "pid": 431,
+                                "sort": 6,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/wechatQrcode",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f421",
+                "title": "微单页（新版）",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDianDanYe",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f565",
+                        "title": "基础配置",
+                        "pid": "421",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanDianDanYe://Name/lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 191,
+                                "title": "基础配置",
+                                "pid": 565,
+                                "sort": 1,
+                                "addons": "DuoguanDianDanYe",
+                                "link": "DuoguanDianDanYe://Name/lists",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 195,
+                                "title": "分享设置",
+                                "pid": 565,
+                                "sort": 1,
+                                "addons": "DuoguanDianDanYe",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f423",
+                        "title": "单页管理",
+                        "pid": "421",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanDianDanYe://DuoguanDianDanYe/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 426,
+                                "title": "新增",
+                                "pid": 423,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishinfoCategory/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 428,
+                                "title": "编辑",
+                                "pid": 423,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishinfoCategory/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 429,
+                                "title": "删除",
+                                "pid": 423,
+                                "sort": 3,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishinfoCategory/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f424",
+                        "title": "评价管理",
+                        "pid": "421",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanDianDanYe://Evaluation/lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 925,
+                                "title": "拼团商品属性添加",
+                                "pid": 424,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 929,
+                                "title": "拼团商品属性列表",
+                                "pid": 424,
+                                "sort": 2,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/alist",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 934,
+                                "title": "拼团商品属性编辑",
+                                "pid": 424,
+                                "sort": 4,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 946,
+                                "title": "拼团属性列表添加",
+                                "pid": 424,
+                                "sort": 5,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/a_add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 947,
+                                "title": "拼团属性列表编辑",
+                                "pid": 424,
+                                "sort": 3,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/a_edit",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f416",
+                "title": "群助手",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanWXGroupHelper",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f593",
+                        "title": "基本配置",
+                        "pid": "416",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanWXGroupHelper://Config/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 185,
+                                "title": "基本配置",
+                                "pid": 593,
+                                "sort": 1,
+                                "addons": "DuoguanWXGroupHelper",
+                                "link": "DuoguanWXGroupHelper://Config/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 187,
+                                "title": "分享设置",
+                                "pid": 593,
+                                "sort": 1,
+                                "addons": "DuoguanWXGroupHelper",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f418",
+                        "title": "投票管理",
+                        "pid": "416",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanWXGroupHelper://Vote/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 979,
+                                "title": "投票管理",
+                                "pid": 418,
+                                "sort": 1,
+                                "addons": "DuoguanWXGroupHelper",
+                                "link": "DuoguanWXGroupHelper://Vote/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 981,
+                                        "title": "投票编辑",
+                                        "pid": 979,
+                                        "sort": 1,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://Vote/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f420",
+                        "title": "活动管理",
+                        "pid": "416",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanWXGroupHelper://Activity/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 988,
+                                "title": "活动管理",
+                                "pid": 420,
+                                "sort": 1,
+                                "addons": "DuoguanWXGroupHelper",
+                                "link": "DuoguanWXGroupHelper://Activity/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 991,
+                                        "title": "查看用户",
+                                        "pid": 988,
+                                        "sort": 1,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://Activity/userLists",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 992,
+                                        "title": "设置抽奖",
+                                        "pid": 988,
+                                        "sort": 2,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://Activity/prize",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 993,
+                                        "title": "编辑",
+                                        "pid": 988,
+                                        "sort": 3,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://Activity/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 989,
+                                "title": "活动模板管理",
+                                "pid": 420,
+                                "sort": 2,
+                                "addons": "DuoguanWXGroupHelper",
+                                "link": "DuoguanWXGroupHelper://ActivityTemp/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 990,
+                                        "title": "添加",
+                                        "pid": 989,
+                                        "sort": 1,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://ActivityTemp/addTempName",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 994,
+                                        "title": "新增模板",
+                                        "pid": 989,
+                                        "sort": 2,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://ActivityTemp/Add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 995,
+                                        "title": "编辑",
+                                        "pid": 989,
+                                        "sort": 3,
+                                        "addons": "DuoguanWXGroupHelper",
+                                        "link": "DuoguanWXGroupHelper://ActivityTemp/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f419",
+                        "title": "打卡管理",
+                        "pid": "416",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanWXGroupHelper://Signed/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f417",
+                        "title": "通知管理",
+                        "pid": "416",
+                        "sort": 9,
+                        "addons": "",
+                        "link": "DuoguanWXGroupHelper://Notice/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f411",
+                "title": "智慧餐厅",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDish",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f412",
+                        "title": "平台配置",
+                        "pid": "411",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDish://Config/setting",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 40,
+                                "title": "平台配置",
+                                "pid": 412,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/setting",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 42,
+                                "title": "数据导入",
+                                "pid": 412,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 43,
+                                "title": "公众号配置",
+                                "pid": 412,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/wechatSetting",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 80,
+                                "title": "分享设置",
+                                "pid": 412,
+                                "sort": 3,
+                                "addons": "DuoguanDish",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 478,
+                                "title": "新增",
+                                "pid": 412,
+                                "sort": 1,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseSell/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 480,
+                                "title": "编辑",
+                                "pid": 412,
+                                "sort": 2,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseSell/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 482,
+                                "title": "删除",
+                                "pid": 412,
+                                "sort": 3,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseSell/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f448",
+                        "title": "首页活动",
+                        "pid": "411",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDish://Swiper/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 49,
+                                "title": "轮播图管理",
+                                "pid": 448,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Swiper/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 414,
+                                        "title": "新增",
+                                        "pid": 49,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Swiper/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 417,
+                                        "title": "编辑",
+                                        "pid": 49,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Swiper/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 418,
+                                        "title": "删除",
+                                        "pid": 49,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Swiper/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 54,
+                                "title": "公告管理",
+                                "pid": 448,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Notice/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 55,
+                                        "title": "新增",
+                                        "pid": 54,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Notice/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 57,
+                                        "title": "编辑",
+                                        "pid": 54,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Notice/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 59,
+                                        "title": "删除",
+                                        "pid": 54,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Notice/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 63,
+                                "title": "优惠券管理",
+                                "pid": 448,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishQuan/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 66,
+                                        "title": "添加编辑",
+                                        "pid": 63,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishQuan/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 68,
+                                        "title": "领取明细",
+                                        "pid": 63,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishQuan/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 70,
+                                        "title": "搜索",
+                                        "pid": 63,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishQuan/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f413",
+                        "title": "门店管理",
+                        "pid": "411",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanDish://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 423,
+                                "title": "分类管理",
+                                "pid": 413,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishinfoCategory/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 426,
+                                        "title": "新增",
+                                        "pid": 423,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishinfoCategory/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 428,
+                                        "title": "编辑",
+                                        "pid": 423,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishinfoCategory/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 429,
+                                        "title": "删除",
+                                        "pid": 423,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishinfoCategory/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 431,
+                                "title": "门店管理",
+                                "pid": 413,
+                                "sort": 0,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 432,
+                                        "title": "新增",
+                                        "pid": 431,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 433,
+                                        "title": "编辑",
+                                        "pid": 431,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 435,
+                                        "title": "删除",
+                                        "pid": 431,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 437,
+                                        "title": "进入管理",
+                                        "pid": 431,
+                                        "sort": 4,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/jumpUrl",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 440,
+                                        "title": "云喇叭绑定",
+                                        "pid": 431,
+                                        "sort": 5,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/horn_bind",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 443,
+                                        "title": "微信消息用户绑定",
+                                        "pid": 431,
+                                        "sort": 6,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/wechatQrcode",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 462,
+                                "title": "商家入驻",
+                                "pid": 413,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Config/ruzhu",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 465,
+                                        "title": "审核",
+                                        "pid": 462,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/dish_shenhe",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 467,
+                                        "title": "拒绝",
+                                        "pid": 462,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Config/dish_tuihui",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f449",
+                        "title": "提现管理",
+                        "pid": "411",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanDish://Cash/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 444,
+                                "title": "提现管理",
+                                "pid": 449,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 447,
+                                        "title": "搜索",
+                                        "pid": 444,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Cash/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 451,
+                                        "title": "导出",
+                                        "pid": 444,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Cash/export_data",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 454,
+                                        "title": "处理",
+                                        "pid": 444,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Cash/confirm",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 456,
+                                        "title": "线下转账",
+                                        "pid": 444,
+                                        "sort": 4,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Cash/cash_offline",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 459,
+                                        "title": "取消",
+                                        "pid": 444,
+                                        "sort": 5,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://Cash/cash_back",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f730",
+                        "title": "打折商品",
+                        "pid": "411",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanDish://DishDiscountGoods/setting",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 492,
+                                "title": "基本配置",
+                                "pid": 730,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishDiscountGoods/setting",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 495,
+                                "title": "商品管理",
+                                "pid": 730,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishDiscountGoods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 497,
+                                        "title": "搜索",
+                                        "pid": 495,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishDiscountGoods/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 498,
+                                        "title": "新增编辑",
+                                        "pid": 495,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishDiscountGoods/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 499,
+                                        "title": "删除",
+                                        "pid": 495,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishDiscountGoods/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1020,
+                                "title": "参数设置",
+                                "pid": 730,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://About/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1021,
+                                "title": "关于我们",
+                                "pid": 730,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://About/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f731",
+                        "title": "店铺推荐",
+                        "pid": "411",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanDish://DishRecommend/setting",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 481,
+                                "title": "基本配置",
+                                "pid": 731,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishRecommend/setting",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 500,
+                                "title": "店铺管理",
+                                "pid": 731,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishRecommend/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 501,
+                                        "title": "新增编辑",
+                                        "pid": 500,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishRecommend/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 502,
+                                        "title": "删除",
+                                        "pid": 500,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishRecommend/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 503,
+                                        "title": "搜索",
+                                        "pid": 500,
+                                        "sort": 3,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishRecommend/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f752",
+                        "title": "平台订单",
+                        "pid": "411",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanDish://DishStatistics/all_dish_order",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 507,
+                                "title": "平台订单",
+                                "pid": 752,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/all_dish_order",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 508,
+                                        "title": "搜素",
+                                        "pid": 507,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishStatistics/all_dish_order",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 756,
+                                "title": "筛选",
+                                "pid": 752,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 757,
+                                "title": "导出",
+                                "pid": 752,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/exportData",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 760,
+                                "title": "按照勾选导出批量发货模板(订单)",
+                                "pid": 752,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://order/exportTmplate",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 762,
+                                "title": "按照勾选导出批量发货模板(商品)",
+                                "pid": 752,
+                                "sort": 4,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://order/exportGoodsTemplate",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 769,
+                                "title": "导出批量发货模板(订单)",
+                                "pid": 752,
+                                "sort": 5,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://order/exportTmplateMore",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 770,
+                                "title": "导出批量发货模板(商品)",
+                                "pid": 752,
+                                "sort": 6,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://order/exportGoodsTemplateMore",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 772,
+                                "title": "检查勾选和直接发货",
+                                "pid": 752,
+                                "sort": 7,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/checkExportTmplate",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 773,
+                                "title": "批量收货",
+                                "pid": 752,
+                                "sort": 8,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/rulkReceiving",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 774,
+                                "title": "批量备货",
+                                "pid": 752,
+                                "sort": 9,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/rulkChoice",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 779,
+                                "title": "整单发货",
+                                "pid": 752,
+                                "sort": 10,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/shippingGoods",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 781,
+                                "title": "分包裹发货",
+                                "pid": 752,
+                                "sort": 11,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/newShippingGoods",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1603",
+                        "title": "报表汇总",
+                        "pid": "411",
+                        "sort": 98,
+                        "addons": "",
+                        "link": "DuoguanDish://DishStatistics/report_summary",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 509,
+                                "title": "账户结算报表",
+                                "pid": 1603,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/report_summary",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 513,
+                                        "title": "搜索",
+                                        "pid": 509,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishStatistics/report_summary",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 514,
+                                        "title": "导出",
+                                        "pid": 509,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishStatistics/order_summary",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 511,
+                                "title": "订单交易报表",
+                                "pid": 1603,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/order_summary",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 515,
+                                        "title": "搜索",
+                                        "pid": 511,
+                                        "sort": 1,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishStatistics/report_summary",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 516,
+                                        "title": "导出",
+                                        "pid": 511,
+                                        "sort": 2,
+                                        "addons": "DuoguanDish",
+                                        "link": "DuoguanDish://DishStatistics/report_summary",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f400",
+                "title": "酒店",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DgHotel",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f415",
+                        "title": "基本配置",
+                        "pid": "400",
+                        "sort": -1,
+                        "addons": "",
+                        "link": "DgHotel://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1,
+                                "title": "短信提醒",
+                                "pid": 415,
+                                "sort": 1,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://Config/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 71,
+                                        "title": "管理手机号码",
+                                        "pid": 1,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Config/phones",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 72,
+                                        "title": "切换酒店选择项",
+                                        "pid": 1,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Config/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 119,
+                                        "title": "添加手机号",
+                                        "pid": 1,
+                                        "sort": 3,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Config/phones",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 2,
+                                "title": "打印机设置",
+                                "pid": 415,
+                                "sort": 2,
+                                "addons": "DgHotel",
+                                "link": "home://print/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 131,
+                                        "title": "新增",
+                                        "pid": 2,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "Home://print/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 144,
+                                        "title": "打印测试",
+                                        "pid": 2,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "Home://print/cs_print",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 146,
+                                        "title": "编辑",
+                                        "pid": 2,
+                                        "sort": 3,
+                                        "addons": "DgHotel",
+                                        "link": "Home://print/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 3,
+                                "title": "分享设置",
+                                "pid": 415,
+                                "sort": 3,
+                                "addons": "DgHotel",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 4,
+                                "title": "数据导入",
+                                "pid": 415,
+                                "sort": 4,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 5,
+                                "title": "其他设置",
+                                "pid": 415,
+                                "sort": 5,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://Config/hotelconfig",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 485,
+                                "title": "新增",
+                                "pid": 415,
+                                "sort": 1,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Village/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 486,
+                                "title": "编辑",
+                                "pid": 415,
+                                "sort": 2,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Village/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 487,
+                                "title": "删除",
+                                "pid": 415,
+                                "sort": 3,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Village/del",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 489,
+                                "title": "搜索",
+                                "pid": 415,
+                                "sort": 3,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Village/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f401",
+                        "title": "酒店管理",
+                        "pid": "400",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DgHotel://DgHotel/hotel_lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 6,
+                                "title": "酒店列表",
+                                "pid": 401,
+                                "sort": 1,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgHotel/hotel_lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 15,
+                                        "title": "新增酒店",
+                                        "pid": 6,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgHotel/hotel_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 16,
+                                        "title": "编辑",
+                                        "pid": 6,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgHotel/hotel_update",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 17,
+                                        "title": "搜索",
+                                        "pid": 6,
+                                        "sort": 3,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgHotel/hotel_lists",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 7,
+                                "title": "标签管理",
+                                "pid": 401,
+                                "sort": 2,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://Tag/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 19,
+                                        "title": "新增",
+                                        "pid": 7,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Tag/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 20,
+                                        "title": "编辑",
+                                        "pid": 7,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Tag/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 21,
+                                        "title": "删除",
+                                        "pid": 7,
+                                        "sort": 3,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Tag/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 22,
+                                        "title": "跳转",
+                                        "pid": 7,
+                                        "sort": 4,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://Tag/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f402",
+                        "title": "客房管理",
+                        "pid": "400",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DgHotel://DgRoom/room_lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 8,
+                                "title": "客房列表",
+                                "pid": 402,
+                                "sort": 1,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgRoom/room_lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 159,
+                                        "title": "新增客房",
+                                        "pid": 8,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgRoom/room_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 165,
+                                        "title": "编辑",
+                                        "pid": 8,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgRoom/room_update",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 9,
+                                "title": "自定义价格",
+                                "pid": 402,
+                                "sort": 2,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgDefined/defined_lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 174,
+                                        "title": "查看",
+                                        "pid": 9,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgDefined/defined_meal_lists",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f403",
+                        "title": "订单管理",
+                        "pid": "400",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DgHotel://DgOrder/order_lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 10,
+                                "title": "订单管理",
+                                "pid": 403,
+                                "sort": 1,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgOrder/order_lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 180,
+                                        "title": "确认/拒绝接待",
+                                        "pid": 10,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgOrder/setstatus",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 182,
+                                        "title": "详情",
+                                        "pid": 10,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgOrder/order_info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 11,
+                                "title": "退款管理",
+                                "pid": 403,
+                                "sort": 2,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgRefund/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 12,
+                                "title": "评价管理",
+                                "pid": 403,
+                                "sort": 3,
+                                "addons": "DgHotel",
+                                "link": "DgHotel://DgEvaluation/evaluation_lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 202,
+                                        "title": "详情",
+                                        "pid": 12,
+                                        "sort": 1,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgEvaluation/evaluation_info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 205,
+                                        "title": "搜索",
+                                        "pid": 12,
+                                        "sort": 2,
+                                        "addons": "DgHotel",
+                                        "link": "DgHotel://DgEvaluation/evaluation_lists",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f393",
+                "title": "微名片",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanBcard",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f394",
+                        "title": "基本配置",
+                        "pid": "393",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBcard://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 399,
+                                "title": "新增专家",
+                                "pid": 394,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Worker/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 400,
+                                "title": "编辑专家",
+                                "pid": 394,
+                                "sort": 2,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Worker/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 402,
+                                "title": "删除专家",
+                                "pid": 394,
+                                "sort": 3,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Worker/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f395",
+                        "title": "名片管理",
+                        "pid": "393",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBcard://Index/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f414",
+                        "title": "数据统计",
+                        "pid": "393",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBcard://Index/statistics",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f385",
+                "title": "微拼团",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanTuan",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f389",
+                        "title": "基本配置",
+                        "pid": "385",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanTuan://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 147,
+                                "title": "基本配置",
+                                "pid": 389,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 149,
+                                "title": "打印机配置",
+                                "pid": 389,
+                                "sort": 1,
+                                "addons": "duoguantuan",
+                                "link": "Home://print/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 799,
+                                        "title": "打印机新增",
+                                        "pid": 149,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "Home://print/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 151,
+                                "title": "数据导入",
+                                "pid": 389,
+                                "sort": 2,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 152,
+                                "title": "分享设置",
+                                "pid": 389,
+                                "sort": 3,
+                                "addons": "DuoguanTuan",
+                                "link": "Home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 154,
+                                "title": "店铺管理",
+                                "pid": 389,
+                                "sort": 4,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Store/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 157,
+                                        "title": "店铺新增",
+                                        "pid": 154,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Store/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 911,
+                                        "title": "店铺编辑",
+                                        "pid": 154,
+                                        "sort": 2,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Store/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 912,
+                                        "title": "自提点编辑",
+                                        "pid": 154,
+                                        "sort": 2,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Store/storesite",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 913,
+                                        "title": "自提点添加",
+                                        "pid": 154,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Store/editsite",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 955,
+                                "title": "拼团分类编辑",
+                                "pid": 389,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Category/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 958,
+                                "title": "拼团商品分类添加",
+                                "pid": 389,
+                                "sort": 2,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Category/add",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f388",
+                        "title": "拼团商品",
+                        "pid": "385",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanTuan://Goods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 383,
+                                "title": "商品管理",
+                                "pid": 388,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 914,
+                                        "title": "拼团商品新增",
+                                        "pid": 383,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goods/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 915,
+                                        "title": "拼团商品编辑",
+                                        "pid": 383,
+                                        "sort": 2,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goods/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 916,
+                                        "title": "编辑推广规则",
+                                        "pid": 383,
+                                        "sort": 3,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Extension/rule",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 917,
+                                        "title": "核销统计",
+                                        "pid": 383,
+                                        "sort": 4,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goods/statistical",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 389,
+                                "title": "分类管理",
+                                "pid": 388,
+                                "sort": 2,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 955,
+                                        "title": "拼团分类编辑",
+                                        "pid": 389,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 958,
+                                        "title": "拼团商品分类添加",
+                                        "pid": 389,
+                                        "sort": 2,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Category/add",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 424,
+                                "title": "商品属性管理",
+                                "pid": 388,
+                                "sort": 3,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Goodattr/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 925,
+                                        "title": "拼团商品属性添加",
+                                        "pid": 424,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goodattr/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 929,
+                                        "title": "拼团商品属性列表",
+                                        "pid": 424,
+                                        "sort": 2,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goodattr/alist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 934,
+                                        "title": "拼团商品属性编辑",
+                                        "pid": 424,
+                                        "sort": 4,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goodattr/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 946,
+                                        "title": "拼团属性列表添加",
+                                        "pid": 424,
+                                        "sort": 5,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goodattr/a_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 947,
+                                        "title": "拼团属性列表编辑",
+                                        "pid": 424,
+                                        "sort": 3,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Goodattr/a_edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f391",
+                        "title": "拼团订单",
+                        "pid": "385",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanTuan://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 830,
+                                "title": "订单管理",
+                                "pid": 391,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 957,
+                                        "title": "拼团订单详情",
+                                        "pid": 830,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Order/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 831,
+                                "title": "拼团管理",
+                                "pid": 391,
+                                "sort": 1,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Tuan/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 832,
+                                "title": "评论管理",
+                                "pid": 391,
+                                "sort": 2,
+                                "addons": "DuoguanTuan",
+                                "link": "DuoguanTuan://Comment/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 948,
+                                        "title": "评论管理",
+                                        "pid": 832,
+                                        "sort": 1,
+                                        "addons": "DuoguanTuan",
+                                        "link": "DuoguanTuan://Comment/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f373",
+                "title": "微商城",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanShop",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f764",
+                        "title": "统计管理",
+                        "pid": "373",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanShop://Statistics/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 561,
+                                "title": "数据概览",
+                                "pid": 764,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Statistics/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 566,
+                                "title": "数据报表",
+                                "pid": 764,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Statistics/dataReport",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 569,
+                                        "title": "商品分析报表",
+                                        "pid": 566,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Statistics/reportformindex",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 570,
+                                        "title": "交易分析报表",
+                                        "pid": 566,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Statistics/transactionanalysis",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 572,
+                                        "title": "查看详情",
+                                        "pid": 566,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Statistics/showgoodssaledetail",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1601",
+                        "title": "基本配置",
+                        "pid": "373",
+                        "sort": 10,
+                        "addons": "",
+                        "link": "DuoguanShop://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 562,
+                                "title": "基本配置",
+                                "pid": 1601,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 576,
+                                "title": "配送管理(新)",
+                                "pid": 1601,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Config/deliveryConfigOne",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 581,
+                                        "title": "到店自提",
+                                        "pid": 576,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/deliveryConfigOne",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 611,
+                                        "title": "商家配送",
+                                        "pid": 576,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/deliveryConfigTwo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 613,
+                                        "title": "自提点修改",
+                                        "pid": 576,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/selfAddressEdit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 615,
+                                        "title": "自提点添加",
+                                        "pid": 576,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/selfAddressAdd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 618,
+                                        "title": "修改添加运费模板",
+                                        "pid": 576,
+                                        "sort": 5,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/editTemplate",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 627,
+                                        "title": "自提点删除",
+                                        "pid": 576,
+                                        "sort": 6,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/selfAddressDel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 629,
+                                        "title": "自提点搜索",
+                                        "pid": 576,
+                                        "sort": 7,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/deliveryConfigOne",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 633,
+                                        "title": "关闭开启到店自提",
+                                        "pid": 576,
+                                        "sort": 8,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/ztOpen",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 636,
+                                        "title": "关闭开启商家配送",
+                                        "pid": 576,
+                                        "sort": 9,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/psOpen",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 641,
+                                        "title": "运费模板搜索",
+                                        "pid": 576,
+                                        "sort": 10,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/deliveryConfigTwo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 643,
+                                        "title": "复制运费模板",
+                                        "pid": 576,
+                                        "sort": 11,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/templateCopy",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 645,
+                                        "title": "删除运费模板",
+                                        "pid": 576,
+                                        "sort": 12,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Config/templateDel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 577,
+                                "title": "分享设置",
+                                "pid": 1601,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f562",
+                        "title": "首页配置",
+                        "pid": "373",
+                        "sort": 30,
+                        "addons": "",
+                        "link": "DuoguanShop://Indexset/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 652,
+                                "title": "首页配置",
+                                "pid": 562,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Indexset/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 658,
+                                "title": "轮播设置",
+                                "pid": 562,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Swiper/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 667,
+                                        "title": "新增",
+                                        "pid": 658,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Swiper/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 668,
+                                        "title": "编辑",
+                                        "pid": 658,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Swiper/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 669,
+                                        "title": "删除",
+                                        "pid": 658,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Swiper/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 660,
+                                "title": "广告管理",
+                                "pid": 562,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Ad/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 674,
+                                        "title": "新增",
+                                        "pid": 660,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Ad/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 675,
+                                        "title": "编辑",
+                                        "pid": 660,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Ad/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 676,
+                                        "title": "删除",
+                                        "pid": 660,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Ad/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 662,
+                                "title": "首页定位与公告",
+                                "pid": 562,
+                                "sort": 4,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Indexset/config",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f604",
+                        "title": "商品管理(新)",
+                        "pid": "373",
+                        "sort": 39,
+                        "addons": "",
+                        "link": "DuoguanShop://DuoguanShopGoods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 687,
+                                "title": "商品管理(新)",
+                                "pid": 604,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://DuoguanShopGoods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 694,
+                                        "title": "新增和编辑",
+                                        "pid": 687,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/editGoodsInfo",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 696,
+                                        "title": "智能采集商品",
+                                        "pid": 687,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/addOtherGoods",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 698,
+                                        "title": "批量上架",
+                                        "pid": 687,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/batchUpperShelf",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 699,
+                                        "title": "批量下架",
+                                        "pid": 687,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/batchLowerShelf",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 703,
+                                        "title": "批量设置运费模板",
+                                        "pid": 687,
+                                        "sort": 5,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/batchSetShippingTemplate",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 705,
+                                        "title": "搜索",
+                                        "pid": 687,
+                                        "sort": 6,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 709,
+                                        "title": "删除",
+                                        "pid": 687,
+                                        "sort": 7,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 712,
+                                        "title": "设置模板",
+                                        "pid": 687,
+                                        "sort": 8,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/infoset",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 715,
+                                        "title": "复制",
+                                        "pid": 687,
+                                        "sort": 9,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/copy",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 717,
+                                        "title": "同步到支付宝",
+                                        "pid": 687,
+                                        "sort": 10,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/aliSynchroGoods",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 719,
+                                        "title": "二维码",
+                                        "pid": 687,
+                                        "sort": 11,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://DuoguanShopGoods/getWxcode",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 689,
+                                "title": "分类管理",
+                                "pid": 604,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 725,
+                                        "title": "新增",
+                                        "pid": 689,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Category/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 726,
+                                        "title": "编辑",
+                                        "pid": 689,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 728,
+                                        "title": "删除",
+                                        "pid": 689,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Category/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 729,
+                                        "title": "搜索",
+                                        "pid": 689,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Category/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 690,
+                                "title": "品牌管理",
+                                "pid": 604,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Pinpai/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 731,
+                                        "title": "新增",
+                                        "pid": 690,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Pinpai/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 733,
+                                        "title": "编辑",
+                                        "pid": 690,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Pinpai/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 734,
+                                        "title": "删除",
+                                        "pid": 690,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Pinpai/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 736,
+                                        "title": "搜索",
+                                        "pid": 690,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Pinpai/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 692,
+                                "title": "商品详情模板",
+                                "pid": 604,
+                                "sort": 4,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://GoodsDetailModel/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 741,
+                                        "title": "新增和编辑",
+                                        "pid": 692,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://GoodsDetailModel/editModel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 743,
+                                        "title": "删除",
+                                        "pid": 692,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://GoodsDetailModel/delModel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 745,
+                                        "title": "查看使用记录",
+                                        "pid": 692,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://GoodsDetailModel/setlog",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 747,
+                                        "title": "批量设置模板",
+                                        "pid": 692,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://GoodsDetailModel/goodsList",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f376",
+                        "title": "订单管理",
+                        "pid": "373",
+                        "sort": 45,
+                        "addons": "",
+                        "link": "DuoguanShop://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 752,
+                                "title": "订单管理",
+                                "pid": 376,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 756,
+                                        "title": "筛选",
+                                        "pid": 752,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 757,
+                                        "title": "导出",
+                                        "pid": 752,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/exportData",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 760,
+                                        "title": "按照勾选导出批量发货模板(订单)",
+                                        "pid": 752,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://order/exportTmplate",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 762,
+                                        "title": "按照勾选导出批量发货模板(商品)",
+                                        "pid": 752,
+                                        "sort": 4,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://order/exportGoodsTemplate",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 769,
+                                        "title": "导出批量发货模板(订单)",
+                                        "pid": 752,
+                                        "sort": 5,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://order/exportTmplateMore",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 770,
+                                        "title": "导出批量发货模板(商品)",
+                                        "pid": 752,
+                                        "sort": 6,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://order/exportGoodsTemplateMore",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 772,
+                                        "title": "检查勾选和直接发货",
+                                        "pid": 752,
+                                        "sort": 7,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/checkExportTmplate",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 773,
+                                        "title": "批量收货",
+                                        "pid": 752,
+                                        "sort": 8,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/rulkReceiving",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 774,
+                                        "title": "批量备货",
+                                        "pid": 752,
+                                        "sort": 9,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/rulkChoice",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 779,
+                                        "title": "整单发货",
+                                        "pid": 752,
+                                        "sort": 10,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/shippingGoods",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 781,
+                                        "title": "分包裹发货",
+                                        "pid": 752,
+                                        "sort": 11,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Order/newShippingGoods",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 754,
+                                "title": "退款管理",
+                                "pid": 376,
+                                "sort": 2,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://RefundOrder/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 784,
+                                        "title": "搜索",
+                                        "pid": 754,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://RefundOrder/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 785,
+                                        "title": "处理退款",
+                                        "pid": 754,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://RefundOrder/info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 755,
+                                "title": "评论管理",
+                                "pid": 376,
+                                "sort": 3,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://Comment/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 786,
+                                        "title": "搜索",
+                                        "pid": 755,
+                                        "sort": 1,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Comment/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 787,
+                                        "title": "编辑",
+                                        "pid": 755,
+                                        "sort": 2,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Comment/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 789,
+                                        "title": "删除",
+                                        "pid": 755,
+                                        "sort": 3,
+                                        "addons": "DuoguanShop",
+                                        "link": "DuoguanShop://Comment/delete",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1602",
+                        "title": "应用中心",
+                        "pid": "373",
+                        "sort": 50,
+                        "addons": "",
+                        "link": "DuoguanShop://AppCenter/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 790,
+                                "title": "应用中心",
+                                "pid": 1602,
+                                "sort": 1,
+                                "addons": "DuoguanShop",
+                                "link": "DuoguanShop://AppCenter/index",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f366",
+                "title": "内容管理",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanCms",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f368",
+                        "title": "内容管理",
+                        "pid": "366",
+                        "sort": 0,
+                        "addons": "DuoguanCms",
+                        "link": "DuoguanCms://DuoguanCms/lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 804,
+                                "title": "内容管理",
+                                "pid": 368,
+                                "sort": 1,
+                                "addons": "DuoguanCms",
+                                "link": "DuoguanCms://DuoguanCms/lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 808,
+                                        "title": "新增内容",
+                                        "pid": 804,
+                                        "sort": 1,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCms/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 809,
+                                        "title": "编辑内容",
+                                        "pid": 804,
+                                        "sort": 2,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCms/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 810,
+                                        "title": "删除内容",
+                                        "pid": 804,
+                                        "sort": 3,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCms/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 805,
+                                "title": "内容配置",
+                                "pid": 368,
+                                "sort": 2,
+                                "addons": "DuoguanCms",
+                                "link": "DuoguanCms://DuoguanCms/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 806,
+                                "title": "分类管理",
+                                "pid": 368,
+                                "sort": 3,
+                                "addons": "DuoguanCms",
+                                "link": "DuoguanCms://DuoguanCmsCategory/lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 811,
+                                        "title": "新增分类",
+                                        "pid": 806,
+                                        "sort": 1,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCmsCategory/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 813,
+                                        "title": "编辑分类",
+                                        "pid": 806,
+                                        "sort": 2,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCmsCategory/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 814,
+                                        "title": "删除分类",
+                                        "pid": 806,
+                                        "sort": 3,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://DuoguanCmsCategory/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 807,
+                                "title": "评论管理",
+                                "pid": 368,
+                                "sort": 4,
+                                "addons": "DuoguanCms",
+                                "link": "DuoguanCms://Comment/lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 857,
+                                        "title": "评论回复",
+                                        "pid": 807,
+                                        "sort": 1,
+                                        "addons": "DuoguanCms",
+                                        "link": "DuoguanCms://Comment/reply",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 849,
+                                "title": "分享设置",
+                                "pid": 368,
+                                "sort": 5,
+                                "addons": "DuoguanCms",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f367",
+                        "title": "轮播管理",
+                        "pid": "366",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanSwiper://DuoguanSwiper/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 794,
+                                "title": "轮播配置",
+                                "pid": 367,
+                                "sort": 1,
+                                "addons": "DuoguanSwiper",
+                                "link": "DuoguanSwiper://DuoguanSwiper/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 801,
+                                "title": "轮播管理",
+                                "pid": 367,
+                                "sort": 2,
+                                "addons": "DuoguanSwiper",
+                                "link": "DuoguanSwiper://DuoguanSwiper/lists",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 818,
+                                        "title": "新增轮播",
+                                        "pid": 801,
+                                        "sort": 1,
+                                        "addons": "DuoguanSwiper",
+                                        "link": "DuoguanSwiper://DuoguanSwiper/add/model/1161",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 819,
+                                        "title": "编辑轮播",
+                                        "pid": 801,
+                                        "sort": 2,
+                                        "addons": "DuoguanSwiper",
+                                        "link": "DuoguanSwiper://DuoguanSwiper/edit/model/1161",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 820,
+                                        "title": "删除轮播",
+                                        "pid": 801,
+                                        "sort": 3,
+                                        "addons": "DuoguanSwiper",
+                                        "link": "DuoguanSwiper://DuoguanSwiper/del/model/1161",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f358",
+                "title": "互动社区",
+                "pid": "0",
+                "sort": 0,
+                "addons": "Weiba",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f359",
+                        "title": "版块管理",
+                        "pid": "358",
+                        "sort": 0,
+                        "addons": "Weiba",
+                        "link": "",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 360,
+                                "title": "新增编辑",
+                                "pid": 359,
+                                "sort": 1,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buy/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 361,
+                                "title": "删除",
+                                "pid": 359,
+                                "sort": 2,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buy/del",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 362,
+                                "title": "查看二维码",
+                                "pid": 359,
+                                "sort": 3,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buy/getWxcode",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 365,
+                                "title": "搜索",
+                                "pid": 359,
+                                "sort": 4,
+                                "addons": "DuoguanGiftCard",
+                                "link": "DuoguanGiftCard://Buy/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f360",
+                        "title": "版块分类",
+                        "pid": "358",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Weiba://Category/lists",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f361",
+                        "title": "帖子管理",
+                        "pid": "358",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Weiba://Post/lists",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f380",
+                        "title": "会员管理",
+                        "pid": "358",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Weiba://User/lists",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f382",
+                        "title": "分享设置",
+                        "pid": "358",
+                        "sort": 8,
+                        "addons": "",
+                        "link": "Home/Public/addons_share/module/WeiBa",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f450",
+                "title": "企业展示",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoGuanNewCms",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f451",
+                        "title": "基本设置",
+                        "pid": "450",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://Logo/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 630,
+                                "title": "公司LOGO",
+                                "pid": 451,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Logo/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 635,
+                                "title": "导入演示数据",
+                                "pid": 451,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Logo/demo",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 637,
+                                "title": "数据导入",
+                                "pid": 451,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Logo/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 642,
+                                "title": "轮播设置",
+                                "pid": 451,
+                                "sort": 4,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://DuoGuanNewCms/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 647,
+                                        "title": "新增",
+                                        "pid": 642,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://DuoGuanNewCms/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 648,
+                                        "title": "编辑",
+                                        "pid": 642,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://DuoGuanNewCms/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 649,
+                                        "title": "删除",
+                                        "pid": 642,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://DuoGuanNewCms/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f453",
+                        "title": "分类管理",
+                        "pid": "450",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://Category/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 651,
+                                "title": "分类管理",
+                                "pid": 453,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Category/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f455",
+                        "title": "产品管理",
+                        "pid": "450",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://Product/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 458,
+                                "title": "新增",
+                                "pid": 455,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Coupon/coupon_add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 461,
+                                "title": "编辑",
+                                "pid": 455,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Coupon/coupon_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 464,
+                                "title": "领取明细",
+                                "pid": 455,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Coupon/coupon_detail",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 653,
+                                "title": "参数设置",
+                                "pid": 455,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Product/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 905,
+                                "title": "二级菜单设置",
+                                "pid": 455,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Product/slevelmenu",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 672,
+                                        "title": "二级菜单设置-编辑",
+                                        "pid": 905,
+                                        "sort": 4,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/slevelmenuedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 677,
+                                        "title": "二级菜单-新增",
+                                        "pid": 905,
+                                        "sort": 5,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/slevelmenuadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 704,
+                                        "title": "二级菜单设置-删除",
+                                        "pid": 905,
+                                        "sort": 6,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/slevelmenudel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 908,
+                                "title": "产品中心",
+                                "pid": 455,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Product/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 708,
+                                        "title": "产品展示-新增",
+                                        "pid": 908,
+                                        "sort": 7,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 711,
+                                        "title": "产品中心-编辑",
+                                        "pid": 908,
+                                        "sort": 8,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 714,
+                                        "title": "产品中心-删除",
+                                        "pid": 908,
+                                        "sort": 9,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 727,
+                                        "title": "产品中心-搜索",
+                                        "pid": 908,
+                                        "sort": 10,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Product/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f456",
+                        "title": "新闻中心",
+                        "pid": "450",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://Content/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1029,
+                                "title": "参数设置",
+                                "pid": 456,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Content/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1030,
+                                "title": "二级菜单设置",
+                                "pid": 456,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Content/slevelmenu",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1031,
+                                        "title": "二级菜单设置-新增",
+                                        "pid": 1030,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/slevelmenuadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1032,
+                                        "title": "二级菜单设置-编辑",
+                                        "pid": 1030,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/slevelmenuedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1033,
+                                        "title": "二级菜单设置-删除",
+                                        "pid": 1030,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/slevelmenudel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1034,
+                                "title": "内容管理",
+                                "pid": 456,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Content/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1035,
+                                        "title": "新增",
+                                        "pid": 1034,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1036,
+                                        "title": "编辑",
+                                        "pid": 1034,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1037,
+                                        "title": "删除",
+                                        "pid": 1034,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1038,
+                                        "title": "搜索",
+                                        "pid": 1034,
+                                        "sort": 4,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Content/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f457",
+                        "title": "内容管理",
+                        "pid": "450",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://About/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 730,
+                                "title": "关于我们",
+                                "pid": 457,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://About/config",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1020,
+                                        "title": "参数设置",
+                                        "pid": 730,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://About/config",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1021,
+                                        "title": "关于我们",
+                                        "pid": 730,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://About/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 732,
+                                "title": "加入我们",
+                                "pid": 457,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Recruit/config",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 740,
+                                        "title": "二级菜单设置-新增",
+                                        "pid": 732,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/slevelmenuadd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 742,
+                                        "title": "二级菜单设置-编辑",
+                                        "pid": 732,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/slevelmenuedit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 744,
+                                        "title": "二级菜单设置-删除",
+                                        "pid": 732,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/slevelmenudel",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 746,
+                                        "title": "招聘英才-新增",
+                                        "pid": 732,
+                                        "sort": 4,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 748,
+                                        "title": "招聘英才-编辑",
+                                        "pid": 732,
+                                        "sort": 5,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 749,
+                                        "title": "招聘英才-删除",
+                                        "pid": 732,
+                                        "sort": 6,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1022,
+                                        "title": "参数设置",
+                                        "pid": 732,
+                                        "sort": 7,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recurit/config",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1027,
+                                        "title": "二级菜单设置",
+                                        "pid": 732,
+                                        "sort": 8,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/slevelmenu",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1028,
+                                        "title": "招聘英才",
+                                        "pid": 732,
+                                        "sort": 9,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Recruit/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 735,
+                                "title": "联系我们",
+                                "pid": 457,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Contact/config",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1023,
+                                        "title": "参数设置",
+                                        "pid": 735,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Contact/config",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1024,
+                                        "title": "联系我们",
+                                        "pid": 735,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Contact/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1025,
+                                        "title": "留言板",
+                                        "pid": 735,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Contact/message",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1026,
+                                        "title": "留言板-删除",
+                                        "pid": 735,
+                                        "sort": 4,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Contact/mes_del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1664",
+                        "title": "案例展示",
+                        "pid": "450",
+                        "sort": 6,
+                        "addons": "",
+                        "link": "DuoGuanNewCms://Case/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 654,
+                                "title": "参数设置",
+                                "pid": 1664,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Case/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 919,
+                                "title": "二级菜单设置",
+                                "pid": 1664,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Case/slevelmenu",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 920,
+                                "title": "案例中心",
+                                "pid": 1664,
+                                "sort": 4,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Case/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 921,
+                                        "title": "新增",
+                                        "pid": 920,
+                                        "sort": 1,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Case/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 922,
+                                        "title": "删除",
+                                        "pid": 920,
+                                        "sort": 2,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Case/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 923,
+                                        "title": "编辑",
+                                        "pid": 920,
+                                        "sort": 3,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Case/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 924,
+                                        "title": "搜索",
+                                        "pid": 920,
+                                        "sort": 4,
+                                        "addons": "DuoGuanNewCms",
+                                        "link": "DuoGuanNewCms://Case/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f469",
+                "title": "卡券",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DgCoupon",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f471",
+                        "title": "相关配置",
+                        "pid": "469",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgCoupon://DgCouponConfig/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f735",
+                        "title": "社交立减金",
+                        "pid": "469",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgCoupon://SDGold/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1023,
+                                "title": "参数设置",
+                                "pid": 735,
+                                "sort": 1,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Contact/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1024,
+                                "title": "联系我们",
+                                "pid": 735,
+                                "sort": 2,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Contact/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1025,
+                                "title": "留言板",
+                                "pid": 735,
+                                "sort": 3,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Contact/message",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1026,
+                                "title": "留言板-删除",
+                                "pid": 735,
+                                "sort": 4,
+                                "addons": "DuoGuanNewCms",
+                                "link": "DuoGuanNewCms://Contact/mes_del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f736",
+                        "title": "会员卡管理",
+                        "pid": "469",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgCoupon://VipCard/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f737",
+                        "title": "优惠券管理",
+                        "pid": "469",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgCoupon://DgCoupon/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f475",
+                "title": "内容管理+",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanBigCms",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f793",
+                        "title": "基本配置",
+                        "pid": "475",
+                        "sort": -1,
+                        "addons": "",
+                        "link": "DuoguanBigCms://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 194,
+                                "title": "基本配置",
+                                "pid": 793,
+                                "sort": 1,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 196,
+                                "title": "轮播配置",
+                                "pid": 793,
+                                "sort": 2,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Carousel/lbtconfig",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 197,
+                                "title": "轮播图列表",
+                                "pid": 793,
+                                "sort": 3,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Carousel/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 239,
+                                        "title": "新增轮播图",
+                                        "pid": 197,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Carousel/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 242,
+                                        "title": "编辑轮播",
+                                        "pid": 197,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Carousel/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 243,
+                                        "title": "删除轮播",
+                                        "pid": 197,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Carousel/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 198,
+                                "title": "数据导入",
+                                "pid": 793,
+                                "sort": 4,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 199,
+                                "title": "分享设置",
+                                "pid": 793,
+                                "sort": 5,
+                                "addons": "DuoguanBigCms",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f478",
+                        "title": "内容管理",
+                        "pid": "475",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBigCms://Category/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 204,
+                                "title": "分类管理",
+                                "pid": 478,
+                                "sort": 1,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 245,
+                                        "title": "新增分类",
+                                        "pid": 204,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Category/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 246,
+                                        "title": "编辑分类",
+                                        "pid": 204,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 247,
+                                        "title": "删除分类",
+                                        "pid": 204,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Category/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 206,
+                                "title": "图文管理",
+                                "pid": 478,
+                                "sort": 2,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Imgtext/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 248,
+                                        "title": "新增图文",
+                                        "pid": 206,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Imgtext/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 249,
+                                        "title": "编辑图文",
+                                        "pid": 206,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Imgtext/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 250,
+                                        "title": "删除图文",
+                                        "pid": 206,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Imgtext/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 207,
+                                "title": "音频管理",
+                                "pid": 478,
+                                "sort": 3,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Audio/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 254,
+                                        "title": "新增音频",
+                                        "pid": 207,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Audio/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 257,
+                                        "title": "编辑音频",
+                                        "pid": 207,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Audio/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 259,
+                                        "title": "删除音频",
+                                        "pid": 207,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Audio/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 208,
+                                "title": "视频管理",
+                                "pid": 478,
+                                "sort": 4,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Video/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 264,
+                                        "title": "新增视频",
+                                        "pid": 208,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://video/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 267,
+                                        "title": "编辑视频",
+                                        "pid": 208,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://video/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 269,
+                                        "title": "删除视频",
+                                        "pid": 208,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://video/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f482",
+                        "title": "评论举报",
+                        "pid": "475",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanBigCms://Comment/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 210,
+                                "title": "评论管理",
+                                "pid": 482,
+                                "sort": 1,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Comment/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 287,
+                                        "title": "详情",
+                                        "pid": 210,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Comment/info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 289,
+                                        "title": "回复",
+                                        "pid": 210,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Comment/reply",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 292,
+                                        "title": "删除评论",
+                                        "pid": 210,
+                                        "sort": 3,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Comment/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 211,
+                                "title": "举报管理",
+                                "pid": 482,
+                                "sort": 2,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Report/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 296,
+                                        "title": "删除举报",
+                                        "pid": 211,
+                                        "sort": 2,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Report/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f575",
+                        "title": "订单管理",
+                        "pid": "475",
+                        "sort": 8,
+                        "addons": "",
+                        "link": "DuoguanBigCms://Pay/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 305,
+                                "title": "订单管理",
+                                "pid": 575,
+                                "sort": 1,
+                                "addons": "DuoguanBigCms",
+                                "link": "DuoguanBigCms://Pay/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 310,
+                                        "title": "订单详情",
+                                        "pid": 305,
+                                        "sort": 1,
+                                        "addons": "DuoguanBigCms",
+                                        "link": "DuoguanBigCms://Pay/info",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f551",
+                "title": "装修",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDecoration",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f552",
+                        "title": "基本设置",
+                        "pid": "551",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDecoration://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 58,
+                                "title": "基本设置",
+                                "pid": 552,
+                                "sort": 1,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 212,
+                                "title": "门店管理",
+                                "pid": 552,
+                                "sort": 2,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Store/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 263,
+                                        "title": "新增",
+                                        "pid": 212,
+                                        "sort": 1,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Store/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 265,
+                                        "title": "编辑",
+                                        "pid": 212,
+                                        "sort": 2,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Store/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 268,
+                                        "title": "删除",
+                                        "pid": 212,
+                                        "sort": 3,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Store/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 270,
+                                        "title": "跳转",
+                                        "pid": 212,
+                                        "sort": 4,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Store/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 213,
+                                "title": "设计师管理",
+                                "pid": 552,
+                                "sort": 3,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Designer/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 273,
+                                        "title": "新增",
+                                        "pid": 213,
+                                        "sort": 1,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Designer/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 275,
+                                        "title": "编辑",
+                                        "pid": 213,
+                                        "sort": 2,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Designer/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 276,
+                                        "title": "删除",
+                                        "pid": 213,
+                                        "sort": 3,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Designer/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 278,
+                                        "title": "跳转",
+                                        "pid": 213,
+                                        "sort": 4,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Designer/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 214,
+                                "title": "分享设置",
+                                "pid": 552,
+                                "sort": 4,
+                                "addons": "DuoguanDecoration",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f553",
+                        "title": "展示管理",
+                        "pid": "551",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanDecoration://Case/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 60,
+                                "title": "图库管理",
+                                "pid": 553,
+                                "sort": 2,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Gallery/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 233,
+                                        "title": "新增",
+                                        "pid": 60,
+                                        "sort": 1,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Gallery/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 234,
+                                        "title": "编辑",
+                                        "pid": 60,
+                                        "sort": 2,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Gallery/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 235,
+                                        "title": "删除",
+                                        "pid": 60,
+                                        "sort": 3,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Gallery/delete",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 236,
+                                "title": "案例管理",
+                                "pid": 553,
+                                "sort": 1,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Case/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 252,
+                                        "title": "新增",
+                                        "pid": 236,
+                                        "sort": 1,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Case/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 256,
+                                        "title": "编辑",
+                                        "pid": 236,
+                                        "sort": 2,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Case/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 258,
+                                        "title": "删除",
+                                        "pid": 236,
+                                        "sort": 2,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Case/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 261,
+                                        "title": "跳转",
+                                        "pid": 236,
+                                        "sort": 4,
+                                        "addons": "DuoguanDecoration",
+                                        "link": "DuoguanDecoration://Case/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 241,
+                                "title": "筛选框管理",
+                                "pid": 553,
+                                "sort": 3,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Filterbox/edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f554",
+                        "title": "客户管理",
+                        "pid": "551",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanDecoration://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 62,
+                                "title": "报价管理",
+                                "pid": 554,
+                                "sort": 2,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Quote/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 244,
+                                "title": "预约管理",
+                                "pid": 554,
+                                "sort": 1,
+                                "addons": "DuoguanDecoration",
+                                "link": "DuoguanDecoration://Order/index",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f542",
+                "title": "微预约（专家版）",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanMeiFa",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f549",
+                        "title": "基本配置",
+                        "pid": "542",
+                        "sort": -1,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 215,
+                                "title": "基本配置",
+                                "pid": 549,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 216,
+                                "title": "预约下单信息配置",
+                                "pid": 549,
+                                "sort": 2,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Config/order_cindex",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 217,
+                                "title": "数据导入",
+                                "pid": 549,
+                                "sort": 3,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 218,
+                                "title": "分享设置",
+                                "pid": 549,
+                                "sort": 4,
+                                "addons": "DuoguanMeiFa",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 219,
+                                "title": "打印机管理",
+                                "pid": 549,
+                                "sort": 5,
+                                "addons": "DuoguanMeiFa",
+                                "link": "home://print/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 573,
+                                "title": "新增轮播图",
+                                "pid": 549,
+                                "sort": 3,
+                                "addons": "DgStore",
+                                "link": "DgStore://MarketBanner/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 574,
+                                "title": "编辑轮播图",
+                                "pid": 549,
+                                "sort": 4,
+                                "addons": "DgStore",
+                                "link": "DgStore://MarketBanner/edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f543",
+                        "title": "店铺管理",
+                        "pid": "542",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Shop/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 317,
+                                "title": "店铺管理",
+                                "pid": 543,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Shop/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 374,
+                                        "title": "新增店铺",
+                                        "pid": 317,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Shop/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 376,
+                                        "title": "编辑店铺",
+                                        "pid": 317,
+                                        "sort": 2,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Shop/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 377,
+                                        "title": "删除店铺",
+                                        "pid": 317,
+                                        "sort": 3,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Shop/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f544",
+                        "title": "服务管理",
+                        "pid": "542",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://ServiceType/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 334,
+                                "title": "服务类型管理",
+                                "pid": 544,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://ServiceType/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 379,
+                                        "title": "新增服务类",
+                                        "pid": 334,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://ServiceType/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 382,
+                                        "title": "编辑服务类",
+                                        "pid": 334,
+                                        "sort": 2,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://ServiceType/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 387,
+                                        "title": "删除服务类",
+                                        "pid": 334,
+                                        "sort": 3,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://ServiceType/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 392,
+                                        "title": "查看服务项目",
+                                        "pid": 334,
+                                        "sort": 4,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://ServiceType/slist",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 558,
+                                "title": "新增",
+                                "pid": 544,
+                                "sort": 1,
+                                "addons": "DgNav",
+                                "link": "DgNav://Cate/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 559,
+                                "title": "编辑",
+                                "pid": 544,
+                                "sort": 2,
+                                "addons": "DgNav",
+                                "link": "DgNav://Cate/edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 560,
+                                "title": "删除",
+                                "pid": 544,
+                                "sort": 3,
+                                "addons": "DgNav",
+                                "link": "DgNav://Cate/del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f545",
+                        "title": "专家管理",
+                        "pid": "542",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Worker/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 394,
+                                "title": "专家管理",
+                                "pid": 545,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Worker/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 399,
+                                        "title": "新增专家",
+                                        "pid": 394,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Worker/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 400,
+                                        "title": "编辑专家",
+                                        "pid": 394,
+                                        "sort": 2,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Worker/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 402,
+                                        "title": "删除专家",
+                                        "pid": 394,
+                                        "sort": 3,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Worker/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 546,
+                                "title": "搜索",
+                                "pid": 545,
+                                "sort": 1,
+                                "addons": "DuoguanZiXun",
+                                "link": "DuoguanZiXun://Reserve/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f546",
+                        "title": "预约管理",
+                        "pid": "542",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 410,
+                                "title": "预约管理",
+                                "pid": 546,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Order/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 420,
+                                        "title": "预约详情",
+                                        "pid": 410,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Order/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f550",
+                        "title": "买单管理",
+                        "pid": "542",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Pay/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 488,
+                                "title": "买单管理",
+                                "pid": 550,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Pay/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 490,
+                                        "title": "买单详情",
+                                        "pid": 488,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Pay/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f757",
+                        "title": "财务管理",
+                        "pid": "542",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanMeiFa://Money/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 491,
+                                "title": "财务管理",
+                                "pid": 757,
+                                "sort": 1,
+                                "addons": "DuoguanMeiFa",
+                                "link": "DuoguanMeiFa://Money/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 612,
+                                        "title": "预约统计表",
+                                        "pid": 491,
+                                        "sort": 1,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Money/yy_list",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 614,
+                                        "title": "买单统计表",
+                                        "pid": 491,
+                                        "sort": 2,
+                                        "addons": "DuoguanMeiFa",
+                                        "link": "DuoguanMeiFa://Money/pay_list",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f537",
+                "title": "单门店",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DgStoreSingle",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f538",
+                        "title": "门店管理",
+                        "pid": "537",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgStoreSingle://Config/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f533",
+                "title": "智慧餐厅(单店版)",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDishSingle",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f733",
+                        "title": "基本配置",
+                        "pid": "533",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDishSingle://Config/setting",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 73,
+                                "title": "基本配置",
+                                "pid": 733,
+                                "sort": 1,
+                                "addons": "DuoguanDishSingle",
+                                "link": "DuoguanDishSingle://Config/setting",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f534",
+                        "title": "门店管理",
+                        "pid": "533",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanDishSingle://Config/index",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f529",
+                "title": "群投票",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanVote",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f592",
+                        "title": "基本配置",
+                        "pid": "529",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanVote://Config/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 183,
+                                "title": "基本配置",
+                                "pid": 592,
+                                "sort": 1,
+                                "addons": "DuoguanVote",
+                                "link": "DuoguanVote://Config/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 184,
+                                "title": "分享配置",
+                                "pid": 592,
+                                "sort": 1,
+                                "addons": "DuoguanVote",
+                                "link": "Home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f783",
+                        "title": "举报管理",
+                        "pid": "529",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanVote://Report/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 851,
+                                "title": "举报管理",
+                                "pid": 783,
+                                "sort": 1,
+                                "addons": "DuoguanVote",
+                                "link": "DuoguanVote://Report/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 852,
+                                        "title": "搜索",
+                                        "pid": 851,
+                                        "sort": 1,
+                                        "addons": "DuoguanVote",
+                                        "link": "DuoguanVote://Report/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f530",
+                        "title": "投票管理",
+                        "pid": "529",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanVote://Vote/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 175,
+                                "title": "投票管理",
+                                "pid": 530,
+                                "sort": 1,
+                                "addons": "DuoguanVote",
+                                "link": "DuoguanVote://Vote/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 853,
+                                        "title": "新增",
+                                        "pid": 175,
+                                        "sort": 1,
+                                        "addons": "DuoguanVote",
+                                        "link": "DuoguanVote://Vote/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 854,
+                                        "title": "编辑",
+                                        "pid": 175,
+                                        "sort": 2,
+                                        "addons": "DuoguanVote",
+                                        "link": "DuoguanVote://Vote/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 855,
+                                        "title": "删除",
+                                        "pid": 175,
+                                        "sort": 3,
+                                        "addons": "DuoguanVote",
+                                        "link": "DuoguanVote://Vote/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 856,
+                                        "title": "搜索",
+                                        "pid": 175,
+                                        "sort": 4,
+                                        "addons": "DuoguanVote",
+                                        "link": "DuoguanVote://Vote/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f522",
+                "title": "小程序导航",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanAppletDaoHang",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f523",
+                        "title": "导航管理",
+                        "pid": "522",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanAppletDaoHang://DaoHang/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 31,
+                                "title": "导航管理",
+                                "pid": 523,
+                                "sort": 1,
+                                "addons": "",
+                                "link": "DuoguanAppletDaoHang://DaoHang/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f524",
+                        "title": "分享管理",
+                        "pid": "522",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "Home/Public/addons_share/module/duoguanappletdaohang",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 973,
+                                "title": "分享管理",
+                                "pid": 524,
+                                "sort": 1,
+                                "addons": "DuoguanAppletDaoHang",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f516",
+                "title": "会员卡",
+                "pid": "0",
+                "sort": 0,
+                "addons": "Card",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f517",
+                        "title": "基本配置",
+                        "pid": "516",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Card://Card/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 523,
+                                "title": "新增",
+                                "pid": 517,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Swiper/add",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 524,
+                                "title": "编辑",
+                                "pid": 517,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Swiper/edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f518",
+                        "title": "会员管理",
+                        "pid": "516",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Card://Member/lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 190,
+                                "title": "会员管理",
+                                "pid": 518,
+                                "sort": 1,
+                                "addons": "Card",
+                                "link": "Card://Member/lists",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 521,
+                                "title": "新增编辑",
+                                "pid": 518,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Product/edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f519",
+                        "title": "会员交易",
+                        "pid": "516",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Card://MemberTransition/lists",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 520,
+                                "title": "新增编辑",
+                                "pid": 519,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Category/edit",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f520",
+                        "title": "会员营销",
+                        "pid": "516",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Card://MemberMarketing/lists",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f508",
+                "title": "房产中介",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanHouse",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f509",
+                        "title": "基本设置",
+                        "pid": "508",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanHouse://DuoguanHouse/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 64,
+                                "title": "基本设置",
+                                "pid": 509,
+                                "sort": 1,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://DuoguanHouse/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 350,
+                                "title": "门店管理",
+                                "pid": 509,
+                                "sort": 2,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Store/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 363,
+                                        "title": "新增",
+                                        "pid": 350,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Store/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 364,
+                                        "title": "编辑",
+                                        "pid": 350,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Store/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 367,
+                                        "title": "删除",
+                                        "pid": 350,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Store/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 369,
+                                        "title": "搜索",
+                                        "pid": 350,
+                                        "sort": 4,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Store/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 372,
+                                        "title": "跳转",
+                                        "pid": 350,
+                                        "sort": 5,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Store/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 352,
+                                "title": "经纪人管理",
+                                "pid": 509,
+                                "sort": 3,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Agent/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 386,
+                                        "title": "新增",
+                                        "pid": 352,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Agent/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 390,
+                                        "title": "编辑",
+                                        "pid": 352,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Agent/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 395,
+                                        "title": "删除",
+                                        "pid": 352,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Agent/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 398,
+                                        "title": "解绑",
+                                        "pid": 352,
+                                        "sort": 4,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Agent/cancel",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 355,
+                                "title": "用户管理",
+                                "pid": 509,
+                                "sort": 4,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseUser/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 403,
+                                        "title": "搜索",
+                                        "pid": 355,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseUser/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 406,
+                                        "title": "跳转",
+                                        "pid": 355,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseUser/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 357,
+                                "title": "分享设置",
+                                "pid": 509,
+                                "sort": 5,
+                                "addons": "DuoguanHouse",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 513,
+                                "title": "搜索",
+                                "pid": 509,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/report_summary",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 514,
+                                "title": "导出",
+                                "pid": 509,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/order_summary",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f510",
+                        "title": "房产管理",
+                        "pid": "508",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DuoguanHouse://HouseRent/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 409,
+                                "title": "出租管理",
+                                "pid": 510,
+                                "sort": 1,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseRent/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 457,
+                                        "title": "新增",
+                                        "pid": 409,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseRent/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 463,
+                                        "title": "编辑",
+                                        "pid": 409,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseRent/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 468,
+                                        "title": "删除",
+                                        "pid": 409,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseRent/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 475,
+                                        "title": "跳转",
+                                        "pid": 409,
+                                        "sort": 5,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseRent/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 412,
+                                "title": "出售管理",
+                                "pid": 510,
+                                "sort": 2,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://HouseSell/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 478,
+                                        "title": "新增",
+                                        "pid": 412,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseSell/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 480,
+                                        "title": "编辑",
+                                        "pid": 412,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseSell/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 482,
+                                        "title": "删除",
+                                        "pid": 412,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://HouseSell/del",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 415,
+                                "title": "小区管理",
+                                "pid": 510,
+                                "sort": 4,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Village/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 485,
+                                        "title": "新增",
+                                        "pid": 415,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Village/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 486,
+                                        "title": "编辑",
+                                        "pid": 415,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Village/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 487,
+                                        "title": "删除",
+                                        "pid": 415,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Village/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 489,
+                                        "title": "搜索",
+                                        "pid": 415,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Village/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 422,
+                                "title": "登记管理",
+                                "pid": 510,
+                                "sort": 5,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Register/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 493,
+                                        "title": "导出",
+                                        "pid": 422,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Register/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 494,
+                                        "title": "搜索",
+                                        "pid": 422,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Register/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 496,
+                                        "title": "删除",
+                                        "pid": 422,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Register/delete",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 796,
+                                "title": "新房管理",
+                                "pid": 510,
+                                "sort": 3,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://NewHouse/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1011,
+                                        "title": "新房地址管理",
+                                        "pid": 796,
+                                        "sort": 1,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Address/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1012,
+                                        "title": "新增",
+                                        "pid": 796,
+                                        "sort": 2,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://NewHouse/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1013,
+                                        "title": "编辑",
+                                        "pid": 796,
+                                        "sort": 3,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://NewHouse/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1014,
+                                        "title": "删除",
+                                        "pid": 796,
+                                        "sort": 4,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://NewHouse/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1015,
+                                        "title": "跳转",
+                                        "pid": 796,
+                                        "sort": 5,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://NewHouse/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1016,
+                                        "title": "新房地址管理-新增",
+                                        "pid": 796,
+                                        "sort": 6,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Address/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1017,
+                                        "title": "新房地址管理-编辑",
+                                        "pid": 796,
+                                        "sort": 7,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Address/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1018,
+                                        "title": "新房地址管理-删除",
+                                        "pid": 796,
+                                        "sort": 8,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Address/delete",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1019,
+                                        "title": "新房地址管理-跳转",
+                                        "pid": 796,
+                                        "sort": 9,
+                                        "addons": "DuoguanHouse",
+                                        "link": "DuoguanHouse://Address/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 1039,
+                                "title": "消费记录",
+                                "pid": 510,
+                                "sort": 6,
+                                "addons": "DuoguanHouse",
+                                "link": "DuoguanHouse://Order/order_list",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f511",
+                        "title": "轮播管理",
+                        "pid": "508",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanHouse://Swiper/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 515,
+                                "title": "搜索",
+                                "pid": 511,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/report_summary",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 516,
+                                "title": "导出",
+                                "pid": 511,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://DishStatistics/report_summary",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f502",
+                "title": "微单页（老版）",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanDianDanYeNew",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f503",
+                        "title": "单页管理",
+                        "pid": "502",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDianDanYe://DuoguanDianDanYe/config",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f504",
+                        "title": "评价管理",
+                        "pid": "502",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanDianDanYe://Evaluation/lists",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f505",
+                        "title": "分享配置",
+                        "pid": "502",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "Home/Public/addons_share/module/duoguan_danye",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f492",
+                "title": "门店系统",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DgStore",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f493",
+                        "title": "基础配置",
+                        "pid": "492",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DgStore://Config/setting",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 128,
+                                "title": "首页配置",
+                                "pid": 493,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/setting",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 134,
+                                "title": "入驻配置",
+                                "pid": 493,
+                                "sort": 2,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/setting_ruzhu",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 136,
+                                "title": "提现管理",
+                                "pid": 493,
+                                "sort": 3,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/setting_tixian",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 137,
+                                "title": "地图管理",
+                                "pid": 493,
+                                "sort": 4,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/setting_map",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 138,
+                                "title": "配送设置",
+                                "pid": 493,
+                                "sort": 5,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/setting_peisong",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 139,
+                                "title": "广告管理",
+                                "pid": 493,
+                                "sort": 6,
+                                "addons": "DgStore",
+                                "link": "DgStore://Swiper/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 579,
+                                        "title": "广告图管理",
+                                        "pid": 139,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Swiper/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 580,
+                                        "title": "广告图编辑",
+                                        "pid": 139,
+                                        "sort": 2,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Swiper/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 142,
+                                "title": "数据导入",
+                                "pid": 493,
+                                "sort": 7,
+                                "addons": "DgStore",
+                                "link": "DgStore://Copy/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 610,
+                                "title": "分享设置",
+                                "pid": 493,
+                                "sort": 9,
+                                "addons": "DgStore",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f497",
+                        "title": "商家入驻",
+                        "pid": "492",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DgStore://StoreEnter/pendingStores",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 821,
+                                "title": "商家入驻",
+                                "pid": 497,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://StoreEnter/pendingStores",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1002,
+                                        "title": "查看",
+                                        "pid": 821,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreEnter/store_info",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 822,
+                                "title": "入驻支付列表",
+                                "pid": 497,
+                                "sort": 2,
+                                "addons": "DgStore",
+                                "link": "DgStore://StoreEnter/pendingpaylist",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 823,
+                                "title": "未付款的入驻记录",
+                                "pid": 497,
+                                "sort": 3,
+                                "addons": "DgStore",
+                                "link": "DgStore://StoreEnter/nopaystores",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f496",
+                        "title": "门店管理",
+                        "pid": "492",
+                        "sort": 3,
+                        "addons": "",
+                        "link": "DgStore://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 200,
+                                "title": "门店管理",
+                                "pid": 496,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://Config/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 594,
+                                        "title": "添加新门店",
+                                        "pid": 200,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Config/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 597,
+                                        "title": "批量添加新门店",
+                                        "pid": 200,
+                                        "sort": 2,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Config/import",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 600,
+                                        "title": "搜索门店",
+                                        "pid": 200,
+                                        "sort": 5,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Config/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 1003,
+                                        "title": "编辑",
+                                        "pid": 200,
+                                        "sort": 5,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Config/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 201,
+                                "title": "分类管理",
+                                "pid": 496,
+                                "sort": 2,
+                                "addons": "DgStore",
+                                "link": "DgStore://StoreCategory/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 601,
+                                        "title": "添加主分类",
+                                        "pid": 201,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 602,
+                                        "title": "编辑主分类",
+                                        "pid": 201,
+                                        "sort": 2,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 603,
+                                        "title": "子分类列表",
+                                        "pid": 201,
+                                        "sort": 3,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/subcategorylist",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 605,
+                                        "title": "分类门店列表",
+                                        "pid": 201,
+                                        "sort": 4,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/category_store_list",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 961,
+                                        "title": "添加子分类",
+                                        "pid": 201,
+                                        "sort": 5,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/subCategoryAdd",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 962,
+                                        "title": "编辑子分类",
+                                        "pid": 201,
+                                        "sort": 6,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://StoreCategory/subcategoryedit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f661",
+                        "title": "订单管理",
+                        "pid": "492",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DgStore://PlatformStats/orders",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f498",
+                        "title": "提现管理",
+                        "pid": "492",
+                        "sort": 6,
+                        "addons": "",
+                        "link": "DgStore://Cash/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f643",
+                        "title": "集市配置",
+                        "pid": "492",
+                        "sort": 11,
+                        "addons": "",
+                        "link": "DgStore://Market/config",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 527,
+                                "title": "集市配置",
+                                "pid": 643,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market/config",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 547,
+                                "title": "专题配置",
+                                "pid": 643,
+                                "sort": 2,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market_theme/theme",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 571,
+                                        "title": "新增专题",
+                                        "pid": 547,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://MarketTheme/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 963,
+                                        "title": "编辑专题",
+                                        "pid": 547,
+                                        "sort": 2,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://MarketTheme/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 549,
+                                "title": "BANNER图配置",
+                                "pid": 643,
+                                "sort": 3,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market_banner/banner",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 573,
+                                        "title": "新增轮播图",
+                                        "pid": 549,
+                                        "sort": 3,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://MarketBanner/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 574,
+                                        "title": "编辑轮播图",
+                                        "pid": 549,
+                                        "sort": 4,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://MarketBanner/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f645",
+                        "title": "集市商品",
+                        "pid": "492",
+                        "sort": 13,
+                        "addons": "",
+                        "link": "DgStore://Market/goods",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 505,
+                                "title": "集市商品",
+                                "pid": 645,
+                                "sort": 1,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market/goods",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 506,
+                                "title": "集市分类",
+                                "pid": 645,
+                                "sort": 2,
+                                "addons": "DgStore",
+                                "link": "DgStore://Market/category",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 522,
+                                        "title": "添加分类",
+                                        "pid": 506,
+                                        "sort": 1,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Market/category_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 526,
+                                        "title": "编辑分类",
+                                        "pid": 506,
+                                        "sort": 3,
+                                        "addons": "DgStore",
+                                        "link": "DgStore://Market/category_edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f484",
+                "title": "微咨询",
+                "pid": "0",
+                "sort": 0,
+                "addons": "DuoguanZiXun",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f490",
+                        "title": "配置管理",
+                        "pid": "484",
+                        "sort": -1,
+                        "addons": "",
+                        "link": "DuoguanZiXun://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 188,
+                                "title": "配置管理",
+                                "pid": 490,
+                                "sort": 1,
+                                "addons": "DuoguanZiXun",
+                                "link": "DuoguanZiXun://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 189,
+                                "title": "分享设置",
+                                "pid": 490,
+                                "sort": 1,
+                                "addons": "DuoguanZiXun",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f485",
+                        "title": "咨询师管理",
+                        "pid": "484",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanZiXun://Worker/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 192,
+                                "title": "咨询师管理",
+                                "pid": 485,
+                                "sort": 1,
+                                "addons": "DuoguanZiXun",
+                                "link": "DuoguanZiXun://Worker/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 530,
+                                        "title": "新增",
+                                        "pid": 192,
+                                        "sort": 1,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Worker/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 531,
+                                        "title": "编辑",
+                                        "pid": 192,
+                                        "sort": 2,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Worker/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 532,
+                                        "title": "删除",
+                                        "pid": 192,
+                                        "sort": 3,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Worker/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 534,
+                                        "title": "搜索",
+                                        "pid": 192,
+                                        "sort": 4,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Worker/index",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 193,
+                                "title": "分类管理",
+                                "pid": 485,
+                                "sort": 2,
+                                "addons": "DuoguanZiXun",
+                                "link": "DuoguanZiXun://Cate/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 538,
+                                        "title": "新增",
+                                        "pid": 193,
+                                        "sort": 1,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Cate/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 539,
+                                        "title": "编辑",
+                                        "pid": 193,
+                                        "sort": 2,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Cate/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 540,
+                                        "title": "删除",
+                                        "pid": 193,
+                                        "sort": 3,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Cate/del",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 543,
+                                        "title": "搜索",
+                                        "pid": 193,
+                                        "sort": 4,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Cate/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f486",
+                        "title": "预定管理",
+                        "pid": "484",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanZiXun://Reserve/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 545,
+                                "title": "预定管理",
+                                "pid": 486,
+                                "sort": 1,
+                                "addons": "DuoguanZiXun",
+                                "link": "DuoguanZiXun://Reserve/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 546,
+                                        "title": "搜索",
+                                        "pid": 545,
+                                        "sort": 1,
+                                        "addons": "DuoguanZiXun",
+                                        "link": "DuoguanZiXun://Reserve/index",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f1632",
+                "title": "智慧门店(连锁版)",
+                "pid": "0",
+                "sort": -10,
+                "addons": "ChainStore",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1633",
+                        "title": "基本配置",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 510,
+                                "title": "基本配置",
+                                "pid": 1633,
+                                "sort": 0,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 512,
+                                "title": "分享设置",
+                                "pid": 1633,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 517,
+                                "title": "轮播设置",
+                                "pid": 1633,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Swiper/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 523,
+                                        "title": "新增",
+                                        "pid": 517,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Swiper/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 524,
+                                        "title": "编辑",
+                                        "pid": 517,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Swiper/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1635",
+                        "title": "商品管理",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Product/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 518,
+                                "title": "商品管理",
+                                "pid": 1635,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Product/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 521,
+                                        "title": "新增编辑",
+                                        "pid": 518,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Product/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 519,
+                                "title": "分类管理",
+                                "pid": 1635,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 520,
+                                        "title": "新增编辑",
+                                        "pid": 519,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Category/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1636",
+                        "title": "门店管理",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Store/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 251,
+                                "title": "门店管理",
+                                "pid": 1636,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Store/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 525,
+                                        "title": "新增编辑",
+                                        "pid": 251,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://store/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1637",
+                        "title": "库存管理",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Stock/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 238,
+                                "title": "库存管理",
+                                "pid": 1637,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Stock/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 528,
+                                        "title": "新增盘点",
+                                        "pid": 238,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Stock/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 529,
+                                        "title": "查看盘点",
+                                        "pid": 238,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Stock/look_pandian",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 533,
+                                        "title": "开始盘点",
+                                        "pid": 238,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Stock/pandian",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1638",
+                        "title": "订单管理",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://order/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 535,
+                                "title": "订单管理",
+                                "pid": 1638,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://order/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1642",
+                        "title": "数据报表",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Statistics/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 537,
+                                "title": "数据报表",
+                                "pid": 1642,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://Statistics/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 542,
+                                        "title": "详情",
+                                        "pid": 537,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://Statistics/info",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1650",
+                        "title": "vip+会员管理",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://UserVip/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 47,
+                                "title": "vip+会员管理",
+                                "pid": 1650,
+                                "sort": 0,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://UserVip/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 550,
+                                "title": "专页配置",
+                                "pid": 1650,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://UserVip/pageConfig",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 551,
+                                "title": "会员管理",
+                                "pid": 1650,
+                                "sort": 1,
+                                "addons": "ChainStore",
+                                "link": "ChainStore://UserVip/memberList",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 552,
+                                        "title": "购买日志",
+                                        "pid": 551,
+                                        "sort": 1,
+                                        "addons": "ChainStore",
+                                        "link": "ChainStore://UserVip/buylog",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f1653",
+                        "title": "优惠券",
+                        "pid": "1632",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "ChainStore://Coupon/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 14,
+                                "title": "优惠券",
+                                "pid": 1653,
+                                "sort": 1,
+                                "addons": "",
+                                "link": "ChainStore://Coupon/index",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f443",
+                "title": "同城",
+                "pid": "0",
+                "sort": -11,
+                "addons": "DuoguanInfo",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f444",
+                        "title": "基本配置",
+                        "pid": "443",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanInfo://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 74,
+                                "title": "基本配置",
+                                "pid": 444,
+                                "sort": 1,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 78,
+                                "title": "分享设置",
+                                "pid": 444,
+                                "sort": 10,
+                                "addons": "DuoguanInfo",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 447,
+                                "title": "搜索",
+                                "pid": 444,
+                                "sort": 1,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 451,
+                                "title": "导出",
+                                "pid": 444,
+                                "sort": 2,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/export_data",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 454,
+                                "title": "处理",
+                                "pid": 444,
+                                "sort": 3,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/confirm",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 456,
+                                "title": "线下转账",
+                                "pid": 444,
+                                "sort": 4,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/cash_offline",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 459,
+                                "title": "取消",
+                                "pid": 444,
+                                "sort": 5,
+                                "addons": "DuoguanDish",
+                                "link": "DuoguanDish://Cash/cash_back",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f446",
+                        "title": "信息管理",
+                        "pid": "443",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanInfo://Article/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 85,
+                                "title": "信息管理",
+                                "pid": 446,
+                                "sort": 1,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Article/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 98,
+                                        "title": "新增",
+                                        "pid": 85,
+                                        "sort": 1,
+                                        "addons": "DuoguanInfo",
+                                        "link": "DuoguanInfo://Article/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 100,
+                                        "title": "编辑",
+                                        "pid": 85,
+                                        "sort": 2,
+                                        "addons": "DuoguanInfo",
+                                        "link": "DuoguanInfo://Article/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 86,
+                                "title": "分类管理",
+                                "pid": 446,
+                                "sort": 10,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Category/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 113,
+                                        "title": "分类管理",
+                                        "pid": 86,
+                                        "sort": 1,
+                                        "addons": "DuoguanInfo",
+                                        "link": "DuoguanInfo://Category/edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 116,
+                                        "title": "分类管理",
+                                        "pid": 86,
+                                        "sort": 1,
+                                        "addons": "DuoguanInfo",
+                                        "link": "DuoguanInfo://Category/del",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f464",
+                        "title": "评论管理",
+                        "pid": "443",
+                        "sort": 0,
+                        "addons": "",
+                        "link": "DuoguanInfo://Comment/index",
+                        "children": []
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f671",
+                        "title": "举报管理",
+                        "pid": "443",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanInfo://JuBao/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 87,
+                                "title": "举报管理",
+                                "pid": 671,
+                                "sort": 1,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://JuBao/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 88,
+                                "title": "黑名单管理",
+                                "pid": 671,
+                                "sort": 10,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Pullblack/index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f669",
+                        "title": "数据统计",
+                        "pid": "443",
+                        "sort": 8,
+                        "addons": "",
+                        "link": "DuoguanInfo://Statistics/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 89,
+                                "title": "数据统计",
+                                "pid": 669,
+                                "sort": 1,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Statistics/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 90,
+                                "title": "收入明细",
+                                "pid": 669,
+                                "sort": 10,
+                                "addons": "DuoguanInfo",
+                                "link": "DuoguanInfo://Statistics/income",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "sign": "manage_menu",
+                "id": "f719",
+                "title": "汽车4S店",
+                "pid": "0",
+                "sort": -12,
+                "addons": "DuoguanCar",
+                "link": null,
+                "children": [
+                    {
+                        "sign": "manage_menu",
+                        "id": "f721",
+                        "title": "商家信息",
+                        "pid": "719",
+                        "sort": 1,
+                        "addons": "",
+                        "link": "DuoguanCar://Merchant/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 311,
+                                "title": "商家信息",
+                                "pid": 721,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Merchant/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 315,
+                                "title": "轮播图管理",
+                                "pid": 721,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Slideshow/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 318,
+                                        "title": "新增",
+                                        "pid": 315,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Slideshow/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 320,
+                                        "title": "编辑",
+                                        "pid": 315,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Slideshow/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f722",
+                        "title": "基本配置",
+                        "pid": "719",
+                        "sort": 2,
+                        "addons": "",
+                        "link": "DuoguanCar://Config/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 299,
+                                "title": "基本配置",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Config/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 301,
+                                "title": "预约咨询说明",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Config/zixun_index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 302,
+                                "title": "售后服务说明",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Config/service_index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 304,
+                                "title": "保养维修类型",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Config/maintain_index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 312,
+                                        "title": "新增",
+                                        "pid": 304,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Config/maintain_add",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 306,
+                                "title": "数据导入",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Copy/import_index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 307,
+                                "title": "分享设置",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "home://public/addons_share",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 737,
+                                "title": "新增分类",
+                                "pid": 722,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/cate_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 738,
+                                "title": "编辑分类",
+                                "pid": 722,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/cate_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 739,
+                                "title": "删除分类",
+                                "pid": 722,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/cate_del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f723",
+                        "title": "车型管理",
+                        "pid": "719",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanCar://CarGoods/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 366,
+                                "title": "车型管理",
+                                "pid": 723,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://CarGoods/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 380,
+                                        "title": "新增",
+                                        "pid": 366,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 384,
+                                        "title": "编辑",
+                                        "pid": 366,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 370,
+                                "title": "属性列表",
+                                "pid": 723,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://CarGoods/attr_index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 393,
+                                        "title": "新增",
+                                        "pid": 370,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/attr_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 397,
+                                        "title": "编辑",
+                                        "pid": 370,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/attr_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 439,
+                                        "title": "属性分类列表",
+                                        "pid": 370,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://AttrCate/index",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 441,
+                                        "title": "属性分类新增编辑",
+                                        "pid": 370,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://AttrCate/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 373,
+                                "title": "车系列表",
+                                "pid": 723,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://CarGoods/car_index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 404,
+                                        "title": "新增",
+                                        "pid": 373,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/car_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 407,
+                                        "title": "编辑",
+                                        "pid": 373,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/car_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 416,
+                                        "title": "添加车型",
+                                        "pid": 373,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoodsLevel/add_car_level",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 421,
+                                        "title": "查看车型",
+                                        "pid": 373,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoods/car_level_info",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 430,
+                                        "title": "编辑车型",
+                                        "pid": 373,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://CarGoodsLevel/edit_car_level",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 750,
+                                "title": "新增部门",
+                                "pid": 723,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/branch_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 751,
+                                "title": "编辑部门",
+                                "pid": 723,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/branch_edit",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 753,
+                                "title": "删除部门",
+                                "pid": 723,
+                                "sort": 3,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/branch_del",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f724",
+                        "title": "活动资讯",
+                        "pid": "719",
+                        "sort": 4,
+                        "addons": "",
+                        "link": "DuoguanCar://Article/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 445,
+                                "title": "活动资讯",
+                                "pid": 724,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Article/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 448,
+                                        "title": "新增",
+                                        "pid": 445,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Article/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 449,
+                                        "title": "编辑",
+                                        "pid": 445,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Article/edit",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 758,
+                                "title": "来信详情",
+                                "pid": 724,
+                                "sort": 1,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/info",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 759,
+                                "title": "回复来信",
+                                "pid": 724,
+                                "sort": 2,
+                                "addons": "DuoguanZhengWu",
+                                "link": "DuoguanZhengWu://Mail/toReply",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f725",
+                        "title": "优惠券",
+                        "pid": "719",
+                        "sort": 5,
+                        "addons": "",
+                        "link": "DuoguanCar://Coupon/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 452,
+                                "title": "优惠券类别",
+                                "pid": 725,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Coupon/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 469,
+                                        "title": "新增",
+                                        "pid": 452,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Coupon/add_coupon_category",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 471,
+                                        "title": "编辑",
+                                        "pid": 452,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Coupon/edit_coupon_category",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 455,
+                                "title": "优惠券列表",
+                                "pid": 725,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Coupon/coupon_index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 458,
+                                        "title": "新增",
+                                        "pid": 455,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Coupon/coupon_add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 461,
+                                        "title": "编辑",
+                                        "pid": 455,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Coupon/coupon_edit",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 464,
+                                        "title": "领取明细",
+                                        "pid": 455,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://Coupon/coupon_detail",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f726",
+                        "title": "预约咨询管理",
+                        "pid": "719",
+                        "sort": 6,
+                        "addons": "",
+                        "link": "DuoguanCar://Bespeak/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 324,
+                                "title": "预约咨询管理",
+                                "pid": 726,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Bespeak/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 326,
+                                "title": "快速询价",
+                                "pid": 726,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Bespeak/index_inquiry",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 327,
+                                "title": "申请贷款",
+                                "pid": 726,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Bespeak/index_loan",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 329,
+                                "title": "预约试驾",
+                                "pid": 726,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Bespeak/index_test_drive",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f727",
+                        "title": "售后服务管理",
+                        "pid": "719",
+                        "sort": 7,
+                        "addons": "",
+                        "link": "DuoguanCar://Service/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 331,
+                                "title": "售后服务管理",
+                                "pid": 727,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Service/index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 333,
+                                "title": "预约保养",
+                                "pid": 727,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Service/Mt_index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 335,
+                                "title": "预约维修",
+                                "pid": 727,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Service/Se_index",
+                                "children": []
+                            },
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 337,
+                                "title": "道路救援",
+                                "pid": 727,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://Service/help_index",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "sign": "manage_menu",
+                        "id": "f728",
+                        "title": "电话咨询管理",
+                        "pid": "719",
+                        "sort": 8,
+                        "addons": "",
+                        "link": "DuoguanCar://MobileConsult/index",
+                        "children": [
+                            {
+                                "sign": "addons_manage_menu",
+                                "id": 340,
+                                "title": "电话咨询管理",
+                                "pid": 728,
+                                "sort": 1,
+                                "addons": "DuoguanCar",
+                                "link": "DuoguanCar://MobileConsult/index",
+                                "children": [
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 342,
+                                        "title": "新增",
+                                        "pid": 340,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://MobileConsult/add",
+                                        "children": []
+                                    },
+                                    {
+                                        "sign": "addons_manage_menu",
+                                        "id": 344,
+                                        "title": "编辑",
+                                        "pid": 340,
+                                        "sort": 1,
+                                        "addons": "DuoguanCar",
+                                        "link": "DuoguanCar://MobileConsult/edit",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
         ]
-      },
-      {
-        id: 2,
-        label: "一级 2",
-        children: [
-          {
-            id: 5,
-            label: "二级 2-1"
-          },
-          {
-            id: 6,
-            label: "二级 2-2"
-          }
+    },
+    {
+        "sign": "admin_menu",
+        "id": 2,
+        "title": "营销插件",
+        "pid": 0,
+        "sort": 2,
+        "link": null,
+        "is_self": 1,
+        "db_name": "",
+        "children": [
+            {
+                "sign": "admin_menu",
+                "id": 7,
+                "title": "大转盘",
+                "pid": 2,
+                "sort": 1,
+                "link": "",
+                "is_self": 1,
+                "db_name": "",
+                "children": []
+            }
         ]
-      },
-      {
-        id: 3,
-        label: "一级 3",
-        children: [
-          {
-            id: 7,
-            label: "二级 3-1"
-          },
-          {
-            id: 8,
-            label: "二级 3-2"
-          }
-        ]
-      }
-    ];
+    },
+    {
+        "sign": "admin_menu",
+        "id": 3,
+        "title": "基础配置",
+        "pid": 0,
+        "sort": 3,
+        "link": null,
+        "is_self": 1,
+        "db_name": "",
+        "children": []
+    },
+    {
+        "sign": "admin_menu",
+        "id": 4,
+        "title": "项目发布",
+        "pid": 0,
+        "sort": 4,
+        "link": null,
+        "is_self": 1,
+        "db_name": "",
+        "children": []
+    },
+    {
+        "sign": "admin_menu",
+        "id": 5,
+        "title": "用户营销",
+        "pid": 0,
+        "sort": 5,
+        "link": null,
+        "is_self": 1,
+        "db_name": "",
+        "children": []
+    },
+    {
+        "sign": "admin_menu",
+        "id": 6,
+        "title": "高级配置",
+        "pid": 0,
+        "sort": 6,
+        "link": null,
+        "is_self": 1,
+        "db_name": "",
+        "children": []
+    }
+];
     return {
       data: JSON.parse(JSON.stringify(data)),
       filterText: '',
-      loading:true
+      loading:false,
+      default_key:[
+        "DuoguanCar://MobileConsult/add",
+        "DuoguanHousemaking://StoreVerify/index"
+      ],
+      form:{
+        name:'',
+        link:'',
+        sort:0
+      },
+      dialogFormVisible: false,
+      formLabelWidth:"120 px"
     };
   },
   methods: {
-    append(data) {
-      const newChild = { id: id++, label: "testtest", children: [] };
-      if (!data.children) {
-        this.$set(data, "children", []);
-      }
-      data.children.push(newChild);
-    },
-
-    remove(node, data) {
-      const parent = node.parent;
-      const children = parent.data.children || parent.data;
-      const index = children.findIndex(d => d.id === data.id);
-      children.splice(index, 1);
-    },
-
-    renderContent(h, { node, data }) {
-      return (
-        <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.append(data)}
-            >
-              Append
-            </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              on-click={() => this.remove(node, data)}
-            >
-              Delete
-            </el-button>
-          </span>
-        </span>
-      );
-    },
-    filterNode(value, data) {
-        if (!value) return true;
-        return data.label.indexOf(value) !== -1;
-      }
+        // 新增
+        add(node,data){
+          console.log(this.$refs)
+          this.default_key=[
+            "DuoguanCar://MobileConsult/add",
+            "DuoguanActivity://Config/config/activity/hidden"
+          ]
+        },
+        //编辑
+        edit(node,data) {
+          console.log(node,data)
+        },
+        //删除
+        remove(node, data) {
+          const parent = node.parent;
+          const children = parent.data.children || parent.data;
+          const index = children.findIndex(d => d.id === data.id);
+          children.splice(index, 1);
+        },
+        filterNode(value, data) {
+          if (!value) return true;
+          return data.label.indexOf(value) !== -1;
+        },
+        check_change:function (a,b,c) {
+          console.log(a,b,c)
+        }
   },
   watch: {
     filterText(val) {
