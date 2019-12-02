@@ -21,19 +21,19 @@
                       <el-button
                               type="text"
                               size="mini"
-                              @click="() => add(node,data)">
+                              @click=" add(node,data)">
                         新增
                       </el-button>
                       <el-button
                               type="text"
                               size="mini"
-                              @click="() => edit(node,data)">
+                              @click=" edit(node,data)">
                         编辑
                       </el-button>
                       <el-button
                               type="text"
                               size="mini"
-                              @click="() => remove(node, data)">
+                              @click="remove(node, data)">
                         删除
                       </el-button>
                     </span>
@@ -63,8 +63,6 @@
 </template>
 
 <script>
-let id = 1000;
-
 export default {
   name: "Menu",
   data() {
@@ -13717,17 +13715,14 @@ export default {
   methods: {
         // 新增
         add(node,data){
-          console.log(this.$refs)
-          this.default_key=[
-            "DuoguanCar://MobileConsult/add",
-            "DuoguanActivity://Config/config/activity/hidden"
-          ]
+        //   console.log(this.$refs.tree.getNode())
+          this.$refs.tree.setCheckedKeys([]);
         },
         //编辑
         edit(node,data) {
           console.log(node,data)
         },
-        //删除
+        //删除 
         remove(node, data) {
           const parent = node.parent;
           const children = parent.data.children || parent.data;
