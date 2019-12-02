@@ -40,23 +40,31 @@
                 </span>
           </el-tree>
         </div>
-<el-dialog title="菜单编辑" :visible.sync="dialogFormVisible">
-  <el-form :model="form">
-    <el-form-item label="名称" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="路径" :label-width="formLabelWidth">
-      <el-input v-model="form.link" autocomplete="off"></el-input>
-    </el-form-item><el-form-item label="排序" :label-width="formLabelWidth">
-      <el-input v-model="form.sort" autocomplete="off"></el-input>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-  </div>
-</el-dialog>
-<el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+        <el-dialog title="菜单编辑" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+            <el-form-item label="名称" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="路径" :label-width="formLabelWidth">
+            <el-input v-model="form.link" autocomplete="off"></el-input>
+            </el-form-item><el-form-item label="排序" :label-width="formLabelWidth">
+            <el-input v-model="form.sort" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+        </el-dialog>
+        <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button><br/>
+        <el-select v-model="value" placeholder="选择链接类型"  @change="select_change">
+            <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+            </el-option>
+        </el-select>
       </div>
     
   </div>
@@ -13709,7 +13717,16 @@ export default {
         sort:0
       },
       dialogFormVisible: false,
-      formLabelWidth:"120 px"
+      formLabelWidth:"120 px",
+      //选择器数据
+       options: [{
+          value: 0,
+          label: '类型1'
+        }, {
+          value: 1,
+          label: '类型2'
+        }],
+        value:''
     };
   },
   methods: {
@@ -13735,6 +13752,10 @@ export default {
         },
         check_change:function (a,b,c) {
           console.log(a,b,c)
+        },
+        //select 框选择事件监听
+        select_change:function(v){
+            console.log(v)
         }
   },
   watch: {
