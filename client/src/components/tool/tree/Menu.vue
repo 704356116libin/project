@@ -13708,8 +13708,7 @@ export default {
       filterText: '',
       loading:false,
       default_key:[
-        "DuoguanCar://MobileConsult/add",
-        "DuoguanHousemaking://StoreVerify/index"
+        
       ],
       form:{
         name:'',
@@ -13733,11 +13732,15 @@ export default {
         // 新增
         add(node,data){
         //   console.log(this.$refs.tree.getNode())
-          this.$refs.tree.setCheckedKeys([]);
+        //   this.$refs.tree.setCheckedKeys([]);
+          console.log(this.$refs.tree.getNode("home://public/addons_share"))
+        //   node.checked = true
         },
         //编辑
         edit(node,data) {
           console.log(node,data)
+          data.title = '测试更新'
+          
         },
         //删除 
         remove(node, data) {
