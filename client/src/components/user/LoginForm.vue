@@ -49,18 +49,88 @@
       end-placeholder="结束日期"
       :picker-options="pickerOptions"
     ></el-date-picker>
-    <Menu />
+
+    <!-- <Menu /> -->
+    <el-form ref="form" :model="form" label-width="80px">
+      <div>
+        <el-form-item label="策略1:">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              :disabled="item.disabled"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="赠送类型:">
+          <el-radio-group v-model="radio">
+            <el-radio :label="3">优惠券</el-radio>
+            <el-radio :label="6">会员余额</el-radio>
+            <el-radio :label="9">赠品</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="赠送类型:">
+          <div id="优惠券">
+            <el-select v-model="value" placeholder="请选择优惠券">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+              ></el-option>
+            </el-select>
+            <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
+            <el-radio-group v-model="radio">
+              <el-radio :label="3">支付完成自动发放</el-radio>
+              <el-radio :label="6">确认收货后自动发放</el-radio>
+              <el-radio :label="9">分享后自动发放</el-radio>
+            </el-radio-group>
+          </div>
+          <div id="会员余额">
+             <el-radio-group v-model="radio">
+                <el-radio :label="3">固定金额</el-radio>
+                <el-radio :label="6">按支付比例</el-radio>
+              </el-radio-group>
+              <el-input v-model="input" placeholder="按支付比例"></el-input>
+              <el-input v-model="input" placeholder="固定金额"></el-input>
+              <span>
+                会员余额只支持使用微信支付进行且确认收货后进行发放,非会员不能返余额，适合做会员营销接口
+              </span>
+          </div>
+           <div id="赠品">
+           <el-select v-model="value" placeholder="请选择赠品">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+              ></el-option>
+            </el-select>
+            <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
+            <el-radio-group v-model="radio">
+              <el-radio :label="3">支付完成自动发放</el-radio>
+              <el-radio :label="6">确认收货后自动发放</el-radio>
+              <el-radio :label="9">分享后自动发放</el-radio>
+            </el-radio-group>
+          </div>
+        </el-form-item>
+      </div>
+    </el-form>
   </el-tabs>
 </template>
 
 <script>
-import Menu from '@/components/tool/tree/Menu.vue'
+import Menu from "@/components/tool/tree/Menu.vue";
 import qs from "qs";
 export default {
   name: "LoginForm",
   props: {},
   components: {
-   Menu
+    Menu
   },
   data() {
     return {
@@ -104,7 +174,32 @@ export default {
           }
         ]
       },
-      value1: ""
+      value1: "",
+      radio: 3,
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+          disabled: true
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎"
+        },
+        {
+          value: "选项4",
+          label: "龙须面"
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭"
+        }
+      ],
+      value: ""
     };
   },
   methods: {

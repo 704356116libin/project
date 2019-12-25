@@ -7,7 +7,7 @@
                   :data="data"
                   class="filter-tree"
                   show-checkbox
-                  node-key="link"
+                  node-key="id"
                   :expand-on-click-node="false"
                   @check-change="check_change"
                   :filter-node-method="filterNode"
@@ -56,15 +56,6 @@
             <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
         </div>
         </el-dialog>
-        <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button><br/>
-        <el-select v-model="value" placeholder="选择链接类型"  @change="select_change">
-            <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-            </el-option>
-        </el-select>
       </div>
     
   </div>
@@ -13732,8 +13723,8 @@ export default {
         // 新增
         add(node,data){
         //   console.log(this.$refs.tree.getNode())
-        //   this.$refs.tree.setCheckedKeys([]);
-          console.log(this.$refs.tree.getNode("home://public/addons_share"))
+          this.$refs.tree.setCheckedKeys([1]);
+        //   console.log(this.$refs.tree.getNode("home://public/addons_share"))
         //   node.checked = true
         },
         //编辑
