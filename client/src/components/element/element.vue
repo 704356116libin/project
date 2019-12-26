@@ -68,34 +68,17 @@
       </el-form-item>
       <!-- 配置策略 -->
       <el-form-item label="配置策略:">
-        <el-radio-group v-model="info.gift_type" @change="gift_type_change">
+        <el-radio-group v-model="info.config_type" @change="config_type_change">
           <el-radio :label="1">按周</el-radio>
           <el-radio :label="0">按月</el-radio>
         </el-radio-group>
       </el-form-item>
 
-      <template>
-        <el-form-item label="策略1:">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="赠送类型:">
-          <el-radio-group v-model="radio">
-            <el-radio :label="3">优惠券</el-radio>
-            <el-radio :label="6">会员余额</el-radio>
-            <el-radio :label="9">赠品</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="赠送类型:">
-          <template id="优惠券">
-            <el-select v-model="value" placeholder="请选择优惠券">
+      <template v-for="(v, index) in [1,2]">
+        <div :key="index">
+          {{index}}{{index}}
+          <el-form-item label="策略1:" :data-index="index">
+            <el-select v-model="value" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -104,39 +87,59 @@
                 :disabled="item.disabled"
               ></el-option>
             </el-select>
-            <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
-            <el-radio-group v-model="radio">
-              <el-radio :label="3">支付完成自动发放</el-radio>
-              <el-radio :label="6">确认收货后自动发放</el-radio>
-              <el-radio :label="9">分享后自动发放</el-radio>
+          </el-form-item>
+          <el-form-item label="赠送类型:">
+            <el-radio-group v-model="radio" @change.self="gift_type_change($event)">
+              <el-radio :label='gift_type_group(index,"coupon")'>优惠券</el-radio>
+              <el-radio :label="gift_type_group(index,'cash')">会员余额</el-radio>
+              <el-radio :label="gift_type_group(index,'gift')">赠品</el-radio>
             </el-radio-group>
-          </template>
-          <template id="会员余额">
-            <el-radio-group v-model="radio">
-              <el-radio :label="3">固定金额</el-radio>
-              <el-radio :label="6">按支付比例</el-radio>
-            </el-radio-group>
-            <el-input v-model="input" placeholder="按支付比例"></el-input>
-            <span>会员余额只支持使用微信支付进行且确认收货后进行发放,非会员不能返余额，适合做会员营销接口</span>
-          </template>
-          <template id="赠品">
-            <el-select v-model="value" placeholder="请选择赠品">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                :disabled="item.disabled"
-              ></el-option>
-            </el-select>
-            <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
-            <el-radio-group v-model="radio">
-              <el-radio :label="3">支付完成自动发放</el-radio>
-              <el-radio :label="6">确认收货后自动发放</el-radio>
-              <el-radio :label="9">分享后自动发放</el-radio>
-            </el-radio-group>
-          </template>
-        </el-form-item>
+          </el-form-item>
+          <el-form-item >
+            <template v-if="show_state == 'coupon'">
+              <el-select v-model="value" placeholder="请选择优惠券">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                ></el-option>
+              </el-select>
+              <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
+              <el-radio-group v-model="radio">
+                <el-radio :label="3">支付完成自动发放</el-radio>
+                <el-radio :label="6">确认收货后自动发放</el-radio>
+                <el-radio :label="9">分享后自动发放</el-radio>
+              </el-radio-group>
+            </template>
+            <template v-if="show_state == 'cash'">
+              <el-radio-group v-model="radio">
+                <el-radio :label="3">固定金额</el-radio>
+                <el-radio :label="6">按支付比例</el-radio>
+              </el-radio-group>
+              <el-input v-model="input" placeholder="按支付比例"></el-input>
+              <span>会员余额只支持使用微信支付进行且确认收货后进行发放,非会员不能返余额，适合做会员营销接口</span>
+            </template>
+            <template v-if="show_state == 'gift'">
+              <el-select v-model="value" placeholder="请选择赠品">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                ></el-option>
+              </el-select>
+              <el-input v-model="input" placeholder="请输入赠送数量"></el-input>
+              <el-radio-group v-model="radio">
+                <el-radio :label="3">支付完成自动发放</el-radio>
+                <el-radio :label="6">确认收货后自动发放</el-radio>
+                <el-radio :label="9">分享后自动发放</el-radio>
+              </el-radio-group>
+            </template>
+          </el-form-item>
+        </div>
       </template>
 
       <!--  -->
@@ -149,7 +152,7 @@
 
 <script>
 import qs from "qs";
-let post_url = "xxx.com"
+let post_url = "xxx.com";
 export default {
   name: "Element",
   props: {},
@@ -166,11 +169,17 @@ export default {
         is_accept_order_notify: 0, //是否开启接单提醒
         comment_tags: ["相当便宜", "品牌可靠", "好~"],
         is_old_client_feedback: 1, //是否开启老客户回馈
-        gift_type: 0 //0--按周 1--按月
+        config_type: 0 //0--按周 1--按月策略选择年月标识
       },
       //评价标签表单相关参数
       comment_input_visiable: false,
       comment_input_value: "",
+      //赠送策略数据组
+      gift_config_data:[
+        {
+
+        }
+      ],
       radio: 3,
       options: [
         {
@@ -196,7 +205,10 @@ export default {
         }
       ],
       value: "",
-      input: ""
+      input: "",
+      show_state:"coupon"
+      //优惠券列表组
+      //赠品列表组
     };
   },
   methods: {
@@ -270,11 +282,10 @@ export default {
     /**
      * 配置策略 -----change事件改变
      */
-    gift_type_change: function(e) {
-      console.log("gift_type", e);
-      this.info.gift_type = e;
+    config_type_change: function(e) {
+      console.log("config_type_change", e);
+      this.info.config_type_change = e;
     },
-
     //=======================评论标签控件===================
     /**
      *评论标签------点击关闭事件
@@ -305,8 +316,37 @@ export default {
       }
       this.comment_input_visiable = false;
       this.comment_input_value = "";
-    }
+    },
     //=================================================
+    //==================赠品策略的处理逻辑====================
+    /**
+     * 点击每项赠送类型时的触发事件
+     * index:策略索引位
+     */
+    gift_type_change:function(v){
+      //分割赠品类型label str
+      let data = v.split('-')
+      console.log('gift_type_change',v)
+      this.show_state = data[0]
+    },
+    gift_type_group:function(index,type){
+      let str = ''
+      switch(type){
+        case 'coupon':
+          str = 'coupon-'+index
+          break
+        case 'cash':
+          str = 'cash-'+index
+          break
+        case 'gift':
+            str = 'gift-'+index
+          break
+        default:
+          console.log('gift_type_group--出错l')
+          break
+      }
+      return str
+    }
   },
   mounted: function() {
     let that = this;
@@ -318,11 +358,11 @@ export default {
     //   success: function(res) {
     //     if (res.code == 1) {
     //       let info = res.data;
-          //赋值配置数据
-          that.info.is_open = 1;
-          that.info.no_repeat_days = 2;
-          that.info.send_days = 3;
-          console.log("mounted", that.info);
+    //赋值配置数据
+    that.info.is_open = 1;
+    that.info.no_repeat_days = 2;
+    that.info.send_days = 3;
+    console.log("mounted", that.info);
     //     } else {
     //       that.$message.error("没有数据,请确认");
     //     }
