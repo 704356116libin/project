@@ -10,7 +10,7 @@ Vue.use(ElementUI);//使用elementui组键
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 axios.defaults.timeout = 5000 // 请求超时
-axios.defaults.baseURL = 'http://127.0.0.1:8000'
+axios.defaults.baseURL = 'http://115.29.67.175/:8000'
 new Vue({
   el: '#app',
   router,
