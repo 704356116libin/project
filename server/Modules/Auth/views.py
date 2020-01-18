@@ -79,7 +79,7 @@ def change_password(request):
 
 
 def get_normal_user(request):
-    data = User.objects.filter(Q(is_superuser=0) | Q(username__startswith='l'))
-    u = User.objects.get(id=1)
-    return HttpResponse(json.dumps({'id': u.id, 'username': u.username}))
+    # data = User.objects.filter(Q(is_superuser=0) | Q(username__startswith='l'))
+    # u = User.objects.get(id=1)
+    return HttpResponse(json.dumps({'id':1, 'username': 'u.username'}))
     return HttpResponse(serialize('json', data, cls=LazyEncoder))
