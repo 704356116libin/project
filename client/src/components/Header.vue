@@ -29,6 +29,9 @@
     <el-menu-item class='header-login'>
       <a href="/register">注册</a>
     </el-menu-item>
+        <el-menu-item class='header-login'>
+      <a href="/element">element演示</a>
+    </el-menu-item>
     </el-menu>
   </div>
  
