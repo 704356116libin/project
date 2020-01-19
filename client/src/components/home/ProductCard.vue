@@ -28,27 +28,27 @@ export default {
        cards:[
         {
           id:1,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://img5.imgtn.bdimg.com/it/u=2403611520,809506871&fm=26&gp=0.jpg'
         },
         {
           id:2,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://i0.hdslb.com/bfs/article/8c882fc96d9c11441bc35cbd9c3139eb6ac71770.jpg'
         },
         {
           id:3,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://img3.imgtn.bdimg.com/it/u=3257426817,610723722&fm=26&gp=0.jpg'
         },
         {
           id:4,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://a4.att.hudong.com/05/50/300001069758129557502950786.jpg'
         },
         {
           id:5,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://i0.hdslb.com/bfs/article/8c882fc96d9c11441bc35cbd9c3139eb6ac71770.jpg'
         },
         {
           id:6,
-          url:'https://xrs.ixiaochengxu.cc/2017-09-11_59b65b9d811b5.png'
+          url:'http://img1.imgtn.bdimg.com/it/u=3791295982,3858283543&fm=26&gp=0.jpg'
         }
        ],
        currentDate:new Date(),

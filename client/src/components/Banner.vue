@@ -17,7 +17,7 @@ export default {
       urls: [
         {
           id: 1,
-          url: "https://xrs.ixiaochengxu.cc/2018-12-14_5c132a9a1c45f.png"
+          url: "http://xrs.tupiancunchu.com/2020-01-19_5e24016c3961c.jpg"
         },
         {
           id: 2,
