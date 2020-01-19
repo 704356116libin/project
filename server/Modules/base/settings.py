@@ -107,7 +107,7 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': database['server']#勿传服务器
+    'default': database['company']#勿传服务器
 }
 
 

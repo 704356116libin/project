@@ -21,17 +21,9 @@
         <el-menu-item index="2-4-3">选项3</el-menu-item>
       </el-submenu>
     </el-submenu>
-    <el-menu-item index="3" >消息中心</el-menu-item>
-    <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-    <el-menu-item class='header-login'>
-      <a href="/login">登陆</a>
-    </el-menu-item>
-    <el-menu-item class='header-login'>
-      <a href="/register">注册</a>
-    </el-menu-item>
-        <el-menu-item class='header-login'>
-      <a href="/element">element演示</a>
-    </el-menu-item>
+    <el-menu-item index="3" @click="menu_jump('/login')" data-url="/login">登录</el-menu-item>
+    <el-menu-item index="4" @click="menu_jump('/register')" data-url="/register">注册</el-menu-item>
+    <el-menu-item index="5" @click="menu_jump('/element')" data-url="/element">element演示</el-menu-item>
     </el-menu>
   </div>
  
@@ -52,7 +44,14 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+    /**
+     *导航点击跳转事件
+     */
+     menu_jump:function(v){
+       console.log('menu_jump',v)
+  　   window.location.href = v
+     }
   },
   created() {
     this.$http.get('/honor/hello_honor',{
