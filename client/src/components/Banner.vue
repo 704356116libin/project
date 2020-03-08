@@ -17,18 +17,8 @@ export default {
       urls: [
         {
           id: 1,
-          url: "http://xrs.tupiancunchu.com/2020-01-19_5e24016c3961c.jpg"
-        },
-        {
-          id: 2,
-          url:
-            "http://www.duoguan.com/d/file/slide/2019-03-05/4cca3e04be5a1d7592811dc09f50e00e.png"
-        },
-        {
-          id: 3,
-          url:
-            "http://www.duoguan.com/d/file/slide/2019-04-17/1ff3ba7a6c9c7a82e1f29aca26c0a64f.png"
-        },
+          url: "/demo_img/banner/banner1.png"
+        }
       ]
     };
   },

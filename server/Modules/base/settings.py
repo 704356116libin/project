@@ -38,9 +38,22 @@ database={
         'PASSWORD': '704356116',
         'HOST': 'localhost',
         'PORT': '3306',
+    },#正式环境mysql配置
+    'my_server':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bin_db',
+        'USER': 'bin_db',
+        'PASSWORD': '704356116',
+        'HOST': '115.29.67.175',
+        'PORT': '3306',
     }
 }
+# Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+DATABASES = {
+    'default': database['server']#勿传服务器
+}
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -101,15 +114,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'base.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-DATABASES = {
-    'default': database['company']#勿传服务器
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

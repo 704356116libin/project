@@ -8,12 +8,6 @@
       <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0"  >
         <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-card']">
           <img :src="o.url" class="image">
-          <div style="padding: 14px;">
-            <span>好吃的汉堡{{index}}</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-            </div>
-          </div>
         </el-card>
     </el-col>
 </el-row>
@@ -31,28 +25,28 @@ export default {
        cards:[
         {
           id:1,
-          url:'http://img5.imgtn.bdimg.com/it/u=2403611520,809506871&fm=26&gp=0.jpg'
+          url:"/demo_img/card/company.png"
         },
         {
           id:2,
-          url:'http://img3.imgtn.bdimg.com/it/u=2081362183,2237717106&fm=26&gp=0.jpg'
+          url:"/demo_img/card/hotel_cover.png"
         },
         {
           id:3,
-          url:'http://img3.imgtn.bdimg.com/it/u=3257426817,610723722&fm=26&gp=0.jpg'
+          url:"/demo_img/card/pt_cover.png"
         },
-        {
+         {
           id:4,
-          url:'http://img3.imgtn.bdimg.com/it/u=3257426817,610723722&fm=26&gp=0.jpg'
+          url:"/demo_img/card/wdy_cover.png"
         },
         {
           id:5,
-          url:'http://img5.imgtn.bdimg.com/it/u=2403611520,809506871&fm=26&gp=0.jpg'
+          url:"/demo_img/card/pinche_cover.png"
         },
         {
           id:6,
-          url:'http://img3.imgtn.bdimg.com/it/u=2081362183,2237717106&fm=26&gp=0.jpg'
-        }
+          url:"/demo_img/card/tongcheng_cover.png"
+        },
        ],
        currentDate:new Date(),
        style:{
@@ -87,6 +81,7 @@ export default {
 
   .image {
     width: 100%;
+    height:200px;
     display: block;
   }
 
@@ -100,11 +95,9 @@ export default {
       clear: both
   }
   .ite-card{
-    margin: 5%;
+   margin: 0% 10% 10% 10%;
     
   }
-  .el-row{
-    margin: 2% 5% 0 5%; 
-  }
+  
 </style>
  
