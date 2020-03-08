@@ -42,7 +42,7 @@ export default {
      }
   },
   created() {
-    this.$http.get('/Auth/login',{
+    this.$http.get('api/Auth/login',{
       }).then(function(response){
       console.log('1111',response);
       }).catch(function(error){
