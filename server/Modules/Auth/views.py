@@ -29,7 +29,7 @@ def login(request):
     # 重新生成用户 token
 
     # 将用户基础信息返回给前端
-    return HttpResponse(json.dumps({}))
+    return HttpResponse(json.dumps({'info':'测试成功'}))
 
 
 '''

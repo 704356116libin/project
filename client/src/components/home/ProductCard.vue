@@ -5,12 +5,9 @@
       <h4>每一个都用心打造</h4>
     </div>
     <el-row class="">
-      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0" :style="{width:'33.3%',height:'200px'}" >
-        <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-card']">
-          <img :src="o.url" class="product-image">
-          <div class="card-text">
-            <span>好吃的汉堡</span>
-          </div>
+      <el-col :span="8" v-for="(o,index) in cards " :key="o.id" :offset="0" class="ite-product-case-card-col" >
+        <el-card :body-style="{ padding: '0px'}" shadow="hover" :class="[index+1%3==0?'':'ite-product-case-card']">
+          <img :src="o.url" class="product-case-image">
         </el-card>
     </el-col>
 </el-row>
@@ -28,27 +25,27 @@ export default {
        cards:[
         {
           id:1,
-          url:'http://img5.imgtn.bdimg.com/it/u=2403611520,809506871&fm=26&gp=0.jpg'
+          url:"/demo_img/card/hudong.png"
         },
         {
           id:2,
-          url:'http://i0.hdslb.com/bfs/article/8c882fc96d9c11441bc35cbd9c3139eb6ac71770.jpg'
+          url:"/demo_img/card/shop_cover.png"
         },
         {
           id:3,
-          url:'http://img3.imgtn.bdimg.com/it/u=3257426817,610723722&fm=26&gp=0.jpg'
+          url:"/demo_img/card/wdy_cover.png"
         },
         {
           id:4,
-          url:'http://a4.att.hudong.com/05/50/300001069758129557502950786.jpg'
+          url:"/demo_img/card/yuyue_cover.png"
         },
         {
           id:5,
-          url:'http://i0.hdslb.com/bfs/article/8c882fc96d9c11441bc35cbd9c3139eb6ac71770.jpg'
+          url:"/demo_img/card/tongcheng_cover.png"
         },
         {
           id:6,
-          url:'http://img1.imgtn.bdimg.com/it/u=3791295982,3858283543&fm=26&gp=0.jpg'
+          url:"/demo_img/card/ct_cover.png"
         }
        ],
        currentDate:new Date(),
@@ -82,9 +79,9 @@ export default {
     float: right;
   }
 
-  .product-image {
+  .product-case-image {
     width: 100%;
-    height:160px;
+    height:200px;
     display: block;
   }
 
@@ -97,16 +94,14 @@ export default {
   .clearfix:after {
       clear: both
   }
-  .ite-card{
-    margin: 0% 10% 10% 0%;
+  .ite-product-case-card{
+    margin: 0% 10% 10% 10%;
     
   }
-  .el-row{
-   
-  }
-  .card-text{
-    padding-top: 5px ;
-    padding-bottom: 5px;
+  .ite-product-case-card-col{
+    width:'33.3%';
+    height:'200px';
+    margin-top:20px;
   }
 </style>
  
