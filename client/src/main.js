@@ -12,7 +12,7 @@ Vue.prototype.$http = axios
 axios.defaults.timeout = 5000 // 请求超时
 var post_url ={
   local:'http://localhost:8000',
-  server:'http://115.29.67.175/:8111'
+  server:'http://115.29.67.175/:8000'
 }
 axios.defaults.baseURL = post_url.server
 new Vue({
